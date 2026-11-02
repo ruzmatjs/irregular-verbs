@@ -275,6 +275,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
       <div class="opts">
         <label class="opt"><input type="radio" name="pool" id="poolAll" value="all" checked><span>Barcha 100 ta</span></label>
         <label class="opt"><input type="radio" name="pool" id="poolMis" value="mistakes"><span>Faqat xato soʻzlar</span></label>
+        <label class="opt"><input type="radio" name="pool" id="poolNew" value="unseen"><span>Hali koʻrilmaganlar <small id="newCount" style="color:var(--muted);font-size:.8em"></small></span></label>
         <label class="opt"><input type="radio" name="pool" id="poolUnl" value="unlearned"><span>Yodlanmaganlar</span></label>
         <label class="opt"><input type="radio" name="pool" id="poolStar" value="starred"><span>★ Belgilanganlar</span></label>
       </div>
@@ -771,6 +772,7 @@ function pickPool(kind) {
   if (kind === "mistakes") return VERBS.filter(function (v) { return rec(v).mis; });
   if (kind === "unlearned") return VERBS.filter(function (v) { return rec(v).lvl < MAXLVL; });
   if (kind === "starred") return VERBS.filter(function (v) { return rec(v).star; });
+  if (kind === "unseen") return VERBS.filter(unseen);
   return VERBS.slice();
 }
 function shuffle(a) {
@@ -779,6 +781,9 @@ function shuffle(a) {
   }
   return a;
 }
+
+/* Hali bir marta ham soʻralmagan soʻz: toʻgʻri ham, xato ham (Bilmadim ham) javob berilmagan */
+function unseen(v) { var r = rec(v); return r.ok + r.bad === 0; }
 
 /* ---------- mashq ---------- */
 var quiz = null;
@@ -1236,6 +1241,7 @@ function updateBrand() {
   $("mcount").textContent = t.mis ? "(" + t.mis + ")" : "";
   var st = VERBS.filter(function (v) { return rec(v).star; }).length;
   $("scount").textContent = st ? "(" + st + ")" : "";
+  $("newCount").textContent = "(" + VERBS.filter(unseen).length + ")";
 }
 
 if (TTS) {
