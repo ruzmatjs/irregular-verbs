@@ -336,13 +336,13 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
       <div class="verdict" id="verdict" hidden></div>
       <button class="spkall" type="button" id="spkFull" hidden></button>
       <div class="actions">
-        <button class="btn ghost" type="button" id="prevBtn" title="Oldingi soʻz">← Oldingi</button>
+        <button class="btn ghost" type="button" id="prevBtn" title="Oldingi soʻz (birinchi maydonda ↑)">← Oldingi</button>
         <button class="btn" type="submit" id="checkBtn">Tekshirish</button>
         <button class="btn ghost" type="button" id="dontknowBtn">Bilmadim</button>
         <span class="spacer"></span>
         <button class="btn ghost" type="button" id="quitBtn">Toʻxtatish</button>
       </div>
-      <p class="hint kbd">Enter, ↓ yoki feʻlda Space — keyingi maydon · ↑ — oldingisi · oxirgi maydonda Enter — tekshirish · ← (boʻsh maydonda) — oldingi soʻz · * — yulduzcha</p>
+      <p class="hint kbd">Enter, ↓ yoki feʻlda Space — keyingi maydon · ↑ — oldingisi · oxirgi maydonda Enter — tekshirish · birinchi maydonda ↑ (yoki boʻsh maydonda ←) — oldingi soʻz · * — yulduzcha</p>
     </form>
   </div>
 </section>
@@ -913,7 +913,8 @@ function renderQ() {
         if (k < inputs.length - 1) focusAt(k + 1); else $("checkBtn").focus();
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        focusAt(k - 1);
+        /* birinchi maydonda ↑ — oldingi soʻzga */
+        if (k === 0) prev(); else focusAt(k - 1);
       } else if (e.key === " " && isVerb) {
         /* Feʻl doim bitta soʻz — boʻsh joy keyingi maydonga oʻtkazadi */
         e.preventDefault();
@@ -996,7 +997,8 @@ document.addEventListener("keydown", function (e) {
   if (k === "ArrowLeft" && !typing) { e.preventDefault(); prev(); return; }
   if (k !== "ArrowDown" && k !== "ArrowUp" && k !== "ArrowRight") return;
   if (quiz.graded) {
-    if (k !== "ArrowUp") { e.preventDefault(); next(); }
+    e.preventDefault();
+    if (k === "ArrowUp") prev(); else next();
     return;
   }
   if (typing) return;
