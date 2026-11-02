@@ -326,7 +326,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
         <span class="spacer"></span>
         <button class="btn ghost" type="button" id="quitBtn">Toʻxtatish</button>
       </div>
-      <p class="hint kbd">Enter yoki ↓ — keyingi maydon · ↑ — oldingisi · oxirgi maydonda Enter — tekshirish</p>
+      <p class="hint kbd">Enter, ↓ yoki feʻlda Space — keyingi maydon · ↑ — oldingisi · oxirgi maydonda Enter — tekshirish</p>
     </form>
   </div>
 </section>
@@ -842,7 +842,19 @@ function renderQ() {
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
         focusAt(k - 1);
+      } else if (e.key === " " && isVerb) {
+        /* Feʻl doim bitta soʻz — boʻsh joy keyingi maydonga oʻtkazadi */
+        e.preventDefault();
+        if (k < inputs.length - 1) focusAt(k + 1); else $("checkBtn").focus();
       }
+    });
+    /* Telefon klaviaturalari keydown da boʻsh joyni bermasligi mumkin,
+       shuning uchun kiritilgan matndan ham tekshiramiz */
+    var isVerb = inp.id !== "in-uz";
+    if (isVerb) inp.addEventListener("input", function () {
+      if (quiz.graded || !/\s/.test(inp.value)) return;
+      inp.value = inp.value.replace(/\s+/g, "");
+      if (k < inputs.length - 1) focusAt(k + 1); else $("checkBtn").focus();
     });
   });
   $("verdict").hidden = true;
