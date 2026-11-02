@@ -79,6 +79,8 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid 
 .btn.sm{padding:7px 13px;font-size:.84rem}
 .btn.danger{color:var(--bad);border-color:var(--bad);background:none}
 .hint{font-size:.8rem;color:var(--muted)}
+.kbd{margin:14px 0 0;font-size:.76rem}
+@media (pointer: coarse){.kbd{display:none}}
 .err{font-size:.84rem;color:var(--bad);font-weight:500;margin:10px 0 0}
 .qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.8rem;color:var(--muted);
   font-variant-numeric:tabular-nums;margin-bottom:10px}
@@ -298,6 +300,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
         <span class="spacer"></span>
         <button class="btn ghost" type="button" id="quitBtn">Toʻxtatish</button>
       </div>
+      <p class="hint kbd">Enter yoki ↓ — keyingi maydon · ↑ — oldingisi · oxirgi maydonda Enter — tekshirish</p>
     </form>
   </div>
 </section>
@@ -610,6 +613,10 @@ function spkCell(v) {
   return '<td class="spkcell"><button class="spk mini" type="button" data-n="' + v.n +
     '" title="Talaffuzni eshitish" aria-label="' + v.v1 + ' talaffuzi">' + SPKSVG + "</button></td>";
 }
+/* hidden xossasining oʻzi yetarli emas: .spk va .spkall inline-flex,
+   eski brauzer yoki quirks rejimida ular [hidden] ni bosib ketadi */
+function hide(el) { el.hidden = true; el.style.display = "none"; }
+function unhide(el) { el.hidden = false; el.style.display = ""; }
 function spkDelegate(host) {
   host.addEventListener("click", function (e) {
     var b = e.target && e.target.closest ? e.target.closest("button[data-n]") : null;
@@ -790,30 +797,40 @@ function renderQ() {
     box.appendChild(d);
   });
 
-  /* Enter: oxirgisidan boshqa maydonlarda keyingisiga oʻtadi, oxirgisida tekshiradi */
+  /* Klaviatura: Enter va ↓ keyingi maydonga, ↑ oldingisiga,
+     oxirgi maydonda Enter javobni tekshiradi */
   var inputs = box.querySelectorAll("input");
+  function focusAt(i) {
+    if (i < 0 || i >= inputs.length) return;
+    inputs[i].focus();
+    inputs[i].select();
+  }
   Array.prototype.forEach.call(inputs, function (inp, k) {
     inp.addEventListener("keydown", function (e) {
-      if (e.key !== "Enter" || e.shiftKey) return;
-      if (k < inputs.length - 1) {
+      if (quiz.graded || e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return;
+      if (e.key === "Enter") {
+        if (k < inputs.length - 1) { e.preventDefault(); focusAt(k + 1); }
+      } else if (e.key === "ArrowDown") {
         e.preventDefault();
-        inputs[k + 1].focus();
-        inputs[k + 1].select();
+        if (k < inputs.length - 1) focusAt(k + 1); else $("checkBtn").focus();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        focusAt(k - 1);
       }
     });
   });
   $("verdict").hidden = true;
-  $("spkFull").hidden = true;
+  hide($("spkFull"));
   $("checkBtn").textContent = "Tekshirish";
   $("dontknowBtn").hidden = false;
 
   var spk = $("spkPrompt");
   if (TTS && main !== "uz") {
-    spk.hidden = false;
+    unhide(spk);
     spk.onclick = function () { sayText(v[main], spk); };
     if (store.cfg.autoQ) sayText(v[main], spk);
   } else {
-    spk.hidden = true;
+    hide(spk);
   }
 
   var first = box.querySelector("input");
@@ -826,6 +843,26 @@ $("qform").addEventListener("submit", function (e) {
 });
 $("dontknowBtn").addEventListener("click", function () { if (quiz && !quiz.graded) grade(true); });
 $("quitBtn").addEventListener("click", function () { finish(true); });
+
+/* Fokus tugmada boʻlsa ham ↑ ↓ maydonlarga qaytaradi;
+   javob tekshirilgandan keyin ↓ (yoki →) keyingi soʻzga oʻtkazadi */
+document.addEventListener("keydown", function (e) {
+  if (!quiz || $("v-quiz").hidden || e.ctrlKey || e.altKey || e.metaKey) return;
+  var k = e.key;
+  if (k !== "ArrowDown" && k !== "ArrowUp" && k !== "ArrowRight") return;
+  if (quiz.graded) {
+    if (k !== "ArrowUp") { e.preventDefault(); next(); }
+    return;
+  }
+  var tag = ((e.target && e.target.tagName) || "").toLowerCase();
+  if (tag === "input" || tag === "select" || tag === "textarea") return;
+  var ins = $("qfields").querySelectorAll("input");
+  if (!ins.length) return;
+  e.preventDefault();
+  var target = k === "ArrowUp" ? ins[ins.length - 1] : ins[0];
+  target.focus();
+  target.select();
+});
 
 function grade(giveUp) {
   var q = quiz, v = q.items[q.i], r = rec(v);
@@ -867,7 +904,7 @@ function grade(giveUp) {
 
   if (TTS) {
     var full = $("spkFull");
-    full.hidden = false;
+    unhide(full);
     full.innerHTML = SPKSVG + '<span class="forms"><span>' + v.v1 + '</span><span class="sep"> · </span><span>' +
       v.v2 + '</span><span class="sep"> · </span><span>' + v.v3 + "</span></span>";
     var marks = Array.prototype.slice.call(full.querySelectorAll(".forms > span:not(.sep)"));
