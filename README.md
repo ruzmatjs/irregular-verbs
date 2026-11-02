@@ -13,6 +13,10 @@ Ingliz tilidagi 100 ta notoʻgʻri feʻlni yodlash uchun mashq sayti. Oʻzbek ti
 - Har bir soʻz uchun 0–5 level: toʻgʻri javob +1, xato −1
 - Xato soʻzlar alohida roʻyxatga tushadi va ularni alohida mashq qilish mumkin
 - Talaffuz: har bir feʻlni eshitish, ovoz va tezlikni tanlash
+- Har bir shakl tagida oʻqilishi oʻzbek harflarida (`be — bi`, `was/were — uoz/uyor`)
+- Mashq paytida oldingi soʻzga qaytish, soʻzga yulduzcha qoʻyish va «Yodladim» bilan darhol level 5 qilish
+- Faqat xatolar, hali koʻrilmaganlar, yodlanmaganlar yoki yulduzchalilar boʻyicha mashq
+- Hammasini klaviatura bilan boshqarish mumkin
 - Natijalar brauzer xotirasida saqlanadi
 
 Tutuq belgisini qanday yozsangiz ham qabul qiladi (`boʻlmoq`, `bo'lmoq`, `bolmoq`), `was/were` kabi ikki variantning bittasi ham toʻgʻri hisoblanadi.

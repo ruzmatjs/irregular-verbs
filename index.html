@@ -114,6 +114,10 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid 
   border:1px solid var(--ok);border-radius:999px;padding:2px 9px;cursor:pointer;white-space:nowrap}
 .mini-learn[aria-pressed="true"]{background:var(--ok);color:var(--surface)}
 tr.learned td.v{color:var(--ok)}
+td.v .rd{display:block;font-family:var(--body);font-size:.74rem;color:var(--muted);font-style:italic;margin-top:1px}
+.prompt .reading{font-size:1rem;color:var(--muted);font-style:italic;margin:0}
+.field .fix .rd,.res-list .rd{color:var(--muted);font-family:var(--body);font-style:italic;font-weight:400}
+.spkall .rd{display:block;font-family:var(--body);font-style:italic;font-size:.78rem;color:var(--muted);margin-top:1px}
 .review-note{font-size:.8rem;color:var(--muted);margin:0 0 12px;text-align:center}
 .spkall{display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:.9rem;font-family:var(--mono);
   color:var(--fg);border:1px solid var(--line);background:var(--surface-2);border-radius:999px;
@@ -308,6 +312,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
         <button class="spk" type="button" id="spkPrompt" title="Talaffuzni eshitish" aria-label="Talaffuzni eshitish" hidden></button>
         <button class="star" type="button" id="starBtn" aria-pressed="false"></button>
       </div>
+      <p class="reading" id="pread"></p>
       <p class="extra" id="pextra"></p>
     </div>
     <p class="review-note" id="reviewNote" hidden>Bu soʻzga javob bergansiz — koʻrib chiqish rejimi, natija oʻzgarmaydi.</p>
@@ -345,7 +350,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
 
 <section id="v-list" hidden>
   <h2>100 ta notoʻgʻri feʻl</h2>
-  <p class="lede">Har bir soʻzning level’i — uni qanchalik yodlaganingiz. 5 ta toʻliq belgi = yodlangan. Chap chetida qizil chiziq boʻlsa, soʻz xatolar roʻyxatida.</p>
+  <p class="lede">Har bir soʻzning level’i — uni qanchalik yodlaganingiz. 5 ta toʻliq belgi = yodlangan. Chap chetida qizil chiziq boʻlsa, soʻz xatolar roʻyxatida. Har bir shakl tagida oʻqilishi yozilgan (taxminiy, oʻzbek harflarida; <b>θ</b> — til uchini tishlar orasiga qoʻyib aytiladigan «s»).</p>
   <div class="toolbar">
     <div class="col"><input type="text" id="search" placeholder="Qidirish: feʻl yoki tarjima"></div>
     <div class="col" style="flex:0 1 200px">
@@ -502,10 +507,118 @@ var RAW = [
 "beat|beat|beaten|urmoq, magʻlub etmoq"
 ];
 
+/* Oʻqilishi — oʻzbek harflarida taxminiy yozuv (V1|V2|V3).
+   θ — til uchini tishlar orasiga qoʻyib aytiladigan «s» */
+var RD = [
+"bi|uoz/uyor|bin",
+"bikam|bikeym|bikam",
+"bigin|bigen|bigan",
+"breyk|brouk|broukn",
+"bring|bro't|bro't",
+"bild|bilt|bilt",
+"bay|bo't|bo't",
+"kech|ko't|ko't",
+"chuz|chouz|chouzn",
+"kam|keym|kam",
+"kost|kost|kost",
+"kat|kat|kat",
+"du|did|dan",
+"dro'|dru|dro'n",
+"drink|drenk|drank",
+"drayv|drouv|drivn",
+"it|eyt|itn",
+"fo'l|fel|fo'ln",
+"fil|felt|felt",
+"faynd|faund|faund",
+"flay|flu|floun",
+"foget|fogot|fogotn",
+"get|got|got/gotn",
+"giv|geyv|givn",
+"gou|uent|gon",
+"grou|gru|groun",
+"hev|hed|hed",
+"hir|hyord|hyord",
+"hayd|hid|hidn",
+"hit|hit|hit",
+"hould|held|held",
+"hyort|hyort|hyort",
+"kip|kept|kept",
+"nou|nyu|noun",
+"liv|left|left",
+"lend|lent|lent",
+"let|let|let",
+"luz|lost|lost",
+"meyk|meyd|meyd",
+"min|ment|ment",
+"mit|met|met",
+"pey|peyd|peyd",
+"put|put|put",
+"rid|red|red",
+"rayd|roud|ridn",
+"ring|reng|rang",
+"rayz|rouz|rizn",
+"ran|ren|ran",
+"sey|sed|sed",
+"si|so'|sin",
+"sel|sould|sould",
+"send|sent|sent",
+"set|set|set",
+"sheyk|shuk|sheykn",
+"shayn|shon|shon",
+"shut|shot|shot",
+"shou|shoud|shoun",
+"shat|shat|shat",
+"sing|seng|sang",
+"sit|set|set",
+"slip|slept|slept",
+"spik|spouk|spoukn",
+"spend|spent|spent",
+"stend|stud|stud",
+"stil|stoul|stouln",
+"suim|suem|suam",
+"teyk|tuk|teykn",
+"tich|to't|to't",
+"tel|tould|tould",
+"θink|θo't|θo't",
+"θrou|θru|θroun",
+"andestend|andestud|andestud",
+"ueyk|uouk|uoukn",
+"uer|uo'|uo'n",
+"uin|uan|uan",
+"rayt|rout|ritn",
+"bayt|bit|bitn",
+"blou|blu|bloun",
+"fid|fed|fed",
+"fayt|fo't|fo't",
+"friz|frouz|frouzn",
+"heng|hang|hang",
+"lid|led|led",
+"lyorn|lyornt/lyornd|lyornt/lyornd",
+"lay|ley|leyn",
+"layt|lit|lit",
+"misteyk|mistuk|misteykn",
+"kuit|kuit|kuit",
+"sik|so't|so't",
+"smel|smelt/smeld|smelt/smeld",
+"spel|spelt/speld|spelt/speld",
+"stik|stak|stak",
+"suip|suept|suept",
+"ter|to'|to'n",
+"spred|spred|spred",
+"dil|delt|delt",
+"dig|dag|dag",
+"fogiv|fogeyv|fogivn",
+"ley|leyd|leyd",
+"bit|bit|bitn"
+];
+
 var VERBS = RAW.map(function (line, i) {
-  var p = line.split("|");
-  return { n: i + 1, v1: p[0], v2: p[1], v3: p[2], uz: p[3] };
+  var p = line.split("|"), r = (RD[i] || "||").split("|");
+  return { n: i + 1, v1: p[0], v2: p[1], v3: p[2], uz: p[3], r1: r[0], r2: r[1], r3: r[2] };
 });
+function rdOf(v, f) { return f === "uz" ? "" : v["r" + f.slice(1)] || ""; }
+/* Jadval katagi: feʻl va tagida oʻqilishi */
+function vcell(v, f) { return v[f] + '<span class="rd">' + rdOf(v, f) + "</span>"; }
 
 var MAXLVL = 5;
 var LVLNAME = ["Yangi", "Tanish", "Oʻrganilyapti", "Yaxshi", "Mustahkam", "Yodlangan"];
@@ -849,8 +962,10 @@ function renderQ() {
   var pw = $("pword");
   pw.textContent = v[main];
   pw.className = "word" + (main === "uz" ? " uz" : "");
+  $("pread").textContent = main === "uz" ? "" : "[" + rdOf(v, main) + "]";
+  $("pread").hidden = main === "uz";
   var extra = known.filter(function (f) { return f !== main; }).map(function (f) {
-    return f === "uz" ? v.uz : f.toUpperCase() + ": " + v[f];
+    return f === "uz" ? v.uz : f.toUpperCase() + ": " + v[f] + " [" + rdOf(v, f) + "]";
   });
   $("pextra").textContent = extra.join("   ·   ");
   $("pextra").hidden = extra.length === 0;
@@ -1134,7 +1249,8 @@ function paintGraded(h, v, fresh) {
     d.classList.add(ok ? "good" : "wrong");
     var fix = document.createElement("p");
     fix.className = "fix" + (ok ? "" : " no");
-    fix.innerHTML = ok ? "<b>✓ toʻgʻri</b>" : "<b>✗</b> toʻgʻrisi: <b>" + v[f] + "</b>";
+    var rdx = f === "uz" ? "" : ' <span class="rd">[' + rdOf(v, f) + "]</span>";
+    fix.innerHTML = (ok ? "<b>✓ toʻgʻri</b>" : "<b>✗</b> toʻgʻrisi: <b>" + v[f] + "</b>") + rdx;
     d.appendChild(fix);
   });
 
@@ -1143,8 +1259,9 @@ function paintGraded(h, v, fresh) {
   if (TTS) {
     var full = $("spkFull");
     unhide(full);
-    full.innerHTML = SPKSVG + '<span class="forms"><span>' + v.v1 + '</span><span class="sep"> · </span><span>' +
-      v.v2 + '</span><span class="sep"> · </span><span>' + v.v3 + "</span></span>";
+    full.innerHTML = SPKSVG + '<span><span class="forms"><span>' + v.v1 + '</span><span class="sep"> · </span><span>' +
+      v.v2 + '</span><span class="sep"> · </span><span>' + v.v3 + '</span></span><span class="rd">' +
+      v.r1 + " · " + v.r2 + " · " + v.r3 + "</span></span>";
     var marks = Array.prototype.slice.call(full.querySelectorAll(".forms > span:not(.sep)"));
     full.onclick = function () { sayVerb(v, full, marks); };
     if (fresh && store.cfg.autoA) sayVerb(v, full, marks);
@@ -1181,7 +1298,8 @@ function finish(early) {
     q.wrongList.forEach(function (w) {
       var li = document.createElement("li");
       var mineTxt = cfg.fields.map(function (f) { return w.mine[f] ? w.mine[f] : "—"; }).join(" / ");
-      li.innerHTML = '<span class="w">' + w.v.v1 + " — " + w.v.v2 + " — " + w.v.v3 + '</span> <span class="c">· ' +
+      li.innerHTML = '<span class="w">' + w.v.v1 + " — " + w.v.v2 + " — " + w.v.v3 + '</span> <span class="rd">[' +
+        w.v.r1 + " — " + w.v.r2 + " — " + w.v.r3 + ']</span> <span class="c">· ' +
         w.v.uz + "</span>" + (TTS ? ' <button class="spk mini" type="button" data-n="' + w.v.n +
           '" title="Talaffuzni eshitish" aria-label="' + w.v.v1 + ' talaffuzi">' + SPKSVG + "</button>" : "") + " " + starBtn(w.v) +
         "<br><span class=\"mine\">siz: " + mineTxt + "</span> " + pips(rec(w.v).lvl);
@@ -1231,7 +1349,7 @@ function renderList() {
   var html = rows.map(function (v) {
     var p = rec(v);
     return '<tr class="' + (p.mis ? "hasmistake" : "") + (p.lvl >= MAXLVL ? " learned" : "") + '"><td class="num">' + v.n + '</td><td class="spkcell">' + starBtn(v) + "</td>" + spkCell(v) +
-      '<td class="v">' + v.v1 + '</td><td class="v">' + v.v2 + '</td><td class="v">' + v.v3 +
+      '<td class="v">' + vcell(v, "v1") + '</td><td class="v">' + vcell(v, "v2") + '</td><td class="v">' + vcell(v, "v3") +
       '</td><td class="uz">' + v.uz + '</td><td>' + pips(p.lvl) + '</td><td class="num">' + p.ok + " / " + p.bad + "</td><td>" + learnBtn(v) + "</td></tr>";
   }).join("");
   $("listBody").innerHTML = html ||
@@ -1268,8 +1386,8 @@ function renderMistakes() {
     '<th>V1</th><th>V2</th><th>V3</th><th>Tarjima</th><th>Level</th><th>Xato</th></tr></thead><tbody>' +
     list.map(function (v) {
       var p = rec(v);
-      return '<tr><td class="num">' + v.n + '</td>' + spkCell(v) + '<td class="v">' + v.v1 + '</td><td class="v">' + v.v2 +
-        '</td><td class="v">' + v.v3 + '</td><td class="uz">' + v.uz + '</td><td>' + pips(p.lvl) +
+      return '<tr><td class="num">' + v.n + '</td>' + spkCell(v) + '<td class="v">' + vcell(v, "v1") + '</td><td class="v">' + vcell(v, "v2") +
+        '</td><td class="v">' + vcell(v, "v3") + '</td><td class="uz">' + v.uz + '</td><td>' + pips(p.lvl) +
         '</td><td class="num">' + p.bad + "</td></tr>";
     }).join("") + "</tbody></table></div>";
   spkDelegate(box.querySelector("tbody"));
@@ -1302,7 +1420,7 @@ function renderStarred() {
     '<th>V1</th><th>V2</th><th>V3</th><th>Tarjima</th><th>Level</th></tr></thead><tbody>' +
     list.map(function (v) {
       return '<tr><td class="num">' + v.n + '</td><td class="spkcell">' + starBtn(v) + "</td>" + spkCell(v) +
-        '<td class="v">' + v.v1 + '</td><td class="v">' + v.v2 + '</td><td class="v">' + v.v3 +
+        '<td class="v">' + vcell(v, "v1") + '</td><td class="v">' + vcell(v, "v2") + '</td><td class="v">' + vcell(v, "v3") +
         '</td><td class="uz">' + v.uz + '</td><td>' + pips(rec(v).lvl) + "</td></tr>";
     }).join("") + "</tbody></table></div>";
   var tb = box.querySelector("tbody");
