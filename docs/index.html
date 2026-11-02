@@ -3,6 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f4f4a">
+<meta name="description" content="100 ta ingliz tilidagi notoʻgʻri feʻlni yodlash uchun mashq sayti. Oʻzbek tilida.">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Irregular Verbs Trainer">
+<meta property="og:description" content="100 ta notoʻgʻri feʻlni yodlash uchun mashq sayti — oʻzbek tilida.">
+<meta property="og:url" content="https://ruzmatjs.github.io/irregular-verbs/">
+<meta property="og:image" content="https://ruzmatjs.github.io/irregular-verbs/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
   body{margin:0;font:14px system-ui,sans-serif}
@@ -54,6 +68,7 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;backgroun
   padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-block:12px 0}
 .brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand .mark{width:28px;height:28px;flex:0 0 auto;align-self:center}
 .brand h1{font-family:var(--display);font-size:1.25rem;font-weight:700;margin:0;letter-spacing:-.01em}
 .brand .sub{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
 nav.tabs{display:flex;gap:2px;margin-top:10px;overflow-x:auto}
@@ -168,6 +183,16 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
 <header class="top">
   <div class="top-in">
     <div class="brand">
+      <svg class="mark" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+        <rect width="256" height="256" rx="56" fill="var(--accent)"/>
+        <g fill="none" stroke="var(--surface)" stroke-width="11" stroke-linecap="round">
+          <path d="M62 156 A33 64 0 0 1 128 156"/>
+          <path d="M128 156 A33 38 0 0 1 194 156"/>
+        </g>
+        <circle cx="62" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="128" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="194" cy="156" r="14" fill="var(--gold)"/>
+      </svg>
       <h1>Irregular Verbs Trainer</h1>
       <span class="sub" id="brandStat"></span>
     </div>

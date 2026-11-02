@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Irregular Verbs Trainer">
+  <title>Irregular Verbs Trainer</title>
+  <rect width="256" height="256" rx="56" fill="#1f4f4a"/>
+  <g fill="none" stroke="#f6f3ec" stroke-width="11" stroke-linecap="round">
+    <path d="M62 156 A33 64 0 0 1 128 156"/>
+    <path d="M128 156 A33 38 0 0 1 194 156"/>
+  </g>
+  <circle cx="62" cy="156" r="14" fill="#f6f3ec"/>
+  <circle cx="128" cy="156" r="14" fill="#f6f3ec"/>
+  <circle cx="194" cy="156" r="14" fill="#e0a94f"/>
+</svg>

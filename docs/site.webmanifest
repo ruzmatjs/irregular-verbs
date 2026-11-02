@@ -1,0 +1,16 @@
+{
+  "name": "Irregular Verbs Trainer",
+  "short_name": "Irregular Verbs",
+  "description": "100 ta notoʻgʻri feʻlni yodlash uchun mashq sayti",
+  "lang": "uz",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f3ec",
+  "theme_color": "#1f4f4a",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "logo.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
