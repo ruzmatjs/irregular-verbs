@@ -108,6 +108,12 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid 
 .star[aria-pressed="true"] svg path{fill:currentColor}
 .star.mini{width:26px;height:26px}
 .star.mini svg{width:14px;height:14px}
+.btn.learn{background:none;color:var(--ok);border-color:var(--ok)}
+.btn.learn:disabled{opacity:.55;cursor:default}
+.mini-learn{appearance:none;font:inherit;font-size:.78rem;font-weight:600;color:var(--ok);background:none;
+  border:1px solid var(--ok);border-radius:999px;padding:2px 9px;cursor:pointer;white-space:nowrap}
+.mini-learn:disabled{border-color:transparent;cursor:default}
+tr.learned td.v{color:var(--ok)}
 .review-note{font-size:.8rem;color:var(--muted);margin:0 0 12px;text-align:center}
 .spkall{display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:.9rem;font-family:var(--mono);
   color:var(--fg);border:1px solid var(--line);background:var(--surface-2);border-radius:999px;
@@ -313,6 +319,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
         <button class="btn ghost" type="button" id="prevBtn" title="Oldingi soʻz (birinchi maydonda ↑)">← Oldingi</button>
         <button class="btn" type="submit" id="checkBtn">Tekshirish</button>
         <button class="btn ghost" type="button" id="dontknowBtn">Bilmadim</button>
+        <button class="btn learn" type="button" id="learnBtn" title="Bu soʻzni yodladim — level 5 boʻladi">✓ Yodladim</button>
         <span class="spacer"></span>
         <button class="btn ghost" type="button" id="quitBtn">Toʻxtatish</button>
       </div>
@@ -352,7 +359,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
   </div>
   <div class="tablewrap">
     <table>
-      <thead><tr><th>#</th><th class="spkcell" title="Belgilash">★</th><th class="spkcell" id="thSpk">Ovoz</th><th>V1</th><th>V2</th><th>V3</th><th>Tarjima</th><th>Level</th><th>✓ / ✗</th></tr></thead>
+      <thead><tr><th>#</th><th class="spkcell" title="Belgilash">★</th><th class="spkcell" id="thSpk">Ovoz</th><th>V1</th><th>V2</th><th>V3</th><th>Tarjima</th><th>Level</th><th>✓ / ✗</th><th></th></tr></thead>
       <tbody id="listBody"></tbody>
     </table>
   </div>
@@ -829,7 +836,7 @@ function renderQ() {
   q.graded = false;
   $("qpos").textContent = (q.i + 1) + " / " + q.items.length + " · #" + v.n + " · level " + r.lvl;
   $("qscore").textContent = "✓ " + q.ok + "   ✗ " + q.bad;
-  $("qbar").style.width = ((q.ok + q.bad) / q.items.length * 100) + "%";
+  $("qbar").style.width = (q.hist.filter(Boolean).length / q.items.length * 100) + "%";
   $("prevBtn").hidden = q.i === 0;
   $("reviewNote").hidden = !past;
   paintStar($("starBtn"), rec(v).star);
@@ -913,6 +920,7 @@ function renderQ() {
   hide($("spkFull"));
   $("checkBtn").textContent = "Tekshirish";
   $("dontknowBtn").hidden = false;
+  paintLearnBtn(v);
 
   var spk = $("spkPrompt");
   if (TTS && main !== "uz") {
@@ -954,6 +962,7 @@ $("qform").addEventListener("submit", function (e) {
 $("dontknowBtn").addEventListener("click", function () { if (quiz && !quiz.graded) grade(true); });
 $("quitBtn").addEventListener("click", function () { finish(true); });
 $("prevBtn").addEventListener("click", prev);
+$("learnBtn").addEventListener("click", markLearned);
 $("starBtn").innerHTML = STARSVG;
 $("starBtn").addEventListener("click", function () {
   if (!quiz) return;
@@ -1009,9 +1018,64 @@ function grade(giveUp) {
   save();
   q.hist[q.i] = { mine: mine, oks: oks, allOk: allOk, giveUp: giveUp, before: before, after: r.lvl, mis: r.mis };
   delete q.draft[q.i];
-  $("qbar").style.width = ((q.ok + q.bad) / q.items.length * 100) + "%";
+  $("qbar").style.width = (q.hist.filter(Boolean).length / q.items.length * 100) + "%";
   paintGraded(q.hist[q.i], v, true);
+  paintLearnBtn(v);
   updateBrand();
+}
+
+function paintVerdict(h) {
+  var vd = $("verdict");
+  vd.hidden = false;
+  vd.className = "verdict " + (h.allOk || h.learned ? "good" : "bad");
+  var head = h.learnedOnly ? "Yodlangan deb belgilandi." :
+    (h.allOk ? "Toʻgʻri." : (h.giveUp ? "Toʻgʻri javoblar yuqorida." : "Xato — soʻz xatolar roʻyxatiga qoʻshildi."));
+  if (h.learned && !h.learnedOnly) head = (h.allOk ? "Toʻgʻri" : "Xato edi") + " — keyin yodlangan deb belgilandi.";
+  vd.innerHTML = head + '<span class="lvl">Level ' + h.before + " → " + h.after + " · " + LVLNAME[h.after] +
+    (h.mis ? " · xatolar roʻyxatida" : "") + "</span>";
+}
+function paintLearnBtn(v) {
+  var b = $("learnBtn"), done = rec(v).lvl >= MAXLVL;
+  b.disabled = done;
+  b.textContent = done ? "✓ Yodlangan" : "✓ Yodladim";
+}
+
+/* "Yodladim": soʻz darhol level 5 ga chiqadi va xatolar roʻyxatidan chiqadi.
+   Javob berilmagan boʻlsa — toʻgʻri javoblar yashil koʻrsatiladi (hisobga qoʻshilmaydi) */
+function setLearned(v) {
+  var r = rec(v);
+  var before = r.lvl;
+  r.lvl = MAXLVL;
+  r.mis = false;
+  save();
+  updateBrand();
+  return before;
+}
+function markLearned() {
+  var q = quiz;
+  if (!q) return;
+  var v = q.items[q.i];
+  if (rec(v).lvl >= MAXLVL) return;
+  var before = setLearned(v);
+  var h = q.hist[q.i];
+  if (!h) {
+    var mine = {}, oks = {};
+    cfg.fields.forEach(function (f) { mine[f] = v[f]; oks[f] = true; });
+    h = q.hist[q.i] = { mine: mine, oks: oks, allOk: true, giveUp: false, before: before, after: MAXLVL,
+      mis: false, learned: true, learnedOnly: true };
+    delete q.draft[q.i];
+    $("qbar").style.width = (q.hist.filter(Boolean).length / q.items.length * 100) + "%";
+    $("qfields").querySelectorAll(".fix").forEach(function (x) { x.remove(); });
+    paintGraded(h, v, true);
+  } else {
+    h.after = MAXLVL;
+    h.mis = false;
+    h.learned = true;
+    paintVerdict(h);
+  }
+  $("qpos").textContent = (q.i + 1) + " / " + q.items.length + " · #" + v.n + " · level " + MAXLVL;
+  paintLearnBtn(v);
+  $("checkBtn").focus();
 }
 
 /* Tekshirilgan javobni chizadi: yangi javobda ham, orqaga qaytib koʻrganda ham */
@@ -1030,12 +1094,7 @@ function paintGraded(h, v, fresh) {
     d.appendChild(fix);
   });
 
-  var vd = $("verdict");
-  vd.hidden = false;
-  vd.className = "verdict " + (h.allOk ? "good" : "bad");
-  vd.innerHTML = (h.allOk ? "Toʻgʻri." : (h.giveUp ? "Toʻgʻri javoblar yuqorida." : "Xato — soʻz xatolar roʻyxatiga qoʻshildi.")) +
-    '<span class="lvl">Level ' + h.before + " → " + h.after + " · " + LVLNAME[h.after] +
-    (h.mis ? " · xatolar roʻyxatida" : "") + "</span>";
+  paintVerdict(h);
 
   if (TTS) {
     var full = $("spkFull");
@@ -1127,13 +1186,24 @@ function renderList() {
 
   var html = rows.map(function (v) {
     var p = rec(v);
-    return '<tr class="' + (p.mis ? "hasmistake" : "") + '"><td class="num">' + v.n + '</td><td class="spkcell">' + starBtn(v) + "</td>" + spkCell(v) +
+    return '<tr class="' + (p.mis ? "hasmistake" : "") + (p.lvl >= MAXLVL ? " learned" : "") + '"><td class="num">' + v.n + '</td><td class="spkcell">' + starBtn(v) + "</td>" + spkCell(v) +
       '<td class="v">' + v.v1 + '</td><td class="v">' + v.v2 + '</td><td class="v">' + v.v3 +
-      '</td><td class="uz">' + v.uz + '</td><td>' + pips(p.lvl) + '</td><td class="num">' + p.ok + " / " + p.bad + "</td></tr>";
+      '</td><td class="uz">' + v.uz + '</td><td>' + pips(p.lvl) + '</td><td class="num">' + p.ok + " / " + p.bad + "</td><td>" + learnBtn(v) + "</td></tr>";
   }).join("");
   $("listBody").innerHTML = html ||
-    '<tr><td colspan="' + (TTS ? 9 : 8) + '" class="num">Hech narsa topilmadi.</td></tr>';
+    '<tr><td colspan="' + (TTS ? 10 : 9) + '" class="num">Hech narsa topilmadi.</td></tr>';
 }
+function learnBtn(v) {
+  var done = rec(v).lvl >= MAXLVL;
+  return '<button class="mini-learn" type="button" data-learn="' + v.n + '"' + (done ? " disabled" : "") +
+    ' title="Yodlangan deb belgilash — level 5">' + (done ? "✓ yodlangan" : "✓ Yodladim") + "</button>";
+}
+$("listBody").addEventListener("click", function (e) {
+  var b = e.target && e.target.closest ? e.target.closest("button[data-learn]") : null;
+  if (!b || b.disabled) return;
+  setLearned(VERBS[parseInt(b.getAttribute("data-learn"), 10) - 1]);
+  renderList();
+});
 $("search").addEventListener("input", renderList);
 $("sortBy").addEventListener("change", renderList);
 
