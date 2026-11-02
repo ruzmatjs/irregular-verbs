@@ -99,6 +99,16 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid 
 .spk.mini{width:26px;height:26px}
 .spk.mini svg{width:13px;height:13px}
 .spk.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.star{appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);padding:0;
+  width:36px;height:36px;border-radius:50%;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.star svg{width:19px;height:19px}
+.star svg path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.star:hover{border-color:var(--gold);color:var(--gold)}
+.star[aria-pressed="true"]{color:var(--gold);border-color:var(--gold)}
+.star[aria-pressed="true"] svg path{fill:currentColor}
+.star.mini{width:26px;height:26px}
+.star.mini svg{width:14px;height:14px}
+.review-note{font-size:.8rem;color:var(--muted);margin:0 0 12px;text-align:center}
 .spkall{display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:.9rem;font-family:var(--mono);
   color:var(--fg);border:1px solid var(--line);background:var(--surface-2);border-radius:999px;
   padding:7px 16px 7px 12px;cursor:pointer;margin-top:12px}
@@ -178,6 +188,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
       <button role="tab" aria-selected="true" data-view="train">Mashq</button>
       <button role="tab" aria-selected="false" data-view="list">Roʻyxat</button>
       <button role="tab" aria-selected="false" data-view="mistakes">Xatolar <span id="mcount"></span></button>
+      <button role="tab" aria-selected="false" data-view="starred">★ Belgilangan <span id="scount"></span></button>
       <button role="tab" aria-selected="false" data-view="stats">Natijalar</button>
     </nav>
   </div>
@@ -265,6 +276,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
         <label class="opt"><input type="radio" name="pool" id="poolAll" value="all" checked><span>Barcha 100 ta</span></label>
         <label class="opt"><input type="radio" name="pool" id="poolMis" value="mistakes"><span>Faqat xato soʻzlar</span></label>
         <label class="opt"><input type="radio" name="pool" id="poolUnl" value="unlearned"><span>Yodlanmaganlar</span></label>
+        <label class="opt"><input type="radio" name="pool" id="poolStar" value="starred"><span>★ Belgilanganlar</span></label>
       </div>
     </fieldset>
 
@@ -287,20 +299,23 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
       <div class="wordrow">
         <p class="word" id="pword"></p>
         <button class="spk" type="button" id="spkPrompt" title="Talaffuzni eshitish" aria-label="Talaffuzni eshitish" hidden></button>
+        <button class="star" type="button" id="starBtn" aria-pressed="false"></button>
       </div>
       <p class="extra" id="pextra"></p>
     </div>
+    <p class="review-note" id="reviewNote" hidden>Bu soʻzga javob bergansiz — koʻrib chiqish rejimi, natija oʻzgarmaydi.</p>
     <form id="qform" autocomplete="off">
       <div class="fields" id="qfields"></div>
       <div class="verdict" id="verdict" hidden></div>
       <button class="spkall" type="button" id="spkFull" hidden></button>
       <div class="actions">
+        <button class="btn ghost" type="button" id="prevBtn" title="Oldingi soʻz">← Oldingi</button>
         <button class="btn" type="submit" id="checkBtn">Tekshirish</button>
         <button class="btn ghost" type="button" id="dontknowBtn">Bilmadim</button>
         <span class="spacer"></span>
         <button class="btn ghost" type="button" id="quitBtn">Toʻxtatish</button>
       </div>
-      <p class="hint kbd">Enter, ↓ yoki feʻlda Space — keyingi maydon · ↑ — oldingisi · oxirgi maydonda Enter — tekshirish</p>
+      <p class="hint kbd">Enter, ↓ yoki feʻlda Space — keyingi maydon · ↑ — oldingisi · oxirgi maydonda Enter — tekshirish · ← (boʻsh maydonda) — oldingi soʻz · * — yulduzcha</p>
     </form>
   </div>
 </section>
@@ -336,7 +351,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
   </div>
   <div class="tablewrap">
     <table>
-      <thead><tr><th>#</th><th class="spkcell" id="thSpk">Ovoz</th><th>V1</th><th>V2</th><th>V3</th><th>Tarjima</th><th>Level</th><th>✓ / ✗</th></tr></thead>
+      <thead><tr><th>#</th><th class="spkcell" title="Belgilash">★</th><th class="spkcell" id="thSpk">Ovoz</th><th>V1</th><th>V2</th><th>V3</th><th>Tarjima</th><th>Level</th><th>✓ / ✗</th></tr></thead>
       <tbody id="listBody"></tbody>
     </table>
   </div>
@@ -346,6 +361,12 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
   <h2>Xato soʻzlar roʻyxati</h2>
   <p class="lede">Bir marta xato qilgan soʻz shu yerda qoladi. Level 5 ga chiqqanda roʻyxatdan avtomatik chiqadi.</p>
   <div id="misBody"></div>
+</section>
+
+<section id="v-starred" hidden>
+  <h2>Yulduzcha qoʻyilgan soʻzlar</h2>
+  <p class="lede">Yaxshilab oʻrganish kerak deb belgilagan soʻzlaringiz. Yulduzchani mashq paytida, roʻyxatda yoki shu yerda qoʻyib-olib tashlashingiz mumkin.</p>
+  <div id="starBody"></div>
 </section>
 
 <section id="v-stats" hidden>
@@ -626,6 +647,36 @@ function spkDelegate(host) {
   });
 }
 
+/* ---------- yulduzcha ---------- */
+var STARSVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+  '<path d="M12 3.2l2.7 5.5 6 .9-4.35 4.25 1.03 6L12 17l-5.38 2.85 1.03-6L3.3 9.6l6-.9z"/></svg>';
+function paintStar(btn, on) {
+  btn.setAttribute("aria-pressed", String(!!on));
+  var t = on ? "Yulduzchani olib tashlash" : "Yulduzcha qoʻyish — yaxshilab oʻrganish kerak";
+  btn.title = t;
+  btn.setAttribute("aria-label", t);
+}
+function toggleStar(v) {
+  var r = rec(v);
+  r.star = !r.star;
+  save();
+  updateBrand();
+  return r.star;
+}
+function starBtn(v) {
+  var on = !!rec(v).star;
+  return '<button class="star mini" type="button" data-star="' + v.n + '" aria-pressed="' + on + '" title="' +
+    (on ? "Yulduzchani olib tashlash" : "Yulduzcha qoʻyish") + '" aria-label="' + v.v1 + ' — yulduzcha">' + STARSVG + "</button>";
+}
+function starDelegate(host) {
+  host.addEventListener("click", function (e) {
+    var b = e.target && e.target.closest ? e.target.closest("button[data-star]") : null;
+    if (!b) return;
+    var v = VERBS[parseInt(b.getAttribute("data-star"), 10) - 1];
+    if (v) paintStar(b, toggleStar(v));
+  });
+}
+
 /* ---------- javobni tekshirish ---------- */
 function norm(s) {
   return (s || "").toLowerCase()
@@ -664,7 +715,7 @@ function check(field, user, v) {
 
 /* ---------- koʻrinishlar ---------- */
 function $(id) { return document.getElementById(id); }
-var VIEWS = ["setup", "quiz", "result", "list", "mistakes", "stats"];
+var VIEWS = ["setup", "quiz", "result", "list", "mistakes", "starred", "stats"];
 function show(name) {
   VIEWS.forEach(function (v) { $("v-" + v).hidden = v !== name; });
   window.scrollTo(0, 0);
@@ -675,6 +726,7 @@ function setTab(t) {
   if (t === "train") show(quiz ? "quiz" : "setup");
   if (t === "list") { renderList(); show("list"); }
   if (t === "mistakes") { renderMistakes(); show("mistakes"); }
+  if (t === "starred") { renderStarred(); show("starred"); }
   if (t === "stats") { renderStats(); show("stats"); }
 }
 Array.prototype.forEach.call(document.querySelectorAll("nav.tabs button"), function (b) {
@@ -718,6 +770,7 @@ Array.prototype.forEach.call(document.querySelectorAll("input[name=fld]"), funct
 function pickPool(kind) {
   if (kind === "mistakes") return VERBS.filter(function (v) { return rec(v).mis; });
   if (kind === "unlearned") return VERBS.filter(function (v) { return rec(v).lvl < MAXLVL; });
+  if (kind === "starred") return VERBS.filter(function (v) { return rec(v).star; });
   return VERBS.slice();
 }
 function shuffle(a) {
@@ -746,7 +799,7 @@ function buildQuiz(conf, listOverride) {
     }
   }
   var n = conf.count === "all" ? pool.length : Math.min(pool.length, conf.count);
-  return { items: pool.slice(0, n), i: 0, ok: 0, bad: 0, wrongList: [], graded: false };
+  return { items: pool.slice(0, n), i: 0, ok: 0, bad: 0, wrongList: [], graded: false, hist: [], draft: [] };
 }
 
 function startQuiz(conf, listOverride) {
@@ -767,10 +820,14 @@ function startQuiz(conf, listOverride) {
 
 function renderQ() {
   var q = quiz, v = q.items[q.i], r = rec(v);
+  var past = q.hist[q.i];
   q.graded = false;
   $("qpos").textContent = (q.i + 1) + " / " + q.items.length + " · #" + v.n + " · level " + r.lvl;
   $("qscore").textContent = "✓ " + q.ok + "   ✗ " + q.bad;
-  $("qbar").style.width = (q.i / q.items.length * 100) + "%";
+  $("qbar").style.width = ((q.ok + q.bad) / q.items.length * 100) + "%";
+  $("prevBtn").hidden = q.i === 0;
+  $("reviewNote").hidden = !past;
+  paintStar($("starBtn"), rec(v).star);
 
   var asked = cfg.fields;
   var known = ["v1", "v2", "v3", "uz"].filter(function (f) { return asked.indexOf(f) < 0; });
@@ -807,7 +864,17 @@ function renderQ() {
   }
   Array.prototype.forEach.call(inputs, function (inp, k) {
     inp.addEventListener("keydown", function (e) {
+      if (e.key === "*" && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        e.preventDefault();
+        $("starBtn").click();
+        return;
+      }
       if (quiz.graded || e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return;
+      if (e.key === "ArrowLeft" && inp.value === "" && quiz.i > 0) {
+        e.preventDefault();
+        prev();
+        return;
+      }
       if (e.key === "Enter") {
         if (k < inputs.length - 1) { e.preventDefault(); focusAt(k + 1); }
       } else if (e.key === "ArrowDown") {
@@ -825,8 +892,13 @@ function renderQ() {
     /* Telefon klaviaturalari keydown da boʻsh joyni bermasligi mumkin,
        shuning uchun kiritilgan matndan ham tekshiramiz */
     var isVerb = inp.id !== "in-uz";
-    if (isVerb) inp.addEventListener("input", function () {
-      if (quiz.graded || !/\s/.test(inp.value)) return;
+    inp.addEventListener("input", function () {
+      if (quiz.graded) return;
+      if (inp.value.indexOf("*") > -1) {
+        inp.value = inp.value.replace(/\*/g, "");
+        $("starBtn").click();
+      }
+      if (!isVerb || !/\s/.test(inp.value)) return;
       inp.value = inp.value.replace(/\s+/g, "");
       if (k < inputs.length - 1) focusAt(k + 1); else $("checkBtn").focus();
     });
@@ -840,13 +912,33 @@ function renderQ() {
   if (TTS && main !== "uz") {
     unhide(spk);
     spk.onclick = function () { sayText(v[main], spk); };
-    if (store.cfg.autoQ) sayText(v[main], spk);
+    if (store.cfg.autoQ && !past) sayText(v[main], spk);
   } else {
     hide(spk);
   }
 
+  if (past) { paintGraded(past, v, false); return; }
+  var dr = q.draft[q.i];
+  if (dr) Array.prototype.forEach.call(inputs, function (inp) {
+    var f = inp.id.slice(3);
+    if (dr[f]) inp.value = dr[f];
+  });
   var first = box.querySelector("input");
   if (first) first.focus();
+}
+
+/* Oldingi soʻzga qaytish: javob berilgan soʻz koʻrib chiqish rejimida ochiladi,
+   hali javob berilmagan joriy soʻzda yozilgan matn esa saqlanib turadi */
+function prev() {
+  var q = quiz;
+  if (!q || q.i === 0) return;
+  if (!q.hist[q.i]) {
+    var dr = {};
+    Array.prototype.forEach.call($("qfields").querySelectorAll("input"), function (inp) { dr[inp.id.slice(3)] = inp.value; });
+    q.draft[q.i] = dr;
+  }
+  q.i--;
+  renderQ();
 }
 
 $("qform").addEventListener("submit", function (e) {
@@ -855,19 +947,28 @@ $("qform").addEventListener("submit", function (e) {
 });
 $("dontknowBtn").addEventListener("click", function () { if (quiz && !quiz.graded) grade(true); });
 $("quitBtn").addEventListener("click", function () { finish(true); });
+$("prevBtn").addEventListener("click", prev);
+$("starBtn").innerHTML = STARSVG;
+$("starBtn").addEventListener("click", function () {
+  if (!quiz) return;
+  paintStar($("starBtn"), toggleStar(quiz.items[quiz.i]));
+});
 
 /* Fokus tugmada boʻlsa ham ↑ ↓ maydonlarga qaytaradi;
    javob tekshirilgandan keyin ↓ (yoki →) keyingi soʻzga oʻtkazadi */
 document.addEventListener("keydown", function (e) {
   if (!quiz || $("v-quiz").hidden || e.ctrlKey || e.altKey || e.metaKey) return;
   var k = e.key;
+  var tag = ((e.target && e.target.tagName) || "").toLowerCase();
+  var typing = (tag === "input" && !e.target.readOnly) || tag === "select" || tag === "textarea";
+  if (k === "*" && !typing) { e.preventDefault(); $("starBtn").click(); return; }
+  if (k === "ArrowLeft" && !typing) { e.preventDefault(); prev(); return; }
   if (k !== "ArrowDown" && k !== "ArrowUp" && k !== "ArrowRight") return;
   if (quiz.graded) {
     if (k !== "ArrowUp") { e.preventDefault(); next(); }
     return;
   }
-  var tag = ((e.target && e.target.tagName) || "").toLowerCase();
-  if (tag === "input" || tag === "select" || tag === "textarea") return;
+  if (typing) return;
   var ins = $("qfields").querySelectorAll("input");
   if (!ins.length) return;
   e.preventDefault();
@@ -879,19 +980,12 @@ document.addEventListener("keydown", function (e) {
 function grade(giveUp) {
   var q = quiz, v = q.items[q.i], r = rec(v);
   var allOk = true;
-  var mine = {};
+  var mine = {}, oks = {};
   cfg.fields.forEach(function (f) {
-    var d = $("qfields").querySelector('.field[data-f="' + f + '"]');
-    var inp = d.querySelector("input");
+    var inp = $("in-" + f);
     mine[f] = inp.value;
-    var ok = !giveUp && check(f, inp.value, v);
-    if (!ok) allOk = false;
-    d.classList.add(ok ? "good" : "wrong");
-    inp.readOnly = true;
-    var fix = document.createElement("p");
-    fix.className = "fix" + (ok ? "" : " no");
-    fix.innerHTML = ok ? "<b>✓ toʻgʻri</b>" : "<b>✗</b> toʻgʻrisi: <b>" + v[f] + "</b>";
-    d.appendChild(fix);
+    oks[f] = !giveUp && check(f, inp.value, v);
+    if (!oks[f]) allOk = false;
   });
 
   var before = r.lvl;
@@ -906,13 +1000,35 @@ function grade(giveUp) {
     q.wrongList.push({ v: v, mine: mine });
   }
   save();
+  q.hist[q.i] = { mine: mine, oks: oks, allOk: allOk, giveUp: giveUp, before: before, after: r.lvl, mis: r.mis };
+  delete q.draft[q.i];
+  $("qbar").style.width = ((q.ok + q.bad) / q.items.length * 100) + "%";
+  paintGraded(q.hist[q.i], v, true);
+  updateBrand();
+}
+
+/* Tekshirilgan javobni chizadi: yangi javobda ham, orqaga qaytib koʻrganda ham */
+function paintGraded(h, v, fresh) {
+  var q = quiz;
+  cfg.fields.forEach(function (f) {
+    var d = $("qfields").querySelector('.field[data-f="' + f + '"]');
+    var inp = d.querySelector("input");
+    var ok = h.oks[f];
+    inp.value = h.mine[f] || "";
+    inp.readOnly = true;
+    d.classList.add(ok ? "good" : "wrong");
+    var fix = document.createElement("p");
+    fix.className = "fix" + (ok ? "" : " no");
+    fix.innerHTML = ok ? "<b>✓ toʻgʻri</b>" : "<b>✗</b> toʻgʻrisi: <b>" + v[f] + "</b>";
+    d.appendChild(fix);
+  });
 
   var vd = $("verdict");
   vd.hidden = false;
-  vd.className = "verdict " + (allOk ? "good" : "bad");
-  vd.innerHTML = (allOk ? "Toʻgʻri." : (giveUp ? "Toʻgʻri javoblar yuqorida." : "Xato — soʻz xatolar roʻyxatiga qoʻshildi.")) +
-    '<span class="lvl">Level ' + before + " → " + r.lvl + " · " + LVLNAME[r.lvl] +
-    (r.mis ? " · xatolar roʻyxatida" : "") + "</span>";
+  vd.className = "verdict " + (h.allOk ? "good" : "bad");
+  vd.innerHTML = (h.allOk ? "Toʻgʻri." : (h.giveUp ? "Toʻgʻri javoblar yuqorida." : "Xato — soʻz xatolar roʻyxatiga qoʻshildi.")) +
+    '<span class="lvl">Level ' + h.before + " → " + h.after + " · " + LVLNAME[h.after] +
+    (h.mis ? " · xatolar roʻyxatida" : "") + "</span>";
 
   if (TTS) {
     var full = $("spkFull");
@@ -921,7 +1037,7 @@ function grade(giveUp) {
       v.v2 + '</span><span class="sep"> · </span><span>' + v.v3 + "</span></span>";
     var marks = Array.prototype.slice.call(full.querySelectorAll(".forms > span:not(.sep)"));
     full.onclick = function () { sayVerb(v, full, marks); };
-    if (store.cfg.autoA) sayVerb(v, full, marks);
+    if (fresh && store.cfg.autoA) sayVerb(v, full, marks);
   }
 
   q.graded = true;
@@ -929,7 +1045,6 @@ function grade(giveUp) {
   $("checkBtn").textContent = q.i + 1 < q.items.length ? "Keyingi soʻz" : "Yakunlash";
   $("dontknowBtn").hidden = true;
   $("checkBtn").focus();
-  updateBrand();
 }
 
 function next() {
@@ -958,7 +1073,7 @@ function finish(early) {
       var mineTxt = cfg.fields.map(function (f) { return w.mine[f] ? w.mine[f] : "—"; }).join(" / ");
       li.innerHTML = '<span class="w">' + w.v.v1 + " — " + w.v.v2 + " — " + w.v.v3 + '</span> <span class="c">· ' +
         w.v.uz + "</span>" + (TTS ? ' <button class="spk mini" type="button" data-n="' + w.v.n +
-          '" title="Talaffuzni eshitish" aria-label="' + w.v.v1 + ' talaffuzi">' + SPKSVG + "</button>" : "") +
+          '" title="Talaffuzni eshitish" aria-label="' + w.v.v1 + ' talaffuzi">' + SPKSVG + "</button>" : "") + " " + starBtn(w.v) +
         "<br><span class=\"mine\">siz: " + mineTxt + "</span> " + pips(rec(w.v).lvl);
       ul.appendChild(li);
     });
@@ -1005,12 +1120,12 @@ function renderList() {
 
   var html = rows.map(function (v) {
     var p = rec(v);
-    return '<tr class="' + (p.mis ? "hasmistake" : "") + '"><td class="num">' + v.n + '</td>' + spkCell(v) +
+    return '<tr class="' + (p.mis ? "hasmistake" : "") + '"><td class="num">' + v.n + '</td><td class="spkcell">' + starBtn(v) + "</td>" + spkCell(v) +
       '<td class="v">' + v.v1 + '</td><td class="v">' + v.v2 + '</td><td class="v">' + v.v3 +
       '</td><td class="uz">' + v.uz + '</td><td>' + pips(p.lvl) + '</td><td class="num">' + p.ok + " / " + p.bad + "</td></tr>";
   }).join("");
   $("listBody").innerHTML = html ||
-    '<tr><td colspan="' + (TTS ? 8 : 7) + '" class="num">Hech narsa topilmadi.</td></tr>';
+    '<tr><td colspan="' + (TTS ? 9 : 8) + '" class="num">Hech narsa topilmadi.</td></tr>';
 }
 $("search").addEventListener("input", renderList);
 $("sortBy").addEventListener("change", renderList);
@@ -1039,9 +1154,41 @@ function renderMistakes() {
     startQuiz({
       count: "all",
       order: "weak",
-      fields: cfg ? cfg.fields : ["v2", "v3", "uz"],
+      fields: curFields(),
       pool: "mistakes"
     }, shuffle(list.slice()));
+  });
+}
+function curFields() {
+  if (cfg) return cfg.fields;
+  var sel = fieldSel();
+  return sel.length && sel.length < 4 ? sel : ["v2", "v3", "uz"];
+}
+
+/* ---------- belgilanganlar ---------- */
+function renderStarred() {
+  var list = VERBS.filter(function (v) { return rec(v).star; });
+  var box = $("starBody");
+  if (!list.length) {
+    box.innerHTML = '<p class="empty">Hali yulduzcha qoʻyilmagan. Mashq paytida soʻz yonidagi ☆ ni bosing (yoki <b>*</b> tugmasini) — soʻz shu yerga tushadi.</p>';
+    return;
+  }
+  box.innerHTML = '<div class="actions" style="margin:0 0 14px"><button class="btn" id="starTrain">Shu ' +
+    list.length + ' ta soʻzni mashq qilish</button></div>' +
+    '<div class="tablewrap"><table><thead><tr><th>#</th><th class="spkcell">★</th>' + (TTS ? '<th class="spkcell">Ovoz</th>' : "") +
+    '<th>V1</th><th>V2</th><th>V3</th><th>Tarjima</th><th>Level</th></tr></thead><tbody>' +
+    list.map(function (v) {
+      return '<tr><td class="num">' + v.n + '</td><td class="spkcell">' + starBtn(v) + "</td>" + spkCell(v) +
+        '<td class="v">' + v.v1 + '</td><td class="v">' + v.v2 + '</td><td class="v">' + v.v3 +
+        '</td><td class="uz">' + v.uz + '</td><td>' + pips(rec(v).lvl) + "</td></tr>";
+    }).join("") + "</tbody></table></div>";
+  var tb = box.querySelector("tbody");
+  spkDelegate(tb);
+  starDelegate(tb);
+  $("starTrain").addEventListener("click", function () {
+    var now = VERBS.filter(function (v) { return rec(v).star; });
+    if (!now.length) { renderStarred(); return; }
+    startQuiz({ count: "all", order: "rnd", fields: curFields(), pool: "starred" }, shuffle(now));
   });
 }
 
@@ -1087,6 +1234,8 @@ function updateBrand() {
   var t = totals();
   $("brandStat").textContent = t.learned + " / " + VERBS.length + " yodlangan · " + t.pct + "%";
   $("mcount").textContent = t.mis ? "(" + t.mis + ")" : "";
+  var st = VERBS.filter(function (v) { return rec(v).star; }).length;
+  $("scount").textContent = st ? "(" + st + ")" : "";
 }
 
 if (TTS) {
@@ -1133,6 +1282,8 @@ if (TTS) {
   $("thSpk").hidden = true;
 }
 
+starDelegate($("listBody"));
+starDelegate($("rwrong"));
 updateBrand();
 show("setup");
 </script>
