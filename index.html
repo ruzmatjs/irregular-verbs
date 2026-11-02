@@ -35,12 +35,12 @@
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--surface)}
-.wrap{max-width:760px;margin:0 auto;
+.wrap{max-width:1120px;margin:0 auto;
   padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-block:0 48px}
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
-.top-in{max-width:760px;margin:0 auto;
+.top-in{max-width:1120px;margin:0 auto;
   padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-block:12px 0}
@@ -88,7 +88,7 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid 
 .bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
 .prompt{text-align:center;padding-block:10px 20px}
 .prompt .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
-.prompt .word{font-family:var(--display);font-size:clamp(1.9rem,8vw,2.6rem);font-weight:700;line-height:1.15;margin:2px 0 0;overflow-wrap:break-word}
+.prompt .word{font-family:var(--display);font-size:clamp(1.9rem,6vw,3.2rem);font-weight:700;line-height:1.15;margin:2px 0 0;overflow-wrap:break-word}
 .prompt .word.uz{font-size:clamp(1.3rem,6vw,1.8rem);font-style:italic;font-weight:400}
 .prompt .extra{font-family:var(--mono);font-size:.9rem;color:var(--muted);margin:6px 0 0}
 .wordrow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
