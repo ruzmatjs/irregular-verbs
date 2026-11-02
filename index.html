@@ -323,7 +323,8 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
         <span class="spacer"></span>
         <button class="btn ghost" type="button" id="quitBtn">Toʻxtatish</button>
       </div>
-      <p class="hint kbd">Enter, ↓ yoki feʻlda Space — keyingi maydon · ↑ — oldingisi · oxirgi maydonda Enter — tekshirish · birinchi maydonda ↑ (yoki boʻsh maydonda ←) — oldingi soʻz · * — yulduzcha</p>
+      <p class="hint kbd">Enter, ↓ yoki feʻlda Space — keyingi maydon · ↑ — oldingisi · oxirgi maydonda Enter — tekshirish · birinchi maydonda ↑ — oldingi soʻz · * — yulduzcha<br>
+        Tugmalar: oxirgi maydonda ↓ — tugmalarga tushadi · ← → — tugmalar orasida · Enter — bosish · <b>B</b> — Bilmadim · <b>Y</b> — Yodladim · <b>O</b> — Oldingi</p>
     </form>
   </div>
 </section>
@@ -970,13 +971,37 @@ $("starBtn").addEventListener("click", function () {
 });
 
 /* Fokus tugmada boʻlsa ham ↑ ↓ maydonlarga qaytaradi;
-   javob tekshirilgandan keyin ↓ (yoki →) keyingi soʻzga oʻtkazadi */
+   javob tekshirilgandan keyin ↓ keyingi, ↑ oldingi soʻzga oʻtkazadi */
 document.addEventListener("keydown", function (e) {
   if (!quiz || $("v-quiz").hidden || e.ctrlKey || e.altKey || e.metaKey) return;
   var k = e.key;
   var tag = ((e.target && e.target.tagName) || "").toLowerCase();
   var typing = (tag === "input" && !e.target.readOnly) || tag === "select" || tag === "textarea";
   if (k === "*" && !typing) { e.preventDefault(); $("starBtn").click(); return; }
+
+  /* Pastdagi tugmalar qatori: ← → tugmalar orasida yuradi, Enter yoki Space bosadi */
+  var row = $("qform").querySelector(".actions");
+  if (tag === "button" && row.contains(e.target) && (k === "ArrowLeft" || k === "ArrowRight")) {
+    e.preventDefault();
+    var btns = Array.prototype.filter.call(row.querySelectorAll("button"), function (b) {
+      return !b.hidden && !b.disabled && b.offsetParent !== null;
+    });
+    var at = btns.indexOf(e.target) + (k === "ArrowRight" ? 1 : -1);
+    if (at >= 0 && at < btns.length) btns[at].focus();
+    return;
+  }
+  /* Tugmalar yoki boʻsh joyda turganda harf bilan bosish */
+  if (!typing && !e.shiftKey) {
+    var lk = k.toLowerCase();
+    var hot = lk === "b" ? "dontknowBtn" : lk === "y" ? "learnBtn" : lk === "o" ? "prevBtn" : null;
+    if (hot) {
+      var hb = $(hot);
+      e.preventDefault();
+      if (!hb.hidden && !hb.disabled) hb.click();
+      return;
+    }
+  }
+
   if (k === "ArrowLeft" && !typing) { e.preventDefault(); prev(); return; }
   if (k !== "ArrowDown" && k !== "ArrowUp" && k !== "ArrowRight") return;
   if (quiz.graded) {
