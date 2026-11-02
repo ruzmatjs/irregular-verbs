@@ -109,10 +109,10 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid 
 .star.mini{width:26px;height:26px}
 .star.mini svg{width:14px;height:14px}
 .btn.learn{background:none;color:var(--ok);border-color:var(--ok)}
-.btn.learn:disabled{opacity:.55;cursor:default}
+.btn.learn[aria-pressed="true"]{background:var(--ok);color:var(--surface)}
 .mini-learn{appearance:none;font:inherit;font-size:.78rem;font-weight:600;color:var(--ok);background:none;
   border:1px solid var(--ok);border-radius:999px;padding:2px 9px;cursor:pointer;white-space:nowrap}
-.mini-learn:disabled{border-color:transparent;cursor:default}
+.mini-learn[aria-pressed="true"]{background:var(--ok);color:var(--surface)}
 tr.learned td.v{color:var(--ok)}
 .review-note{font-size:.8rem;color:var(--muted);margin:0 0 12px;text-align:center}
 .spkall{display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:.9rem;font-family:var(--mono);
@@ -1061,8 +1061,9 @@ function paintVerdict(h) {
 }
 function paintLearnBtn(v) {
   var b = $("learnBtn"), done = rec(v).lvl >= MAXLVL;
-  b.disabled = done;
+  b.setAttribute("aria-pressed", String(done));
   b.textContent = done ? "✓ Yodlangan" : "✓ Yodladim";
+  b.title = done ? "Yodlangan. Bosib bekor qilish mumkin (Y)" : "Bu soʻzni yodladim — level 5 boʻladi (Y)";
 }
 
 /* "Yodladim": soʻz darhol level 5 ga chiqadi va xatolar roʻyxatidan chiqadi.
@@ -1070,19 +1071,37 @@ function paintLearnBtn(v) {
 function setLearned(v) {
   var r = rec(v);
   var before = r.lvl;
+  if (before < MAXLVL) { r.pre = before; r.preMis = r.mis; }
   r.lvl = MAXLVL;
   r.mis = false;
   save();
   updateBrand();
   return before;
 }
+/* Bekor qilish: belgilashdan oldingi level qaytadi (nomaʼlum boʻlsa — 4) */
+function unsetLearned(v) {
+  var r = rec(v);
+  r.lvl = typeof r.pre === "number" && r.pre < MAXLVL ? r.pre : MAXLVL - 1;
+  if (r.preMis) r.mis = true;
+  delete r.pre; delete r.preMis;
+  save();
+  updateBrand();
+}
 function markLearned() {
   var q = quiz;
   if (!q) return;
   var v = q.items[q.i];
-  if (rec(v).lvl >= MAXLVL) return;
-  var before = setLearned(v);
   var h = q.hist[q.i];
+  if (rec(v).lvl >= MAXLVL) {
+    unsetLearned(v);
+    if (h && h.learnedOnly) { delete q.hist[q.i]; renderQ(); return; }
+    if (h) { h.after = rec(v).lvl; h.mis = rec(v).mis; h.learned = false; paintVerdict(h); }
+    $("qpos").textContent = (q.i + 1) + " / " + q.items.length + " · #" + v.n + " · level " + rec(v).lvl;
+    paintLearnBtn(v);
+    $("qbar").style.width = (q.hist.filter(Boolean).length / q.items.length * 100) + "%";
+    return;
+  }
+  var before = setLearned(v);
   if (!h) {
     var mine = {}, oks = {};
     cfg.fields.forEach(function (f) { mine[f] = v[f]; oks[f] = true; });
@@ -1220,13 +1239,15 @@ function renderList() {
 }
 function learnBtn(v) {
   var done = rec(v).lvl >= MAXLVL;
-  return '<button class="mini-learn" type="button" data-learn="' + v.n + '"' + (done ? " disabled" : "") +
-    ' title="Yodlangan deb belgilash — level 5">' + (done ? "✓ yodlangan" : "✓ Yodladim") + "</button>";
+  return '<button class="mini-learn" type="button" data-learn="' + v.n + '" aria-pressed="' + done + '" title="' +
+    (done ? "Yodlangan. Bosib bekor qilish mumkin" : "Yodlangan deb belgilash — level 5") + '">' +
+    (done ? "✓ Yodlangan" : "✓ Yodladim") + "</button>";
 }
 $("listBody").addEventListener("click", function (e) {
   var b = e.target && e.target.closest ? e.target.closest("button[data-learn]") : null;
-  if (!b || b.disabled) return;
-  setLearned(VERBS[parseInt(b.getAttribute("data-learn"), 10) - 1]);
+  if (!b) return;
+  var v = VERBS[parseInt(b.getAttribute("data-learn"), 10) - 1];
+  if (rec(v).lvl >= MAXLVL) unsetLearned(v); else setLearned(v);
   renderList();
 });
 $("search").addEventListener("input", renderList);
