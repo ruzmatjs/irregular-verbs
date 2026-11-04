@@ -1,0 +1,2606 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f4f4a">
+<meta name="description" content="A1 kursining 24 ta unitidagi 1372 ta inglizcha soʻzni yodlash uchun mashq sayti. Oʻzbek tilida.">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A1 Vocabulary Trainer">
+<meta property="og:description" content="A1 kursining 24 ta unitidagi 1372 ta inglizcha soʻzni yodlash uchun mashq sayti. Oʻzbek tilida.">
+<meta property="og:url" content="https://ruzmatjs.github.io/irregular-verbs/words.html">
+<meta property="og:image" content="https://ruzmatjs.github.io/irregular-verbs/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  body{margin:0;font:14px system-ui,sans-serif}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>A1 Vocabulary Trainer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: lug'at sahifasi - markazda bitta ustun, ustida yopishqoq sarlavha, pastda karta va jadval bloklari */
+:root{
+  --bg:#f6f3ec; --surface:#fffdf8; --surface-2:#efe9dc; --line:#ded5c3;
+  --fg:#241f18; --muted:#6f6552; --accent:#1f4f4a; --accent-soft:#d6e4e0;
+  --on-accent:#fffdf8;
+  --ok:#2f6b3a; --ok-soft:#dcebdc; --bad:#9c3324; --bad-soft:#f4ddd8;
+  --gold:#b4792a;
+  --display:"Literata",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#15181a; --surface:#1d2124; --surface-2:#262b2e; --line:#363d41;
+  --fg:#ece7dd; --muted:#9aa0a0; --accent:#7fc9bb; --accent-soft:#223431;
+  --on-accent:#10201e;
+  --ok:#8ed49a; --ok-soft:#1f2e22; --bad:#f09e90; --bad-soft:#33211e;
+  --gold:#d9a85a;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#15181a; --surface:#1d2124; --surface-2:#262b2e; --line:#363d41;
+  --fg:#ece7dd; --muted:#9aa0a0; --accent:#7fc9bb; --accent-soft:#223431;
+  --on-accent:#10201e;
+  --ok:#8ed49a; --ok-soft:#1f2e22; --bad:#f09e90; --bad-soft:#33211e;
+  --gold:#d9a85a;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+/* hidden xossasi flex/grid elementlarda ham ishlashi uchun */
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--surface)}
+.wrap{max-width:1120px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 48px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-in{max-width:1120px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:12px 0}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand .mark{width:28px;height:28px;flex:0 0 auto;align-self:center}
+.brand h1{font-family:var(--display);font-size:1.25rem;font-weight:700;margin:0;letter-spacing:-.01em}
+.brand .sub{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
+nav.tabs{display:flex;gap:2px;margin-top:10px;overflow-x:auto}
+nav.tabs button{appearance:none;border:0;background:none;font:inherit;font-size:.86rem;font-weight:500;color:var(--muted);
+  padding:8px 12px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+nav.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+h2{font-family:var(--display);font-size:1.05rem;margin:0 0 4px;text-wrap:balance}
+.lede{color:var(--muted);font-size:.88rem;margin:0 0 18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.stack{display:flex;flex-direction:column;gap:18px}
+section{padding-block:22px 0}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend,.flabel{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;padding:0 0 8px;display:block}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{position:relative}
+.opt input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+.opt span{display:block;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;
+  padding:7px 14px;font-size:.88rem;cursor:pointer;transition:background .12s,border-color .12s}
+.opt input:checked+span{background:var(--accent-soft);border-color:var(--accent);color:var(--fg);font-weight:500}
+.opt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.row{display:flex;gap:14px;flex-wrap:wrap}
+.row>*{min-width:0}
+.col{flex:1 1 220px;min-width:0}
+input[type=number],input[type=text],select{width:100%;font:inherit;background:var(--surface-2);color:var(--fg);
+  border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.btn{font:inherit;font-weight:600;font-size:.95rem;border:1px solid var(--accent);background:var(--accent);
+  color:var(--on-accent);padding:11px 20px;border-radius:8px;cursor:pointer}
+.btn.ghost{background:none;color:var(--fg);border-color:var(--line);font-weight:500}
+.btn.sm{padding:7px 13px;font-size:.84rem}
+.btn.danger{color:var(--bad);border-color:var(--bad);background:none}
+.hint{font-size:.8rem;color:var(--muted)}
+.kbd{margin:14px 0 0;font-size:.76rem}
+@media (pointer: coarse){.kbd{display:none}}
+.err{font-size:.84rem;color:var(--bad);font-weight:500;margin:10px 0 0}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.8rem;color:var(--muted);
+  font-variant-numeric:tabular-nums;margin-bottom:10px}
+.bar{height:4px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.prompt{text-align:center;padding-block:10px 20px}
+.prompt .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
+.prompt .word{font-family:var(--display);font-size:clamp(1.9rem,6vw,3.2rem);font-weight:700;line-height:1.15;margin:2px 0 0;overflow-wrap:break-word}
+.prompt .word.uz{font-size:clamp(1.3rem,6vw,1.8rem);font-style:italic;font-weight:400}
+.prompt .extra{font-family:var(--mono);font-size:.9rem;color:var(--muted);margin:6px 0 0}
+.wordrow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.spk{appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);padding:0;
+  width:36px;height:36px;border-radius:50%;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.spk svg{width:18px;height:18px}
+.spk:hover{border-color:var(--accent);color:var(--accent)}
+.spk.mini{width:26px;height:26px}
+.spk.mini svg{width:13px;height:13px}
+.spk.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.star{appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);padding:0;
+  width:36px;height:36px;border-radius:50%;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.star svg{width:19px;height:19px}
+.star svg path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
+.star:hover{border-color:var(--gold);color:var(--gold)}
+.star[aria-pressed="true"]{color:var(--gold);border-color:var(--gold)}
+.star[aria-pressed="true"] svg path{fill:currentColor}
+.star.mini{width:26px;height:26px}
+.star.mini svg{width:14px;height:14px}
+.btn.learn{background:none;color:var(--ok);border-color:var(--ok)}
+.btn.learn[aria-pressed="true"]{background:var(--ok);color:var(--surface)}
+.mini-learn{appearance:none;font:inherit;font-size:.78rem;font-weight:600;color:var(--ok);background:none;
+  border:1px solid var(--ok);border-radius:999px;padding:2px 9px;cursor:pointer;white-space:nowrap}
+.mini-learn[aria-pressed="true"]{background:var(--ok);color:var(--surface)}
+tr.learned td.v{color:var(--ok)}
+td.v .rd{display:block;font-family:var(--body);font-size:.74rem;color:var(--muted);font-style:italic;margin-top:1px}
+.prompt .reading{font-size:1rem;color:var(--muted);font-style:italic;margin:0}
+.field .fix .rd,.res-list .rd{color:var(--muted);font-family:var(--body);font-style:italic;font-weight:400}
+.spkall .rd{display:block;font-family:var(--body);font-style:italic;font-size:.78rem;color:var(--muted);margin-top:1px}
+.review-note{font-size:.8rem;color:var(--muted);margin:0 0 12px;text-align:center}
+.spkall{display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:.9rem;font-family:var(--mono);
+  color:var(--fg);border:1px solid var(--line);background:var(--surface-2);border-radius:999px;
+  padding:7px 16px 7px 12px;cursor:pointer;margin-top:12px}
+.spkall svg{width:16px;height:16px;flex:0 0 auto;color:var(--accent)}
+.spkall:hover{border-color:var(--accent)}
+.spkall.on{background:var(--accent-soft);border-color:var(--accent)}
+.spkall .now{color:var(--accent);font-weight:700}
+.spkall .sep{color:var(--muted)}
+select:disabled{opacity:.6}
+td.spkcell{padding-left:8px;padding-right:8px}
+.fields{display:flex;flex-direction:column;gap:12px}
+.field label{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:4px}
+.field input{font-family:var(--mono);font-size:1rem}
+.field.uzf input{font-family:var(--body)}
+.field.good input{border-color:var(--ok);background:var(--ok-soft)}
+.field.wrong input{border-color:var(--bad);background:var(--bad-soft)}
+.field .fix{font-size:.82rem;margin:4px 0 0;font-family:var(--mono)}
+.field .fix b{color:var(--ok)}
+.field .fix.no b{color:var(--bad)}
+.verdict{margin:16px 0 0;padding:12px 14px;border-radius:8px;font-size:.92rem;font-weight:500}
+.verdict.good{background:var(--ok-soft);color:var(--ok)}
+.verdict.bad{background:var(--bad-soft);color:var(--bad)}
+.verdict .lvl{display:block;font-weight:400;font-size:.82rem;color:var(--muted);margin-top:4px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.actions .spacer{flex:1 1 auto}
+.pips{display:inline-flex;gap:3px;vertical-align:middle}
+.pips i{width:7px;height:12px;border-radius:2px;background:var(--surface-2);border:1px solid var(--line);display:block}
+.pips i.on{background:var(--gold);border-color:var(--gold)}
+.pips i.full{background:var(--ok);border-color:var(--ok)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;
+  position:sticky;top:0;background:var(--surface)}
+tr:last-child td{border-bottom:0}
+td.v{font-family:var(--mono)}
+td.uz{white-space:normal;color:var(--muted);font-size:.86rem;min-width:140px}
+td.num{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.82rem}
+tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.stat b{display:block;font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.lvlrow{display:flex;align-items:center;gap:10px;font-size:.86rem;padding:5px 0}
+.lvlrow .nm{flex:0 0 120px;color:var(--muted);min-width:0}
+.lvlrow .trk{flex:1 1 auto;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;min-width:0}
+.lvlrow .trk i{display:block;height:100%;background:var(--accent)}
+.lvlrow .ct{flex:0 0 34px;text-align:right;font-variant-numeric:tabular-nums}
+.empty{text-align:center;color:var(--muted);font-size:.9rem;padding:28px 10px;border:1px dashed var(--line);border-radius:var(--r)}
+.res-list{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.res-list li{background:var(--surface-2);border-radius:8px;padding:10px 12px;font-size:.9rem}
+.res-list .w{font-family:var(--mono);font-weight:600}
+.res-list .c{color:var(--muted)}
+.res-list .mine{color:var(--bad);font-family:var(--mono);font-size:.84rem}
+.score{font-family:var(--display);font-size:2.4rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;margin:0}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+/* ---------- A1 soʻzlar sahifasi ---------- */
+.switch{display:flex;gap:4px;margin-left:auto;align-self:center;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px}
+.switch a{font-size:.8rem;font-weight:500;color:var(--muted);text-decoration:none;padding:4px 11px;border-radius:999px;white-space:nowrap}
+.switch a[aria-current="page"]{background:var(--accent);color:var(--on-accent)}
+.switch a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.unitgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.uopt{position:relative;display:block}
+.uopt input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+.uopt span{display:block;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:8px 11px;font-size:.84rem;cursor:pointer;line-height:1.3;height:100%}
+.uopt span b{font-weight:600}
+.uopt small{display:block;color:var(--muted);font-size:.74rem;font-variant-numeric:tabular-nums;margin-top:2px}
+.uopt input:checked+span{background:var(--accent-soft);border-color:var(--accent)}
+.uopt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+small.ct{color:var(--muted);font-size:.8em}
+.cardans{margin:6px 0 0;padding:16px;border-radius:8px;background:var(--surface-2);text-align:center}
+.cardans .flabel{padding-bottom:4px}
+.cardans b{font-size:1.4rem;font-family:var(--display)}
+.unit{padding:0;margin-bottom:10px;overflow:hidden}
+.uh{appearance:none;border:0;background:none;font:inherit;color:inherit;width:100%;text-align:left;cursor:pointer;
+  display:flex;align-items:center;gap:14px;padding:14px 16px;flex-wrap:wrap}
+.uh:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.uh-t{flex:1 1 240px;min-width:0}
+.uh-t small{display:block;color:var(--muted);font-size:.8rem}
+.uh-p{flex:0 1 220px;display:flex;align-items:center;gap:10px;min-width:0}
+.uh-p .trk{flex:1 1 auto;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden}
+.uh-p .trk i{display:block;height:100%;background:var(--ok)}
+.uh-p .ct{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.uh::after{content:"▾";color:var(--muted);transition:transform .15s}
+.uh[aria-expanded="true"]::after{transform:rotate(180deg)}
+.ub{padding:0 16px 16px}
+td.v{white-space:normal;min-width:120px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+        <rect width="256" height="256" rx="56" fill="var(--accent)"/>
+        <g fill="none" stroke="var(--surface)" stroke-width="11" stroke-linecap="round">
+          <path d="M62 156 A33 64 0 0 1 128 156"/>
+          <path d="M128 156 A33 38 0 0 1 194 156"/>
+        </g>
+        <circle cx="62" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="128" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="194" cy="156" r="14" fill="var(--gold)"/>
+      </svg>
+      <h1>A1 Vocabulary</h1>
+      <span class="sub" id="brandStat"></span>
+      <nav class="switch" aria-label="Boʻlimlar">
+        <a href="index.html">Irregular verbs</a>
+        <a href="words.html" aria-current="page">A1 soʻzlar</a>
+      </nav>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-view="train">Mashq</button>
+      <button role="tab" aria-selected="false" data-view="units">Unitlar</button>
+      <button role="tab" aria-selected="false" data-view="mistakes">Xatolar <span id="mcount"></span></button>
+      <button role="tab" aria-selected="false" data-view="starred">★ Belgilangan <span id="scount"></span></button>
+      <button role="tab" aria-selected="false" data-view="stats">Natijalar</button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+<section id="v-setup">
+  <h2>A1 soʻzlarini yodlash</h2>
+  <p class="lede">A1 kursining 24 ta unitidagi 1372 ta soʻz — inglizcha va oʻzbekcha. Unitlarni, yoʻnalishni va mashq usulini tanlang.</p>
+  <div class="card stack">
+    <fieldset>
+      <legend>Unitlar</legend>
+      <div class="unitgrid" id="unitPick"></div>
+      <div class="actions" style="margin-top:10px">
+        <button class="btn ghost sm" type="button" id="uAll">Hammasini belgilash</button>
+        <button class="btn ghost sm" type="button" id="uNone">Tozalash</button>
+        <span class="hint" id="uInfo"></span>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Soʻz turkumi</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="grp" value="all" checked><span>Hammasi</span></label>
+        <label class="opt"><input type="radio" name="grp" value="n"><span>Otlar</span></label>
+        <label class="opt"><input type="radio" name="grp" value="v"><span>Feʻllar</span></label>
+        <label class="opt"><input type="radio" name="grp" value="a"><span>Sifatlar</span></label>
+        <label class="opt"><input type="radio" name="grp" value="o"><span>Ravish va boshqalar</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Yoʻnalish</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="dir" value="en" checked><span>Inglizcha → oʻzbekcha</span></label>
+        <label class="opt"><input type="radio" name="dir" value="uz"><span>Oʻzbekcha → inglizcha</span></label>
+        <label class="opt"><input type="radio" name="dir" value="mix"><span>Aralash</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Mashq usuli</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="mode" value="type" checked><span>Yozib javob berish</span></label>
+        <label class="opt"><input type="radio" name="mode" value="card"><span>Kartochka</span></label>
+      </div>
+      <p class="hint" style="margin-top:8px">Kartochkada javobni yozmaysiz: soʻzni koʻrib eslaysiz, javobni ochib, oʻzingiz «Bildim» yoki «Bilmadim» deysiz.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Nechta soʻz</legend>
+      <div class="row">
+        <div class="col">
+          <div class="opts">
+            <label class="opt"><input type="radio" name="cnt" value="10"><span>10</span></label>
+            <label class="opt"><input type="radio" name="cnt" value="20" checked><span>20</span></label>
+            <label class="opt"><input type="radio" name="cnt" value="50"><span>50</span></label>
+            <label class="opt"><input type="radio" name="cnt" value="all"><span>Hammasi</span></label>
+            <label class="opt"><input type="radio" name="cnt" value="custom"><span>Boshqa…</span></label>
+          </div>
+        </div>
+        <div class="col" id="customBox" hidden>
+          <label class="flabel" for="customCount">Soʻz soni</label>
+          <input type="number" id="customCount" min="1" max="1372" value="30">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Tartib</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="ord" value="seq"><span>Ketma-ket</span></label>
+        <label class="opt"><input type="radio" name="ord" value="rnd" checked><span>Aralash</span></label>
+        <label class="opt"><input type="radio" name="ord" value="weak"><span>Eng zaiflari avval</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Qaysi soʻzlardan</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="pool" value="all" checked><span>Hammasi</span></label>
+        <label class="opt"><input type="radio" name="pool" value="unseen"><span>Hali koʻrilmaganlar <small id="newCount" class="ct"></small></span></label>
+        <label class="opt"><input type="radio" name="pool" value="mistakes"><span>Faqat xatolar</span></label>
+        <label class="opt"><input type="radio" name="pool" value="unlearned"><span>Yodlanmaganlar</span></label>
+        <label class="opt"><input type="radio" name="pool" value="starred"><span>★ Belgilanganlar</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset id="audioSet">
+      <legend>Talaffuz</legend>
+      <div class="opts">
+        <label class="opt"><input type="checkbox" id="autoSay" checked><span>Inglizcha soʻzni oʻqib bersin</span></label>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <div class="col">
+          <label class="flabel" for="voiceSel">Ovoz</label>
+          <select id="voiceSel"></select>
+        </div>
+        <div class="col">
+          <span class="flabel">Tezlik</span>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="rate" value="0.7"><span>Sekin</span></label>
+            <label class="opt"><input type="radio" name="rate" value="0.9" checked><span>Oddiy</span></label>
+            <label class="opt"><input type="radio" name="rate" value="1.1"><span>Tez</span></label>
+          </div>
+        </div>
+      </div>
+      <p class="hint" style="margin-top:10px" id="audioHint"></p>
+    </fieldset>
+
+    <div>
+      <button class="btn" id="startBtn">Mashqni boshlash</button>
+      <p class="err" id="setupErr" hidden></p>
+    </div>
+  </div>
+</section>
+
+<section id="v-quiz" hidden>
+  <div class="qhead">
+    <span id="qpos"></span>
+    <span id="qscore"></span>
+  </div>
+  <div class="bar"><i id="qbar" style="width:0%"></i></div>
+  <div class="card">
+    <div class="prompt">
+      <span class="tag" id="ptag"></span>
+      <div class="wordrow">
+        <p class="word" id="pword"></p>
+        <button class="spk" type="button" id="spkPrompt" title="Talaffuzni eshitish" aria-label="Talaffuzni eshitish" hidden></button>
+        <button class="star" type="button" id="starBtn" aria-pressed="false"></button>
+      </div>
+      <p class="extra" id="pmeta"></p>
+    </div>
+    <p class="review-note" id="reviewNote" hidden>Bu soʻzga javob bergansiz — koʻrib chiqish rejimi, natija oʻzgarmaydi.</p>
+    <form id="qform" autocomplete="off">
+      <div class="fields" id="typeBox">
+        <div class="field" id="ansField">
+          <label for="ans" id="ansLabel"></label>
+          <input type="text" id="ans" spellcheck="false" autocapitalize="off">
+        </div>
+      </div>
+      <div class="cardans" id="cardAns" hidden></div>
+      <div class="verdict" id="verdict" hidden></div>
+      <div class="actions">
+        <button class="btn ghost" type="button" id="prevBtn" title="Oldingi soʻz (↑ yoki O)">← Oldingi</button>
+        <button class="btn" type="submit" id="checkBtn">Tekshirish</button>
+        <button class="btn ghost" type="button" id="dontknowBtn">Bilmadim</button>
+        <button class="btn learn" type="button" id="learnBtn">✓ Yodladim</button>
+        <span class="spacer"></span>
+        <button class="btn ghost" type="button" id="quitBtn">Toʻxtatish</button>
+      </div>
+      <p class="hint kbd" id="kbdHint"></p>
+    </form>
+  </div>
+</section>
+
+<section id="v-result" hidden>
+  <h2>Mashq tugadi</h2>
+  <div class="card">
+    <p class="score" id="rscore"></p>
+    <p class="lede" id="rline" style="margin:6px 0 0"></p>
+    <div id="rwrong"></div>
+    <div class="actions">
+      <button class="btn" id="againBtn">Yana shu sozlamalar bilan</button>
+      <button class="btn ghost" id="trainWrongBtn" hidden>Xatolarni mashq qilish</button>
+      <button class="btn ghost" id="backSetupBtn">Sozlamalarga qaytish</button>
+    </div>
+  </div>
+</section>
+
+<section id="v-units" hidden>
+  <h2>Unitlar boʻyicha soʻzlar</h2>
+  <p class="lede">Har bir unitni ochib soʻzlarini koʻring, eshiting, yulduzcha qoʻying yoki shu unitni alohida mashq qiling.</p>
+  <div class="toolbar">
+    <div class="col"><input type="text" id="search" placeholder="Qidirish: inglizcha yoki oʻzbekcha"></div>
+  </div>
+  <div id="unitsBody"></div>
+</section>
+
+<section id="v-mistakes" hidden>
+  <h2>Xato soʻzlar</h2>
+  <p class="lede">Bir marta xato qilgan soʻz shu yerda qoladi. Level 5 ga chiqqanda roʻyxatdan avtomatik chiqadi.</p>
+  <div id="misBody"></div>
+</section>
+
+<section id="v-starred" hidden>
+  <h2>Yulduzcha qoʻyilgan soʻzlar</h2>
+  <p class="lede">Yaxshilab oʻrganish kerak deb belgilagan soʻzlaringiz.</p>
+  <div id="starBody"></div>
+</section>
+
+<section id="v-stats" hidden>
+  <h2>Yodlash holati</h2>
+  <p class="lede">Natijalar shu brauzerda saqlanadi. Irregular verbs natijalaridan alohida.</p>
+  <div class="stats" id="statCards"></div>
+  <div class="card">
+    <span class="flabel">Unitlar boʻyicha</span>
+    <div id="unitDist"></div>
+  </div>
+  <div class="actions">
+    <button class="btn ghost danger sm" id="resetBtn">A1 natijalarini tozalash</button>
+    <span class="hint" id="resetHint" hidden>Ishonchingiz komilmi?
+      <button class="btn danger sm" id="resetYes" style="margin-left:6px">Ha, tozalash</button>
+      <button class="btn ghost sm" id="resetNo">Yoʻq</button>
+    </span>
+  </div>
+</section>
+
+</div>
+
+<script>
+var UNITS = [[1, "Introducing Yourself", "Oʻzingizni tanishtirish"], [2, "My Family", "Mening oilam"], [3, "My Best Friend", "Eng yaqin doʻstim"], [4, "Daily Routine", "Kun tartibi"], [5, "My House", "Mening uyim"], [6, "My School", "Mening maktabim"], [7, "My Job", "Mening ishim"], [8, "Food and Drinks", "Ovqat va ichimliklar"], [9, "At the Restaurant", "Restoranda"], [10, "Shopping for Clothes", "Kiyim xarid qilish"], [11, "At the Supermarket", "Supermarketda"], [12, "My City", "Mening shahrim"], [13, "Giving Directions", "Yoʻl koʻrsatish"], [14, "Transport", "Transport"], [15, "My Last Weekend", "Oʻtgan dam olish kunlarim"], [16, "A Holiday Trip", "Taʼtil safari"], [17, "Weather and Seasons", "Ob-havo va fasllar"], [18, "Hobbies", "Qiziqishlar"], [19, "Free Time Activities", "Boʻsh vaqt mashgʻulotlari"], [20, "Health and Illness", "Sogʻliq va kasallik"], [21, "Describing People", "Odamlarni tasvirlash"], [22, "Comparing Cities", "Shaharlarni solishtirish"], [23, "Future Plans", "Kelajak rejalari"], [24, "A Special Day", "Maxsus kun"]];
+var CATS = [["Otlar", "n"], ["Sifatlar", "a"], ["Feʻllar", "v"], ["Sifat va ravishlar", "a"], ["Joy predloglari", "o"], ["Yoʻnalishlar", "o"], ["Modal feʻllar", "v"], ["Ravishlar", "o"], ["Qiyosiy daraja", "a"], ["Orttirma daraja", "a"]];
+/* [inglizcha, oʻzbekcha, unit, turkum] */
+var W = [
+["name", "ism", 1, 0],
+["age", "yosh", 1, 0],
+["nurse", "hamshira", 1, 0],
+["hospital", "kasalxona", 1, 0],
+["workplace", "ish joyi", 1, 0],
+["home", "uy", 1, 0],
+["coworker", "hamkasb", 1, 0],
+["life", "hayot", 1, 0],
+["family", "oila", 1, 0],
+["husband", "er", 1, 0],
+["daughter", "qiz", 1, 0],
+["driver", "haydovchi", 1, 0],
+["sales manager", "savdo menejeri", 1, 0],
+["store", "do'kon", 1, 0],
+["city center", "shahar markazi", 1, 0],
+["environment", "ish muhiti", 1, 0],
+["parents", "ota-ona", 1, 0],
+["sister", "singil / opa", 1, 0],
+["university", "universitet", 1, 0],
+["student", "talaba", 1, 0],
+["accountant", "buxgalter", 1, 0],
+["company", "kompaniya", 1, 0],
+["office", "ofis", 1, 0],
+["engineer", "muhandis", 1, 0],
+["teacher", "o'qituvchi", 1, 0],
+["language school", "til maktabi", 1, 0],
+["park", "park", 1, 0],
+["son", "o'g'il", 1, 0],
+["wife", "xotin", 1, 0],
+["doctor", "shifokor / doktor", 1, 0],
+["modern", "zamonaviy", 1, 1],
+["busy", "band", 1, 1],
+["professional", "professional", 1, 1],
+["polite", "odobli", 1, 1],
+["organized", "tartibli", 1, 1],
+["clean", "toza", 1, 1],
+["local", "mahalliy", 1, 1],
+["active", "faol", 1, 1],
+["interesting", "qiziqarli", 1, 1],
+["friendly", "do'stona", 1, 1],
+["simple", "oddiy", 1, 1],
+["comfortable", "qulay", 1, 1],
+["nice", "yoqimli", 1, 1],
+["small", "kichik", 1, 1],
+["large / big", "katta", 1, 1],
+["kind", "mehribon", 1, 1],
+["hardworking", "mehnatkash", 1, 1],
+["important", "muhim", 1, 1],
+["retired", "nafaqada", 1, 1],
+["private", "xususiy", 1, 1],
+["perfect", "mukammal", 1, 1],
+["to work", "ishlash", 1, 2],
+["to live", "yashash", 1, 2],
+["to study", "o'qish", 1, 2],
+["to mean (a lot)", "ko'p anglatmoq", 1, 2],
+["family", "oila", 2, 0],
+["father", "ota", 2, 0],
+["mother", "ona / mama", 2, 0],
+["parents", "ota-ona", 2, 0],
+["school", "maktab", 2, 0],
+["bank", "bank", 2, 0],
+["factory", "zavod", 2, 0],
+["shop / store", "do'kon", 2, 0],
+["dinner", "kechki ovqat", 2, 0],
+["food", "ovqat", 2, 0],
+["evening", "oqshom", 2, 0],
+["relationship", "munosabat", 2, 0],
+["district", "tuman", 2, 0],
+["advice", "maslahat", 2, 0],
+["news", "yangiliklar", 2, 0],
+["phone", "telefon", 2, 0],
+["city", "shahar", 2, 0],
+["week", "hafta", 2, 0],
+["weekend", "dam olish kunlari", 2, 0],
+["to visit", "tashrif buyurish", 2, 2],
+["to bring", "olib kelish", 2, 2],
+["to invite", "taklif qilish", 2, 2],
+["to tell", "aytib berish", 2, 2],
+["to spend time", "vaqt o'tkazish", 2, 2],
+["to enjoy", "zavq olish", 2, 2],
+["to support", "qo'llab-quvvatlash", 2, 2],
+["to call", "qo'ng'iroq qilish", 2, 2],
+["to see", "ko'rish", 2, 2],
+["to listen", "tinglash", 2, 2],
+["to give", "berish", 2, 2],
+["to share", "ulashish", 2, 2],
+["to talk", "gaplashish", 2, 2],
+["to teach", "o'qitish", 2, 2],
+["important", "muhim", 2, 1],
+["small", "kichik", 2, 1],
+["big", "katta", 2, 1],
+["close / warm", "yaqin / iliq", 2, 1],
+["strong", "kuchli", 2, 1],
+["friendly", "do'stona", 2, 1],
+["happy", "baxtli", 2, 1],
+["loving", "sevuvchi", 2, 1],
+["friend", "do'st", 3, 0],
+["neighborhood", "mahalla", 3, 0],
+["hospital", "kasalxona", 3, 0],
+["patient", "bemor", 3, 0],
+["night shift", "tun smenasi", 3, 0],
+["job", "ish", 3, 0],
+["café", "kafe", 3, 0],
+["coffee", "qahva", 3, 0],
+["tea", "choy", 3, 0],
+["brother", "aka / uka", 3, 0],
+["sister", "singil / opa", 3, 0],
+["city", "shahar", 3, 0],
+["holiday", "bayram", 3, 0],
+["friendship", "do'stlik", 3, 0],
+["conversation", "suhbat", 3, 0],
+["workplace", "ish joyi", 3, 0],
+["location", "joylashuv", 3, 0],
+["park", "park", 3, 0],
+["apartment", "kvartira", 3, 0],
+["office", "ofis", 3, 0],
+["bank", "bank", 3, 0],
+["meeting", "yig'ilish", 3, 0],
+["technology company", "texnologiya kompaniyasi", 3, 0],
+["computer", "kompyuter", 3, 0],
+["time", "vaqt", 3, 0],
+["month", "oy", 3, 0],
+["year", "yil", 3, 0],
+["to care for", "g'amxo'rlik qilish", 3, 2],
+["to like / enjoy", "yoqtirish", 3, 2],
+["to meet", "uchrashish", 3, 2],
+["to drink", "ichish", 3, 2],
+["to walk", "yurish", 3, 2],
+["to visit", "borib ko'rish", 3, 2],
+["to start", "boshlash", 3, 2],
+["to finish", "tugatish", 3, 2],
+["to find", "topish", 3, 2],
+["to help", "yordam berish", 3, 2],
+["to live", "yashash", 3, 2],
+["good / close", "yaxshi / yaqin", 3, 1],
+["busy", "band", 3, 1],
+["long", "uzun", 3, 1],
+["strong", "kuchli", 3, 1],
+["interesting", "qiziqarli", 3, 1],
+["enjoyable / pleasant", "yoqimli", 3, 1],
+["convenient", "qulay", 3, 1],
+["clean", "toza", 3, 1],
+["large", "katta", 3, 1],
+["valuable", "qadrli", 3, 1],
+["stressful", "stressli", 3, 1],
+["daily routine", "kundalik tartib", 4, 0],
+["apartment", "kvartira", 4, 0],
+["coffee", "qahva", 4, 0],
+["news", "yangiliklar", 4, 0],
+["phone", "telefon", 4, 0],
+["music", "musiqa", 4, 0],
+["television / TV", "televizor", 4, 0],
+["morning", "ertalab", 4, 0],
+["evening", "oqshom", 4, 0],
+["dinner", "kechki ovqat", 4, 0],
+["kitchen", "oshxona", 4, 0],
+["plan", "reja", 4, 0],
+["office", "ofis", 4, 0],
+["report", "hisobot", 4, 0],
+["customer / client", "mijoz", 4, 0],
+["day", "kun", 4, 0],
+["email", "elektron xat", 4, 0],
+["document", "hujjat", 4, 0],
+["phone call", "telefon qo'ng'irog'i", 4, 0],
+["week", "hafta", 4, 0],
+["home", "uy", 4, 0],
+["to wake up", "uyg'onish", 4, 2],
+["to start", "boshlash", 4, 2],
+["to read", "o'qish", 4, 2],
+["to listen", "tinglash", 4, 2],
+["to watch", "ko'rish", 4, 2],
+["to prefer", "afzal ko'rish", 4, 2],
+["to leave", "ketish", 4, 2],
+["to walk", "piyoda yurish", 4, 2],
+["to cook", "ovqat pishirish", 4, 2],
+["to clean", "tozalash", 4, 2],
+["to meet", "uchrashish", 4, 2],
+["to talk", "gaplashish", 4, 2],
+["to enjoy", "zavq olish", 4, 2],
+["to stay", "qolish", 4, 2],
+["to rest / relax", "dam olish", 4, 2],
+["to answer", "javob berish", 4, 2],
+["to learn", "o'rganish", 4, 2],
+["to spend time", "vaqt o'tkazish", 4, 2],
+["to return", "qaytish", 4, 2],
+["to prepare", "tayyorlash", 4, 2],
+["quiet", "sokin", 4, 3],
+["organized", "tartibli", 4, 3],
+["easy", "oson", 4, 3],
+["difficult", "qiyin", 4, 3],
+["busy", "band", 4, 3],
+["calm", "tinch", 4, 3],
+["useful", "foydali", 4, 3],
+["once a week", "haftasiga bir marta", 4, 3],
+["house", "uy", 5, 0],
+["apartment", "kvartira", 5, 0],
+["street", "ko'cha", 5, 0],
+["door", "eshik", 5, 0],
+["garden", "bog'", 5, 0],
+["living room", "mehmonxona", 5, 0],
+["kitchen", "oshxona", 5, 0],
+["bathroom", "hammom", 5, 0],
+["bedroom", "yotoqxona", 5, 0],
+["hallway", "yo'lak", 5, 0],
+["table", "stol", 5, 0],
+["sofa", "divan", 5, 0],
+["window", "deraza", 5, 0],
+["shelf", "javon", 5, 0],
+["corner", "burchak", 5, 0],
+["yard", "hovli", 5, 0],
+["area", "hudud", 5, 0],
+["floor (storey)", "qavat", 5, 0],
+["entrance", "kirish", 5, 0],
+["wall", "devor", 5, 0],
+["chair", "stul", 5, 0],
+["desk", "ish stoli", 5, 0],
+["bag", "sumka", 5, 0],
+["backpack", "ryukzak", 5, 0],
+["pharmacy", "dorixona", 5, 0],
+["grocery store", "oziq-ovqat do'koni", 5, 0],
+["small shop", "kichik do'kon", 5, 0],
+["building", "bino", 5, 0],
+["location", "joylashuv", 5, 0],
+["neighborhood", "mahalla", 5, 0],
+["room", "xona", 5, 0],
+["book", "kitob", 5, 0],
+["next to", "yonida", 5, 4],
+["between", "o'rtasida", 5, 4],
+["in front of", "oldida", 5, 4],
+["in the middle", "o'rtasida", 5, 4],
+["in the corner", "burchagida", 5, 4],
+["under", "ostida", 5, 4],
+["near", "yaqinida", 5, 4],
+["beside", "yonida", 5, 4],
+["quiet", "sokin", 5, 1],
+["convenient", "qulay", 5, 1],
+["small", "kichik", 5, 1],
+["old", "eski", 5, 1],
+["new", "yangi", 5, 1],
+["modern", "zamonaviy", 5, 1],
+["big", "katta", 5, 1],
+["calm", "tinch", 5, 1],
+["comfortable", "qulay", 5, 1],
+["good", "yaxshi", 5, 1],
+["language school", "til maktabi", 6, 0],
+["group", "guruh", 6, 0],
+["classmate", "sinfdosh", 6, 0],
+["dialogue", "muloqot", 6, 0],
+["travel", "sayohat", 6, 0],
+["part", "qism", 6, 0],
+["partner", "hamkor", 6, 0],
+["mistake", "xato", 6, 0],
+["teacher", "o'qituvchi", 6, 0],
+["classroom", "sinf xonasi", 6, 0],
+["activity", "faoliyat", 6, 0],
+["skill", "ko'nikma", 6, 0],
+["notebook", "daftar", 6, 0],
+["phrase", "ibora", 6, 0],
+["exercise", "mashq", 6, 0],
+["result", "natija", 6, 0],
+["board", "taxta", 6, 0],
+["sentence", "jumla", 6, 0],
+["pronunciation", "talaffuz", 6, 0],
+["topic", "mavzu", 6, 0],
+["question", "savol", 6, 0],
+["answer", "javob", 6, 0],
+["task", "topshiriq", 6, 0],
+["idea", "g'oya", 6, 0],
+["text", "matn", 6, 0],
+["lesson", "dars", 6, 0],
+["progress", "ilgarilanish", 6, 0],
+["step", "qadam", 6, 0],
+["example", "misol", 6, 0],
+["to study", "o'qish", 6, 2],
+["to practice", "mashq qilish", 6, 2],
+["to read aloud", "ovoz chiqarib o'qish", 6, 2],
+["to correct", "to'g'rilash", 6, 2],
+["to explain", "tushuntirish", 6, 2],
+["to help", "yordam berish", 6, 2],
+["to write", "yozish", 6, 2],
+["to try", "harakat qilish", 6, 2],
+["to feel", "his qilish", 6, 2],
+["to copy", "nusxalash", 6, 2],
+["to discuss", "muhokama qilish", 6, 2],
+["to focus", "diqqatni jamlash", 6, 2],
+["to listen", "tinglash", 6, 2],
+["to sit", "o'tirish", 6, 2],
+["to walk", "yurish", 6, 2],
+["to understand", "tushunish", 6, 2],
+["to learn", "o'rganish", 6, 2],
+["useful", "foydali", 6, 1],
+["confident", "ishonchli", 6, 1],
+["easy", "oson", 6, 1],
+["short", "qisqa", 6, 1],
+["interesting", "qiziqarli", 6, 1],
+["quiet", "sokin", 6, 1],
+["new", "yangi", 6, 1],
+["better", "yaxshiroq", 6, 1],
+["café", "kafe", 7, 0],
+["park", "park", 7, 0],
+["counter", "stend / kassa", 7, 0],
+["customer", "xaridor", 7, 0],
+["noise", "shovqin", 7, 0],
+["cup", "chashka", 7, 0],
+["milk", "sut", 7, 0],
+["machine", "mashina", 7, 0],
+["queue", "navbat", 7, 0],
+["paper", "qog'oz", 7, 0],
+["order", "buyurtma", 7, 0],
+["atmosphere", "atmosfera", 7, 0],
+["shelf", "javon", 7, 0],
+["price", "narx", 7, 0],
+["product", "mahsulot", 7, 0],
+["activity", "faoliyat", 7, 0],
+["store", "do'kon", 7, 0],
+["street", "ko'cha", 7, 0],
+["waiting area", "kutish xonasi", 7, 0],
+["computer", "kompyuter", 7, 0],
+["note", "eslatma", 7, 0],
+["patient", "bemor", 7, 0],
+["equipment", "jihozlar", 7, 0],
+["medicine", "dori", 7, 0],
+["cabinet", "shkaf", 7, 0],
+["break", "tanaffus", 7, 0],
+["situation", "vaziyat", 7, 0],
+["task", "topshiriq", 7, 0],
+["bank", "bank", 7, 0],
+["document", "hujjat", 7, 0],
+["information", "ma'lumot", 7, 0],
+["people", "odamlar", 7, 0],
+["to stand", "turish", 7, 2],
+["to serve", "xizmat qilish", 7, 2],
+["to make coffee", "qahva tayyorlash", 7, 2],
+["to place", "qo'yish", 7, 2],
+["to take orders", "buyurtma qabul qilish", 7, 2],
+["to work", "ishlash", 7, 2],
+["to wait", "kutish", 7, 2],
+["to help", "yordam berish", 7, 2],
+["to check", "tekshirish", 7, 2],
+["to organize", "tartibga solish", 7, 2],
+["to arrange", "joylashtirish", 7, 2],
+["to focus", "diqqatni jamlash", 7, 2],
+["to enter (data)", "ma'lumot kiritish", 7, 2],
+["to feel", "his qilish", 7, 2],
+["to stop", "to'xtash", 7, 2],
+["to move", "harakat qilish", 7, 2],
+["busy", "band", 7, 1],
+["fresh", "yangi / toza", 7, 1],
+["tired", "charchagan", 7, 1],
+["active", "faol", 7, 1],
+["clean", "toza", 7, 1],
+["ready", "tayyor", 7, 1],
+["stressed", "stressda", 7, 1],
+["careful", "ehtiyotkor", 7, 1],
+["calm", "tinch", 7, 1],
+["lunch", "tushlik", 8, 0],
+["dinner", "kechki ovqat", 8, 0],
+["meal / food", "ovqat / taom", 8, 0],
+["soup", "sho'rva", 8, 0],
+["bowl", "kosa", 8, 0],
+["bread", "non", 8, 0],
+["tea", "choy", 8, 0],
+["rice", "guruch", 8, 0],
+["pasta", "makaron", 8, 0],
+["salad", "salat", 8, 0],
+["juice", "sharbat", 8, 0],
+["teapot", "choynak", 8, 0],
+["plate", "likopcha", 8, 0],
+["spoon", "qoshiq", 8, 0],
+["glass", "stakan", 8, 0],
+["smell", "hid", 8, 0],
+["kitchen", "oshxona", 8, 0],
+["table", "stol", 8, 0],
+["pot", "qozon", 8, 0],
+["water", "suv", 8, 0],
+["cucumber", "bodring", 8, 0],
+["tomato", "pomidor", 8, 0],
+["vegetable", "sabzavot", 8, 0],
+["living room", "mehmonxona", 8, 0],
+["brother", "aka / uka", 8, 0],
+["sister", "singil / opa", 8, 0],
+["father", "ota", 8, 0],
+["mother", "ona", 8, 0],
+["to eat", "yemoq", 8, 2],
+["to drink", "ichish", 8, 2],
+["to cook", "pishirish", 8, 2],
+["to cut", "kesish", 8, 2],
+["to set the table", "dasturxon yozish", 8, 2],
+["to sit", "o'tirish", 8, 2],
+["to listen", "tinglash", 8, 2],
+["to clean", "tozalash", 8, 2],
+["to prepare", "tayyorlash", 8, 2],
+["to check", "tekshirish", 8, 2],
+["to watch", "ko'rish", 8, 2],
+["to talk", "gaplashish", 8, 2],
+["to relax", "dam olish", 8, 2],
+["to smell", "hidlamoq", 8, 2],
+["simple", "oddiy", 8, 1],
+["quiet", "sokin", 8, 1],
+["warm", "iliq", 8, 1],
+["tasty", "mazali", 8, 1],
+["hot", "issiq", 8, 1],
+["comfortable", "qulay", 8, 1],
+["calm", "tinch", 8, 1],
+["personal", "shaxsiy", 8, 1],
+["nice", "yoqimli", 8, 1],
+["almost ready", "deyarli tayyor", 8, 1],
+["restaurant", "restoran", 9, 0],
+["waiter", "ofitsiant", 9, 0],
+["service", "xizmat", 9, 0],
+["table", "stol", 9, 0],
+["window", "deraza", 9, 0],
+["light / lamp", "chiroq", 9, 0],
+["food", "ovqat", 9, 0],
+["cake", "tort", 9, 0],
+["dinner", "kechki ovqat", 9, 0],
+["celebration", "bayram", 9, 0],
+["atmosphere", "atmosfera", 9, 0],
+["menu", "menyu", 9, 0],
+["price", "narx", 9, 0],
+["soup", "sho'rva", 9, 0],
+["chicken", "tovuq", 9, 0],
+["rice", "guruch", 9, 0],
+["noodles", "makaron / lag'mon", 9, 0],
+["birthday", "tug'ilgan kun", 9, 0],
+["evening", "oqshom", 9, 0],
+["meal", "taom", 9, 0],
+["place", "joy", 9, 0],
+["wall", "devor", 9, 0],
+["to arrive", "kelish", 9, 2],
+["to order", "buyurtma berish", 9, 2],
+["to eat", "yemoq", 9, 2],
+["to be satisfied", "mamnun bo'lish", 9, 2],
+["to be glad / happy", "xursand bo'lish", 9, 2],
+["quiet", "sokin", 9, 1],
+["polite", "odobli", 9, 1],
+["helpful", "yordam beruvchi", 9, 1],
+["fast / quick", "tez", 9, 1],
+["fresh", "yangi / toza", 9, 1],
+["warm", "iliq", 9, 1],
+["friendly", "do'stona", 9, 1],
+["pleasant", "yoqimli", 9, 1],
+["comfortable", "qulay", 9, 1],
+["delicious", "mazali", 9, 1],
+["modern", "zamonaviy", 9, 1],
+["cozy", "qulay / iliq", 9, 1],
+["reasonable (price)", "maqbul", 9, 1],
+["bright", "yorqin", 9, 1],
+["full", "to'la", 9, 1],
+["hungry", "och", 9, 1],
+["satisfied / relaxed", "mamnun", 9, 1],
+["tasty", "mazali", 9, 1],
+["soft", "yumshoq", 9, 1],
+["loud", "baland ovozli", 9, 1],
+["hot", "issiq", 9, 1],
+["shopping mall", "savdo markazi", 10, 0],
+["shopping center", "savdo markazi", 10, 0],
+["cousin", "amakivachcha", 10, 0],
+["shoes", "oyoq kiyim", 10, 0],
+["sports store", "sport do'koni", 10, 0],
+["style", "uslub", 10, 0],
+["option", "variant", 10, 0],
+["pair", "juft", 10, 0],
+["size", "o'lcham", 10, 0],
+["sales assistant", "sotuvchi yordamchisi", 10, 0],
+["bag", "paket / xalta", 10, 0],
+["trousers", "shim", 10, 0],
+["jacket", "kurtka", 10, 0],
+["shirt", "ko'ylak", 10, 0],
+["clothing store", "kiyim do'koni", 10, 0],
+["counter", "kassa", 10, 0],
+["month", "oy", 10, 0],
+["advice", "maslahat", 10, 0],
+["to look at / for", "qarash / qidirish", 10, 2],
+["to try on", "kiyib ko'rish", 10, 2],
+["to feel", "his qilish", 10, 2],
+["to choose", "tanlash", 10, 2],
+["to compare", "solishtirish", 10, 2],
+["to buy", "sotib olish", 10, 2],
+["to pay", "to'lash", 10, 2],
+["to leave", "ketish", 10, 2],
+["to show", "ko'rsatish", 10, 2],
+["to suit", "mos kelish", 10, 2],
+["to need", "kerak bo'lish", 10, 2],
+["to want", "istamoq", 10, 2],
+["to receive", "olish", 10, 2],
+["to decide", "qaror qilish", 10, 2],
+["comfortable", "qulay", 10, 1],
+["black", "qora", 10, 1],
+["dark blue", "to'q ko'k", 10, 1],
+["light gray", "och kulrang", 10, 1],
+["simple", "oddiy", 10, 1],
+["neat", "tartibli", 10, 1],
+["reasonable (price)", "maqbul", 10, 1],
+["new", "yangi", 10, 1],
+["right (correct)", "to'g'ri", 10, 1],
+["supermarket", "supermarket", 11, 0],
+["bread", "non", 11, 0],
+["rice", "guruch", 11, 0],
+["fruit", "meva", 11, 0],
+["line / queue", "navbat", 11, 0],
+["bakery section", "non bo'limi", 11, 0],
+["banana", "banan", 11, 0],
+["orange", "apelsin", 11, 0],
+["apple", "olma", 11, 0],
+["chocolate", "shokolad", 11, 0],
+["juice", "sharbat", 11, 0],
+["price", "narx", 11, 0],
+["item", "tovar", 11, 0],
+["cart", "aravacha", 11, 0],
+["milk", "sut", 11, 0],
+["egg", "tuxum", 11, 0],
+["butter", "sariyog'", 11, 0],
+["yogurt", "yogurt", 11, 0],
+["cheese", "pishloq", 11, 0],
+["cucumber", "bodring", 11, 0],
+["carrot", "sabzi", 11, 0],
+["tomato", "pomidor", 11, 0],
+["potato", "kartoshka", 11, 0],
+["coffee", "qahva", 11, 0],
+["tea", "choy", 11, 0],
+["shopping list", "xarid ro'yxati", 11, 0],
+["dairy section", "sut mahsulotlari bo'limi", 11, 0],
+["shelf", "javon", 11, 0],
+["money", "pul", 11, 0],
+["area", "bo'lim", 11, 0],
+["to need", "ehtiyoj sezish", 11, 2],
+["to stand in line", "navbatda turish", 11, 2],
+["to choose", "tanlash", 11, 2],
+["to pick / take", "olish", 11, 2],
+["to want", "istamoq", 11, 2],
+["to buy", "sotib olish", 11, 2],
+["to look for", "qidirish", 11, 2],
+["to pay", "to'lash", 11, 2],
+["to leave", "ketish", 11, 2],
+["to spend", "sarflash", 11, 2],
+["to find", "topish", 11, 2],
+["to put", "qo'yish", 11, 2],
+["to walk", "yurish", 11, 2],
+["to decide", "qaror qilish", 11, 2],
+["crowded", "gavjum", 11, 1],
+["fresh", "yangi / toza", 11, 1],
+["high (price)", "yuqori", 11, 1],
+["satisfied", "mamnun", 11, 1],
+["empty", "bo'sh", 11, 1],
+["available", "mavjud", 11, 1],
+["important", "muhim", 11, 1],
+["city", "shahar", 12, 0],
+["street", "ko'cha", 12, 0],
+["car", "mashina", 12, 0],
+["building", "bino", 12, 0],
+["office", "ofis", 12, 0],
+["supermarket", "supermarket", 12, 0],
+["café", "kafe", 12, 0],
+["park", "park", 12, 0],
+["bench", "skameyka", 12, 0],
+["center", "markaz", 12, 0],
+["shop", "do'kon", 12, 0],
+["river", "daryo", 12, 0],
+["market", "bozor", 12, 0],
+["memory", "xotira", 12, 0],
+["hometown", "ona shahar", 12, 0],
+["colleague", "hamkasb", 12, 0],
+["friend", "do'st", 12, 0],
+["restaurant", "restoran", 12, 0],
+["area", "hudud", 12, 0],
+["change", "o'zgarish", 12, 0],
+["childhood", "bolalik", 12, 0],
+["place", "joy", 12, 0],
+["life", "hayot", 12, 0],
+["time", "vaqt", 12, 0],
+["morning", "ertalab", 12, 0],
+["to move", "ko'chib o'tish", 12, 2],
+["to rent", "ijaraga olish", 12, 2],
+["to find", "topish", 12, 2],
+["to know", "bilish", 12, 2],
+["to meet", "uchrashish", 12, 2],
+["to visit", "ziyorat qilish", 12, 2],
+["to sit", "o'tirish", 12, 2],
+["to notice", "sezish", 12, 2],
+["to walk", "yurish", 12, 2],
+["to understand", "tushunish", 12, 2],
+["to help", "yordam berish", 12, 2],
+["to look at", "qarash", 12, 2],
+["to talk", "gaplashish", 12, 2],
+["to return", "qaytish", 12, 2],
+["to arrive", "kelish", 12, 2],
+["big", "katta", 12, 1],
+["busy", "band", 12, 1],
+["old", "eski", 12, 1],
+["close", "yaqin", 12, 1],
+["different", "boshqa", 12, 1],
+["comfortable", "qulay", 12, 1],
+["beautiful", "chiroyli", 12, 1],
+["new", "yangi", 12, 1],
+["pleasant", "yoqimli", 12, 1],
+["short", "qisqa", 12, 1],
+["current", "hozirgi", 12, 1],
+["narrow", "tor", 12, 1],
+["bus stop", "avtobus bekati", 13, 0],
+["schedule", "jadval", 13, 0],
+["woman", "ayol", 13, 0],
+["tourist / visitor", "sayyoh / mehmon", 13, 0],
+["direction", "yo'nalish", 13, 0],
+["hospital", "kasalxona", 13, 0],
+["street", "ko'cha", 13, 0],
+["bank", "bank", 13, 0],
+["corner", "burchak", 13, 0],
+["road / way", "yo'l", 13, 0],
+["map", "xarita", 13, 0],
+["route", "marshrut", 13, 0],
+["hotel", "mehmonxona", 13, 0],
+["museum", "muzey", 13, 0],
+["train station", "temir yo'l stantsiyasi", 13, 0],
+["pharmacy", "dorixona", 13, 0],
+["square", "maydon", 13, 0],
+["block", "kvartal", 13, 0],
+["building", "bino", 13, 0],
+["park", "park", 13, 0],
+["guidebook", "yo'llanma kitob", 13, 0],
+["country", "mamlakat", 13, 0],
+["bus", "avtobus", 13, 0],
+["traffic", "trafik", 13, 0],
+["name (of street)", "nom", 13, 0],
+["to stand", "turish", 13, 2],
+["to check", "tekshirish", 13, 2],
+["to ask", "so'rash", 13, 2],
+["to listen", "tinglash", 13, 2],
+["to explain", "tushuntirish", 13, 2],
+["to point", "ko'rsatish", 13, 2],
+["to turn", "burilish", 13, 2],
+["to thank", "minnatdorchilik bildirish", 13, 2],
+["to walk", "borish / yurish", 13, 2],
+["to cross", "kesib o'tish", 13, 2],
+["to reach", "yetib borish", 13, 2],
+["to repeat", "takrorlash", 13, 2],
+["to remember", "eslab qolish", 13, 2],
+["to help", "yordam berish", 13, 2],
+["to describe", "tasvirlash", 13, 2],
+["straight", "to'g'ri", 13, 5],
+["to the right", "o'ngga", 13, 5],
+["to the left", "chapga", 13, 5],
+["slowly", "sekin", 13, 5],
+["step by step", "qadam ba qadam", 13, 5],
+["carefully", "ehtiyotkorlik bilan", 13, 5],
+["quickly", "tez", 13, 5],
+["nearby", "yaqin atrofda", 13, 5],
+["transport", "transport", 14, 0],
+["bus", "avtobus", 14, 0],
+["car", "mashina / avtomobil", 14, 0],
+["train", "poyezd", 14, 0],
+["plane", "samolyot", 14, 0],
+["subway / underground", "metro", 14, 0],
+["trip / journey", "sayohat", 14, 0],
+["traffic", "trafik", 14, 0],
+["view", "manzara", 14, 0],
+["relatives", "qarindoshlar", 14, 0],
+["flight", "parvoz", 14, 0],
+["future", "kelajak", 14, 0],
+["role", "rol'", 14, 0],
+["winter", "qish", 14, 0],
+["summer", "yoz", 14, 0],
+["capital city", "poytaxt", 14, 0],
+["uncle", "amaki", 14, 0],
+["cousin", "amakivachcha", 14, 0],
+["colleague", "hamkasb", 14, 0],
+["brother", "aka / uka", 14, 0],
+["friend", "do'st", 14, 0],
+["time", "vaqt", 14, 0],
+["hour", "soat", 14, 0],
+["city", "shahar", 14, 0],
+["country", "mamlakat", 14, 0],
+["to drive", "haydash", 14, 2],
+["to take (bus)", "minish", 14, 2],
+["to travel", "sayohat qilish", 14, 2],
+["to buy", "sotib olish", 14, 2],
+["to change", "o'zgartirish", 14, 2],
+["to use", "foydalanish", 14, 2],
+["to return", "qaytish", 14, 2],
+["to hope", "umid qilish", 14, 2],
+["to fly", "uchish", 14, 2],
+["to ride", "minib borish", 14, 2],
+["to visit", "tashrif buyurish", 14, 2],
+["to move around", "harakatlanish", 14, 2],
+["to save time", "vaqtni tejash", 14, 2],
+["to enjoy", "zavq olish", 14, 2],
+["heavy (traffic)", "og'ir", 14, 1],
+["comfortable", "qulay", 14, 1],
+["public", "jamoat", 14, 1],
+["long", "uzoq", 14, 1],
+["affordable", "arzon / qulay", 14, 1],
+["important", "muhim", 14, 1],
+["simple", "oddiy", 14, 1],
+["fast", "tez", 14, 1],
+["exciting", "hayajonli", 14, 1],
+["pleasant", "yoqimli", 14, 1],
+["cheap", "arzon", 14, 1],
+["convenient", "qulay", 14, 1],
+["weekend", "dam olish kunlari", 15, 0],
+["break", "tanaffus", 15, 0],
+["beginning", "boshlanish", 15, 0],
+["month", "oy", 15, 0],
+["office", "ofis", 15, 0],
+["movie", "film", 15, 0],
+["Friday", "juma", 15, 0],
+["Saturday", "shanba", 15, 0],
+["Sunday", "yakshanba", 15, 0],
+["market", "bozor", 15, 0],
+["morning", "ertalab", 15, 0],
+["afternoon", "tush vaqti", 15, 0],
+["evening", "oqshom", 15, 0],
+["night", "kech", 15, 0],
+["hometown", "ona shahar", 15, 0],
+["neighbor", "qo'shni", 15, 0],
+["meal", "ovqat", 15, 0],
+["conversation", "suhbat", 15, 0],
+["childhood", "bolalik", 15, 0],
+["arrival", "kelish", 15, 0],
+["vegetable", "sabzavot", 15, 0],
+["news", "yangiliklar", 15, 0],
+["week", "hafta", 15, 0],
+["lunch", "tushlik", 15, 0],
+["hours", "soatlar", 15, 0],
+["to stay", "qolish", 15, 2],
+["to rest", "dam olish", 15, 2],
+["to finish", "tugatish", 15, 2],
+["to need", "ehtiyoj sezish", 15, 2],
+["to feel", "his qilish", 15, 2],
+["to clean", "tozalash", 15, 2],
+["to cook", "pishirish", 15, 2],
+["to watch", "ko'rish", 15, 2],
+["to call", "qo'ng'iroq qilish", 15, 2],
+["to spend", "o'tkazish", 15, 2],
+["to visit", "tashrif buyurish", 15, 2],
+["to travel", "sayohat qilish", 15, 2],
+["to reach", "yetib borish", 15, 2],
+["to meet", "uchrashish", 15, 2],
+["to walk", "yurish", 15, 2],
+["to greet", "salomlashish", 15, 2],
+["to share", "ulashish", 15, 2],
+["to arrive", "kelish", 15, 2],
+["to enjoy", "zavq olish", 15, 2],
+["tired", "charchagan", 15, 1],
+["relaxed", "xotirjam", 15, 1],
+["simple", "oddiy", 15, 1],
+["free", "bo'sh", 15, 1],
+["short", "qisqa", 15, 1],
+["pleasant", "yoqimli", 15, 1],
+["peaceful", "tinch", 15, 1],
+["calm", "sokin", 15, 1],
+["quiet", "jim", 15, 1],
+["happy", "xursand", 15, 1],
+["fresh", "yangi / toza", 15, 1],
+["enjoyable", "yoqimli", 15, 1],
+["mountains", "tog'lar", 16, 0],
+["clothes", "kiyim", 16, 0],
+["shoes", "poyabzal", 16, 0],
+["guest house", "kichik mehmonxona", 16, 0],
+["lake", "ko'l", 16, 0],
+["forest", "o'rmon", 16, 0],
+["village", "qishloq", 16, 0],
+["camera", "fotoaparat", 16, 0],
+["photo", "rasm", 16, 0],
+["memory", "xotira", 16, 0],
+["train", "poyezd", 16, 0],
+["hotel", "mehmonxona", 16, 0],
+["ticket", "chipta", 16, 0],
+["sea", "dengiz", 16, 0],
+["beach", "plyaj", 16, 0],
+["coast", "qirg'oq", 16, 0],
+["luggage / bags", "bagaj / sumkalar", 16, 0],
+["guesthouse", "mehmonxona", 16, 0],
+["town", "shaharcha", 16, 0],
+["holiday", "ta'til", 16, 0],
+["night", "kech", 16, 0],
+["day", "kun", 16, 0],
+["activity", "faoliyat", 16, 0],
+["place", "joy", 16, 0],
+["moment", "lahza", 16, 0],
+["rest", "dam olish", 16, 0],
+["family", "oila", 16, 0],
+["to travel", "sayohat qilish", 16, 2],
+["to leave", "ketish", 16, 2],
+["to stay", "qolish", 16, 2],
+["to bring", "olib ketish", 16, 2],
+["to drive", "haydash", 16, 2],
+["to walk", "yurish", 16, 2],
+["to visit", "ziyorat qilish", 16, 2],
+["to take photos", "rasm olish", 16, 2],
+["to believe", "ishonish", 16, 2],
+["to return", "qaytish", 16, 2],
+["to relax", "dam olish", 16, 2],
+["to book / reserve", "band qilish", 16, 2],
+["to prepare", "tayyorlash", 16, 2],
+["to capture", "suratga olish", 16, 2],
+["to organize", "tartibga solish", 16, 2],
+["warm", "iliq", 16, 1],
+["cool", "salqin", 16, 1],
+["sunny", "quyoshli", 16, 1],
+["important", "muhim", 16, 1],
+["short", "qisqa", 16, 1],
+["comfortable", "qulay", 16, 1],
+["nearby", "yaqin atrofdagi", 16, 1],
+["quiet", "sokin", 16, 1],
+["pleasant", "yoqimli", 16, 1],
+["easy", "oson", 16, 1],
+["good", "yaxshi", 16, 1],
+["weather", "ob-havo", 17, 0],
+["winter", "qish", 17, 0],
+["summer", "yoz", 17, 0],
+["spring", "bahor", 17, 0],
+["autumn", "kuz", 17, 0],
+["snow", "qor", 17, 0],
+["rain", "yomg'ir", 17, 0],
+["wind", "shamol", 17, 0],
+["shade", "soya", 17, 0],
+["temperature", "harorat", 17, 0],
+["road", "yo'l", 17, 0],
+["season", "mavsum", 17, 0],
+["heat", "issiqlik", 17, 0],
+["coat", "palto", 17, 0],
+["jacket", "kurtka", 17, 0],
+["condition", "holat", 17, 0],
+["sun", "quyosh", 17, 0],
+["water", "suv", 17, 0],
+["child / children", "bola / bolalar", 17, 0],
+["driver", "haydovchi", 17, 0],
+["country", "mamlakat", 17, 0],
+["health", "sog'liq", 17, 0],
+["beauty", "go'zallik", 17, 0],
+["character", "xarakter", 17, 0],
+["hour", "soat", 17, 0],
+["to snow", "qor yog'ishi", 17, 2],
+["to become", "bo'lmoq", 17, 2],
+["to wear", "kiyish", 17, 2],
+["to stay", "qolish", 17, 2],
+["to drink", "ichish", 17, 2],
+["to prepare", "tayyor bo'lish", 17, 2],
+["to change", "o'zgarish", 17, 2],
+["to protect", "himoya qilish", 17, 2],
+["to carry", "olib yurish", 17, 2],
+["to adjust", "moslashish", 17, 2],
+["to cause", "sabab bo'lish", 17, 2],
+["to drop", "tushmoq", 17, 2],
+["to rise", "ko'tarilmoq", 17, 2],
+["to affect", "ta'sir qilish", 17, 2],
+["dangerous", "xavfli", 17, 1],
+["careful", "ehtiyotkor", 17, 1],
+["hot", "issiq", 17, 1],
+["cold", "sovuq", 17, 1],
+["warm", "iliq", 17, 1],
+["cool", "salqin", 17, 1],
+["rainy", "yomg'irli", 17, 1],
+["cloudy", "bulutli", 17, 1],
+["strong", "kuchli", 17, 1],
+["heavy (snow)", "kuchli (qor)", 17, 1],
+["windy", "shamolli", 17, 1],
+["uncomfortable", "noqulay", 17, 1],
+["extreme", "ekstremal", 17, 1],
+["different", "turli", 17, 1],
+["high", "baland / yuqori", 17, 1],
+["low", "past", 17, 1],
+["can", "qila olmoq", 17, 6],
+["must", "kerak / lozim", 17, 6],
+["should", "lozim", 17, 6],
+["might / may", "bo'lishi mumkin", 17, 6],
+["reading", "o'qish", 18, 0],
+["photography", "fotografiya", 18, 0],
+["painting", "rasm chizish", 18, 0],
+["neighbor", "qo'shni", 18, 0],
+["library", "kutubxona", 18, 0],
+["book", "kitob", 18, 0],
+["story", "hikoya", 18, 0],
+["author", "muallif", 18, 0],
+["novel", "roman", 18, 0],
+["character", "qahramon", 18, 0],
+["challenge", "qiyinchilik", 18, 0],
+["hobby", "qiziqish", 18, 0],
+["activity", "faoliyat", 18, 0],
+["idea", "g'oya", 18, 0],
+["knowledge", "bilim", 18, 0],
+["club", "klub", 18, 0],
+["group", "guruh", 18, 0],
+["paints", "bo'yoqlar", 18, 0],
+["scenery", "manzara", 18, 0],
+["inspiration", "ilhom", 18, 0],
+["culture", "madaniyat", 18, 0],
+["pleasure", "zavq", 18, 0],
+["peace", "tinchlik", 18, 0],
+["creativity", "ijodkorlik", 18, 0],
+["drawing", "rasm", 18, 0],
+["picture", "rasm", 18, 0],
+["interest", "qiziqish", 18, 0],
+["nature", "tabiat", 18, 0],
+["camera", "fotoaparat", 18, 0],
+["art", "san'at", 18, 0],
+["history", "tarix", 18, 0],
+["travel", "sayohat", 18, 0],
+["class", "mashg'ulot", 18, 0],
+["practice", "amaliyot", 18, 0],
+["experience", "tajriba", 18, 0],
+["life", "hayot", 18, 0],
+["year", "yil", 18, 0],
+["to read", "o'qish", 18, 2],
+["to relax", "dam olish", 18, 2],
+["to enjoy", "zavq olish", 18, 2],
+["to photograph", "rasm olish", 18, 2],
+["to draw / paint", "rasm chizish", 18, 2],
+["to share", "ulashish", 18, 2],
+["to join", "qo'shilish", 18, 2],
+["to discuss", "muhokama qilish", 18, 2],
+["to visit", "tashrif buyurish", 18, 2],
+["to understand", "tushunish", 18, 2],
+["to write", "yozish", 18, 2],
+["to tell", "aytib berish", 18, 2],
+["to sit", "o'tirish", 18, 2],
+["to walk", "yurish", 18, 2],
+["to show", "ko'rsatish", 18, 2],
+["to represent", "ifodalash", 18, 2],
+["to practice", "mashq qilish", 18, 2],
+["to love", "sevmoq", 18, 2],
+["to meet", "uchrashish", 18, 2],
+["to continue", "davom ettirish", 18, 2],
+["real", "haqiqiy", 18, 1],
+["popular", "mashhur", 18, 1],
+["young", "yosh", 18, 1],
+["easy", "oson", 18, 1],
+["favorite", "sevimli", 18, 1],
+["friendly", "do'stona", 18, 1],
+["encouraging", "rag'batlantiruvchi", 18, 1],
+["patient", "sabr-toqatli", 18, 1],
+["simple", "oddiy", 18, 1],
+["interesting", "qiziqarli", 18, 1],
+["happy", "baxtli", 18, 1],
+["kind", "mehribon", 18, 1],
+["supportive", "qo'llab-quvvatlovchi", 18, 1],
+["different", "turli", 18, 1],
+["calm", "tinch", 18, 1],
+["free time", "bo'sh vaqt", 19, 0],
+["balcony", "balkon", 19, 0],
+["story", "hikoya", 19, 0],
+["game", "o'yin", 19, 0],
+["skill", "ko'nikma", 19, 0],
+["video", "video", 19, 0],
+["social media", "ijtimoiy tarmoqlar", 19, 0],
+["week", "hafta", 19, 0],
+["television", "televizor", 19, 0],
+["article", "maqola", 19, 0],
+["recipe", "retsept", 19, 0],
+["vocabulary", "lug'at / leksika", 19, 0],
+["music", "musiqa", 19, 0],
+["film", "film", 19, 0],
+["book", "kitob", 19, 0],
+["park", "park", 19, 0],
+["café", "kafe", 19, 0],
+["meal", "ovqat", 19, 0],
+["dish", "taom", 19, 0],
+["food", "ovqat", 19, 0],
+["city", "shahar", 19, 0],
+["task", "topshiriq", 19, 0],
+["English", "ingliz tili", 19, 0],
+["conversation", "suhbat", 19, 0],
+["word", "so'z", 19, 0],
+["kitchen", "oshxona", 19, 0],
+["to spend time", "vaqt o'tkazish", 19, 2],
+["to sit", "o'tirish", 19, 2],
+["to watch", "kuzatish / ko'rish", 19, 2],
+["to decide", "qaror qilish", 19, 2],
+["to play", "o'ynash", 19, 2],
+["to share", "ulashish", 19, 2],
+["to learn", "o'rganish", 19, 2],
+["to avoid", "qochish", 19, 2],
+["to waste", "behuda sarflash", 19, 2],
+["to use", "foydalanish", 19, 2],
+["to finish", "tugatish", 19, 2],
+["to improve", "yaxshilash", 19, 2],
+["to practice", "mashq qilish", 19, 2],
+["to cook", "pishirish", 19, 2],
+["to stay", "qolish", 19, 2],
+["to listen", "tinglash", 19, 2],
+["to read", "o'qish", 19, 2],
+["to meet", "uchrashish", 19, 2],
+["to walk", "yurish", 19, 2],
+["to talk", "gaplashish", 19, 2],
+["to try", "sinab ko'rish", 19, 2],
+["to relax", "dam olish", 19, 2],
+["to help", "yordam berish", 19, 2],
+["to begin", "boshlash", 19, 2],
+["close", "yaqin", 19, 1],
+["useful", "foydali", 19, 1],
+["calm", "tinch", 19, 1],
+["simple", "oddiy", 19, 1],
+["quiet", "sokin", 19, 1],
+["enjoyable", "yoqimli", 19, 1],
+["important", "muhim", 19, 1],
+["busy", "band", 19, 1],
+["new", "yangi", 19, 1],
+["short", "qisqa", 19, 1],
+["easy", "oson", 19, 1],
+["different", "turli", 19, 1],
+["outdoor", "tashqarida", 19, 1],
+["ready", "tayyor", 19, 1],
+["health", "sog'liq", 20, 0],
+["cold (illness)", "shamollash", 20, 0],
+["headache", "bosh og'riq", 20, 0],
+["medicine", "dori", 20, 0],
+["doctor", "shifokor / doktor", 20, 0],
+["problem", "muammo", 20, 0],
+["body", "tana", 20, 0],
+["window", "deraza", 20, 0],
+["fever", "isitma", 20, 0],
+["stomach", "me'da", 20, 0],
+["advice", "maslahat", 20, 0],
+["symptom", "belgi", 20, 0],
+["treatment", "davolash", 20, 0],
+["pain", "og'riq", 20, 0],
+["temperature (body)", "tana harorati", 20, 0],
+["life", "hayot", 20, 0],
+["habit", "odat", 20, 0],
+["strength", "kuch", 20, 0],
+["music", "musiqa", 20, 0],
+["book", "kitob", 20, 0],
+["phone", "telefon", 20, 0],
+["day", "kun", 20, 0],
+["routine", "kundalik tartib", 20, 0],
+["condition", "holat", 20, 0],
+["to feel", "his qilish", 20, 2],
+["to rest", "dam olish", 20, 2],
+["to sleep", "uxlash", 20, 2],
+["to open", "ochish", 20, 2],
+["to wear", "kiyish", 20, 2],
+["to avoid", "qochish", 20, 2],
+["to visit (doctor)", "shifokorga borish", 20, 2],
+["to continue", "davom etish", 20, 2],
+["to return", "qaytish", 20, 2],
+["to recover", "tuzalish", 20, 2],
+["to take (medicine)", "dori qabul qilish", 20, 2],
+["to follow advice", "maslahatga amal qilish", 20, 2],
+["to check", "tekshirish", 20, 2],
+["to examine", "tekshirmoq", 20, 2],
+["to drink", "ichish", 20, 2],
+["to eat", "yemoq", 20, 2],
+["to go away", "yo'qolish", 20, 2],
+["to improve", "yaxshilanish", 20, 2],
+["to regain", "qayta tiklash", 20, 2],
+["to pay attention", "e'tibor berish", 20, 2],
+["to take care", "g'amxo'rlik qilish", 20, 2],
+["to move", "harakat qilish", 20, 2],
+["to live", "yashash", 20, 2],
+["tired", "charchagan", 20, 1],
+["cold", "sovuq", 20, 1],
+["active", "faol", 20, 1],
+["sick / unwell", "kasal", 20, 1],
+["strong", "kuchli", 20, 1],
+["light (food)", "yengil", 20, 1],
+["healthy", "sog'lom", 20, 1],
+["warm", "iliq", 20, 1],
+["better", "yaxshiroq", 20, 1],
+["early", "erta", 20, 1],
+["normal", "normal", 20, 1],
+["good", "yaxshi", 20, 1],
+["important", "muhim", 20, 1],
+["simple", "oddiy", 20, 1],
+["quiet", "sokin", 20, 1],
+["teacher", "o'qituvchi", 21, 0],
+["manager", "menejer", 21, 0],
+["coach", "murabiy", 21, 0],
+["teacher assistant", "o'qituvchi yordamchisi", 21, 0],
+["lesson", "dars", 21, 0],
+["mistake", "xato", 21, 0],
+["homework", "uy vazifasi", 21, 0],
+["result", "natija", 21, 0],
+["patience", "sabr", 21, 0],
+["problem", "muammo", 21, 0],
+["detail", "tafsilot", 21, 0],
+["team", "jamoa", 21, 0],
+["training session", "mashg'ulot", 21, 0],
+["weakness", "zaiflik", 21, 0],
+["meeting", "yig'ilish", 21, 0],
+["break", "tanaffus", 21, 0],
+["voice", "ovoz", 21, 0],
+["task", "topshiriq", 21, 0],
+["instruction", "ko'rsatma", 21, 0],
+["employee", "xodim", 21, 0],
+["explanation", "tushuntirish", 21, 0],
+["attitude", "munosabat", 21, 0],
+["behavior", "xulq", 21, 0],
+["leader", "lider", 21, 0],
+["school", "maktab", 21, 0],
+["office", "ofis", 21, 0],
+["field", "maydon", 21, 0],
+["player", "o'yinchi", 21, 0],
+["beginner", "boshlang'ich darajadagi", 21, 0],
+["exercise", "mashq", 21, 0],
+["company", "kompaniya", 21, 0],
+["height", "bo'y", 21, 0],
+["person", "odam / shaxs", 21, 0],
+["math", "matematika", 21, 0],
+["to explain", "tushuntirish", 21, 2],
+["to correct", "to'g'rilash", 21, 2],
+["to give", "berish", 21, 2],
+["to check", "tekshirish", 21, 2],
+["to smile", "jilmayish", 21, 2],
+["to respect", "hurmat qilish", 21, 2],
+["to solve", "hal qilish", 21, 2],
+["to react", "munosabat bildirish", 21, 2],
+["to expect", "kutish", 21, 2],
+["to notice", "sezish", 21, 2],
+["to improve", "yaxshilash", 21, 2],
+["to speak", "gapirish", 21, 2],
+["to move", "harakat qilish", 21, 2],
+["to watch", "kuzatish", 21, 2],
+["to listen", "tinglash", 21, 2],
+["to prepare", "tayyorlash", 21, 2],
+["to forget", "unutish", 21, 2],
+["to become", "bo'lmoq", 21, 2],
+["to prefer", "afzal ko'rish", 21, 2],
+["to ignore", "e'tiborsiz qoldirish", 21, 2],
+["to raise (voice)", "ko'tarish", 21, 2],
+["to talk", "gaplashish", 21, 2],
+["to try", "harakat qilish", 21, 2],
+["to grow", "o'sish", 21, 2],
+["to understand", "tushunish", 21, 2],
+["strict", "qat'iy", 21, 1],
+["punctual / on time", "vaqtida", 21, 1],
+["intelligent", "aqlli", 21, 1],
+["nervous", "asabiy", 21, 1],
+["serious", "jiddiy", 21, 1],
+["kind / warm", "mehribon", 21, 1],
+["weak", "zaif", 21, 1],
+["tall", "baland bo'yli", 21, 1],
+["slim / thin", "ingichka", 21, 1],
+["medium height", "o'rtacha bo'yli", 21, 1],
+["calm", "xotirjam", 21, 1],
+["friendly", "do'stona", 21, 1],
+["supportive", "qo'llab-quvvatlovchi", 21, 1],
+["patient", "sabr-toqatli", 21, 1],
+["organized", "tartibli", 21, 1],
+["perfect", "mukammal", 21, 1],
+["comfortable", "qulay", 21, 1],
+["difficult", "qiyin", 21, 1],
+["satisfied", "mamnun", 21, 1],
+["distant", "uzoq", 21, 1],
+["stressed", "stressda", 21, 1],
+["confused", "chalkashgan", 21, 1],
+["uncomfortable", "noqulay", 21, 1],
+["impatient", "sabrsiz", 21, 1],
+["encouraging", "rag'batlantiruvchi", 21, 1],
+["strong", "kuchli", 21, 1],
+["energetic", "energiyali", 21, 1],
+["cold (personality)", "sovuq (xarakter)", 21, 1],
+["helpful", "yordam beruvchi", 21, 1],
+["loudly", "baland ovozda", 21, 7],
+["immediately", "darhol", 21, 7],
+["clearly", "aniq", 21, 7],
+["too (much)", "haddan tashqari", 21, 7],
+["carefully", "diqqat bilan", 21, 7],
+["rarely", "kamdan-kam", 21, 7],
+["quickly", "tez", 21, 7],
+["enough", "yetarli", 21, 7],
+["kindly", "mehribonlik bilan", 21, 7],
+["harshly", "qo'pollik bilan", 21, 7],
+["closely", "yaqindan", 21, 7],
+["patiently", "sabr bilan", 21, 7],
+["slowly", "sekin", 21, 7],
+["late", "kech", 21, 7],
+["perfectly", "mukammal tarzda", 21, 7],
+["town", "shaharcha", 22, 0],
+["mountains", "tog'lar", 22, 0],
+["shop", "do'kon", 22, 0],
+["office", "ofis", 22, 0],
+["opportunity", "imkoniyat", 22, 0],
+["transport", "transport", 22, 0],
+["building", "bino", 22, 0],
+["atmosphere", "muhit", 22, 0],
+["hometown", "ona shahar", 22, 0],
+["apartment", "kvartira", 22, 0],
+["neighbor", "qo'shni", 22, 0],
+["street", "ko'cha", 22, 0],
+["house", "uy", 22, 0],
+["road", "yo'l", 22, 0],
+["bus", "avtobus", 22, 0],
+["life", "hayot", 22, 0],
+["education", "ta'lim", 22, 0],
+["restaurant", "restoran", 22, 0],
+["business", "biznes", 22, 0],
+["place", "joy", 22, 0],
+["pace (of life)", "sur'at (hayot)", 22, 0],
+["chance", "imkoniyat", 22, 0],
+["to grow up", "o'sib ulg'ayish", 22, 2],
+["to move", "ko'chib o'tish", 22, 2],
+["to offer", "taklif qilish", 22, 2],
+["to miss", "sog'inish", 22, 2],
+["to feel", "his qilish", 22, 2],
+["to know", "bilish", 22, 2],
+["to prefer", "afzal ko'rish", 22, 2],
+["to provide", "ta'minlash", 22, 2],
+["to stop", "to'xtash", 22, 2],
+["to run (buses)", "yurib turmoq", 22, 2],
+["to use", "foydalanish", 22, 2],
+["to travel", "harakatlanish", 22, 2],
+["quiet — quieter", "sokin — sokinroq", 22, 8],
+["busy — busier", "band — bandroq", 22, 8],
+["crowded — more crowded", "gavjum — gavjumroq", 22, 8],
+["tall — taller", "baland — balandroq", 22, 8],
+["expensive — more expensive", "qimmat — qimmatroq", 22, 8],
+["noisy — noisier", "shovqinli — shovqinliroq", 22, 8],
+["exciting — more exciting", "hayajonli — hayajonliroq", 22, 8],
+["comfortable — more comfortable", "qulay — qulayroq", 22, 8],
+["friendly — more friendly", "do'stona — do'stonaroq", 22, 8],
+["calm — calmer", "tinch — tinchliroq", 22, 8],
+["peaceful", "tinch / osoyishta", 22, 8],
+["familiar", "tanish", 22, 8],
+["simple", "oddiy", 22, 8],
+["old", "eski", 22, 8],
+["narrow", "tor", 22, 8],
+["wide", "keng", 22, 8],
+["slow", "sekin", 22, 8],
+["fast", "tez", 22, 8],
+["active", "faol", 22, 8],
+["lively", "jonli", 22, 8],
+["modern", "zamonaviy", 22, 8],
+["developed", "rivojlangan", 22, 8],
+["change", "o'zgarish", 23, 0],
+["schedule", "jadval", 23, 0],
+["skill", "ko'nikma", 23, 0],
+["position", "lavozim", 23, 0],
+["pressure", "bosim / stress", 23, 0],
+["routine", "kundalik tartib", 23, 0],
+["lifestyle", "hayot tarzi", 23, 0],
+["future", "kelajak", 23, 0],
+["experience", "tajriba", 23, 0],
+["balance", "muvozanat", 23, 0],
+["energy", "energiya", 23, 0],
+["field", "soha", 23, 0],
+["stage", "bosqich", 23, 0],
+["time", "vaqt", 23, 0],
+["year", "yil", 23, 0],
+["evening", "oqshom", 23, 0],
+["family", "oila", 23, 0],
+["city", "shahar", 23, 0],
+["town", "shaharcha", 23, 0],
+["area", "hudud", 23, 0],
+["environment", "muhit", 23, 0],
+["cost (of living)", "yashash narxi", 23, 0],
+["housing", "uy-joy", 23, 0],
+["worry", "xavotir", 23, 0],
+["moment", "lahza", 23, 0],
+["chapter", "bob / davr", 23, 0],
+["to want", "istamoq", 23, 2],
+["to plan", "reja tuzish", 23, 2],
+["to look for", "qidirish", 23, 2],
+["to choose", "tanlash", 23, 2],
+["to imagine", "tasavvur qilish", 23, 2],
+["to learn", "o'rganish", 23, 2],
+["to move", "ko'chib o'tish", 23, 2],
+["to apply (for a job)", "ariza berish", 23, 2],
+["to change", "o'zgartirish", 23, 2],
+["to spend", "o'tkazish", 23, 2],
+["to gain", "qo'lga kiritish", 23, 2],
+["to think", "o'ylash", 23, 2],
+["to hope", "umid qilish", 23, 2],
+["to focus", "diqqatni jamlash", 23, 2],
+["to slow down", "sekinlashish", 23, 2],
+["to create", "yaratish", 23, 2],
+["to build", "qurish", 23, 2],
+["to picture", "tasavvur qilish", 23, 2],
+["to become", "bo'lmoq", 23, 2],
+["stressful", "stressli", 23, 1],
+["flexible", "moslashuvchan", 23, 1],
+["demanding", "talab qiluvchi", 23, 1],
+["useful", "foydali", 23, 1],
+["healthy", "sog'lom", 23, 1],
+["simple", "oddiy", 23, 1],
+["calm", "tinch", 23, 1],
+["balanced", "muvozanatli", 23, 1],
+["meaningful", "mazmunli", 23, 1],
+["less expensive", "arzonroq", 23, 1],
+["practical", "amaliy", 23, 1],
+["valuable", "qadrli", 23, 1],
+["rewarding", "samarali", 23, 1],
+["satisfying", "qoniqarli", 23, 1],
+["important", "muhim", 23, 1],
+["personal", "shaxsiy", 23, 1],
+["current", "hozirgi", 23, 1],
+["quieter", "sokinroq", 23, 1],
+["smaller", "kichikroq", 23, 1],
+["cheaper", "arzonroq", 23, 1],
+["less crowded", "kam gavjum", 23, 1],
+["less noisy", "kam shovqinli", 23, 1],
+["more peaceful", "tinchroq", 23, 1],
+["more modern", "zamonaviyroq", 23, 1],
+["more comfortable", "qulayroq", 23, 1],
+["fulfilling", "to'laqonli", 23, 1],
+["steadier", "barqarorroq", 23, 1],
+["apartment", "kvartira", 24, 0],
+["step", "qadam", 24, 0],
+["adult life", "katta hayot", 24, 0],
+["living room", "mehmonxona", 24, 0],
+["window", "deraza", 24, 0],
+["furniture", "mebel", 24, 0],
+["decision", "qaror", 24, 0],
+["ceremony", "marosim", 24, 0],
+["career", "karyera", 24, 0],
+["manager", "menejer", 24, 0],
+["office", "ofis", 24, 0],
+["chapter", "yangi davr / bob", 24, 0],
+["graduation day", "bitirish kuni", 24, 0],
+["university hall", "universitet zali", 24, 0],
+["teacher", "o'qituvchi", 24, 0],
+["moment", "lahza", 24, 0],
+["ending", "oxiri", 24, 0],
+["beginning", "boshlanish", 24, 0],
+["life", "hayot", 24, 0],
+["change", "o'zgarish", 24, 0],
+["money", "pul", 24, 0],
+["year", "yil", 24, 0],
+["evening", "oqshom", 24, 0],
+["night", "kech", 24, 0],
+["day", "kun", 24, 0],
+["first day", "birinchi kun", 24, 0],
+["task", "topshiriq", 24, 0],
+["rule", "qoida", 24, 0],
+["building", "bino", 24, 0],
+["city", "shahar", 24, 0],
+["street", "ko'cha", 24, 0],
+["colleague", "hamkasb", 24, 0],
+["area", "hudud", 24, 0],
+["education", "ta'lim", 24, 0],
+["to save (money)", "pul yig'ish", 24, 2],
+["to plan", "reja tuzish", 24, 2],
+["to enter", "kirish", 24, 2],
+["to feel", "his qilish", 24, 2],
+["to arrange", "joylashtirish", 24, 2],
+["to organize", "tartibga solish", 24, 2],
+["to build", "qurish", 24, 2],
+["to move (out)", "ko'chib o'tish", 24, 2],
+["to welcome", "kutib olish", 24, 2],
+["to congratulate", "tabriklamoq", 24, 2],
+["to prepare", "tayyorlanish", 24, 2],
+["to study", "o'qish", 24, 2],
+["to reach", "erishmoq", 24, 2],
+["to arrive", "kelish", 24, 2],
+["to explain", "tushuntirish", 24, 2],
+["to stay", "qolish", 24, 2],
+["to finish", "tugatish", 24, 2],
+["to celebrate", "nishonlamoq", 24, 2],
+["to support", "qo'llab-quvvatlash", 24, 2],
+["to imagine", "tasavvur qilish", 24, 2],
+["to live", "yashash", 24, 2],
+["exciting — most exciting", "hayajonli — eng hayajonli", 24, 9],
+["big — biggest", "katta — eng katta", 24, 9],
+["comfortable — most comfortable", "qulay — eng qulay", 24, 9],
+["important — most important", "muhim — eng muhim", 24, 9],
+["special — most special", "maxsus — eng maxsus", 24, 9],
+["memorable — most memorable", "yodda qoladigan", 24, 9],
+["meaningful", "mazmunli", 24, 9],
+["beautiful — most beautiful", "chiroyli — eng chiroyli", 24, 9],
+["modern — most modern", "zamonaviy — eng zamonaviy", 24, 9],
+["active — most active", "faol — eng faol", 24, 9],
+["happy — happiest", "baxtli — eng baxtli", 24, 9],
+["bright", "yorqin", 24, 9],
+["independent", "mustaqil", 24, 9],
+["lonely", "yolg'iz", 24, 9],
+["proud", "g'ururli", 24, 9],
+["nervous", "asabiy", 24, 9],
+["hard — hardest", "qiyin — eng qiyin", 24, 9],
+["easy — easiest", "oson — eng oson", 24, 9],
+["welcoming", "mehribon", 24, 9],
+["quiet — quietest", "sokin — eng sokin", 24, 9],
+["excited", "hayajonlangan", 24, 9],
+["worried", "xavotirli", 24, 9]
+];
+
+var MAXLVL = 5;
+var LVLNAME = ["Yangi", "Tanish", "Oʻrganilyapti", "Yaxshi", "Mustahkam", "Yodlangan"];
+var KEY = "a1words.v1";
+var WORDS = W.map(function (w, i) {
+  return { id: i, en: w[0], uz: w[1], u: w[2], c: w[3], g: CATS[w[3]][1], k: (w[0] + "|" + w[1]).toLowerCase() };
+});
+var UNIT_TITLE = {};
+UNITS.forEach(function (u) { UNIT_TITLE[u[0]] = u; });
+
+/* ---------- saqlash ---------- */
+var store = { p: {} };
+try {
+  var raw0 = localStorage.getItem(KEY);
+  if (raw0) { var o0 = JSON.parse(raw0); if (o0 && o0.p) store = o0; }
+} catch (e) {}
+if (!store.cfg) store.cfg = {};
+function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+function rec(w) {
+  var r = store.p[w.k];
+  if (!r) r = store.p[w.k] = { lvl: 0, ok: 0, bad: 0, mis: false };
+  return r;
+}
+function peek(w) { return store.p[w.k] || { lvl: 0, ok: 0, bad: 0, mis: false }; }
+function unseen(w) { var r = peek(w); return r.ok + r.bad === 0 && r.lvl === 0; }
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function hide(el) { el.hidden = true; el.style.display = "none"; }
+function unhide(el) { el.hidden = false; el.style.display = ""; }
+
+/* ---------- talaffuz ---------- */
+var SPKSVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+  '<path d="M4 9.3h3.3L12 5.4v13.2L7.3 14.7H4z" fill="currentColor"/>' +
+  '<path d="M15.4 9.2a4 4 0 0 1 0 5.6M17.9 6.7a7.5 7.5 0 0 1 0 10.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+var STARSVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+  '<path d="M12 3.2l2.7 5.5 6 .9-4.35 4.25 1.03 6L12 17l-5.38 2.85 1.03-6L3.3 9.6l6-.9z"/></svg>';
+var TTS = typeof window.speechSynthesis !== "undefined" && typeof window.SpeechSynthesisUtterance !== "undefined";
+var voices = [], voice = null, hasEn = false;
+function voiceScore(v) {
+  var n = (v.name || "") + " " + (v.voiceURI || "");
+  var s = 0;
+  if (/natural|neural|premium|enhanced/i.test(n)) s += 100;
+  if (/google/i.test(n)) s += 70;
+  if (/online/i.test(n)) s += 40;
+  if (v.localService === false) s += 20;
+  if (/siri|samantha|daniel|aria|libby|jenny|guy/i.test(n)) s += 25;
+  if (/desktop|compact/i.test(n)) s -= 30;
+  if (/espeak|festival|pico|robot/i.test(n)) s -= 120;
+  if (/^en[-_]US/i.test(v.lang)) s += 10;
+  else if (/^en[-_]GB/i.test(v.lang)) s += 6;
+  return s;
+}
+function fillVoiceSelect() {
+  var sel = $("voiceSel");
+  sel.innerHTML = "";
+  if (!hasEn) {
+    var auto = document.createElement("option");
+    auto.value = ""; auto.textContent = "Brauzer oʻzi tanlasin";
+    sel.appendChild(auto);
+  }
+  voices.forEach(function (v) {
+    var o = document.createElement("option");
+    o.value = v.voiceURI || v.name;
+    o.textContent = v.name + " (" + v.lang + ")";
+    sel.appendChild(o);
+  });
+  sel.value = voice ? (voice.voiceURI || voice.name) : "";
+  sel.disabled = sel.options.length < 2;
+  $("audioHint").textContent = hasEn
+    ? "Ovoz qurilmangizdagi talaffuzdan olinadi — roʻyxatda eng sifatlisi birinchi turadi."
+    : "Qurilmangizda inglizcha ovoz topilmadi, talaffuz gʻalati chiqishi mumkin. Windows’da English (United States) tilini “Nutq” paketi bilan oʻrnating.";
+}
+function loadVoices() {
+  if (!TTS) return;
+  try {
+    var all = speechSynthesis.getVoices() || [];
+    if (!all.length) return;
+    var en = all.filter(function (v) { return /^en([-_]|$)/i.test(v.lang || ""); });
+    hasEn = en.length > 0;
+    voices = hasEn ? en : all.slice(0, 25);
+    voices.sort(function (a, b) { return voiceScore(b) - voiceScore(a); });
+    voice = null;
+    if (store.cfg.voice) voice = voices.filter(function (v) { return v.voiceURI === store.cfg.voice || v.name === store.cfg.voice; })[0] || null;
+    if (!voice && hasEn) voice = voices[0];
+    fillVoiceSelect();
+  } catch (e) {}
+}
+function say(text, el) {
+  if (!TTS || !text) return;
+  try { speechSynthesis.cancel(); } catch (e) {}
+  var u = new SpeechSynthesisUtterance(String(text).replace(/\//g, " or ").replace(/\(.*?\)/g, "").replace(/—/g, ","));
+  if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = "en-US";
+  var r = parseFloat(store.cfg.rate);
+  u.rate = isNaN(r) ? 0.9 : r;
+  if (el) { el.classList.add("on"); u.onend = u.onerror = function () { el.classList.remove("on"); }; }
+  setTimeout(function () { try { speechSynthesis.speak(u); } catch (e) {} }, 50);
+}
+
+/* ---------- javobni tekshirish ---------- */
+function norm(s) {
+  return (s || "").toLowerCase()
+    .replace(/[ʻʼ‘’`´']/g, "'")
+    .replace(/[—–]/g, "-")
+    .replace(/\s*-\s*/g, " - ")
+    .replace(/[….!?]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+function noParen(s) { return s.replace(/\([^)]*\)/g, " ").replace(/\s+/g, " ").trim(); }
+function bare(x) { return x.replace(/'/g, ""); }
+/* oʻzbekcha feʻl: "ishlash" = "ishlamoq" = "ishla" */
+function uzStem(x) { return x.split(" ").map(function (t) { return t.replace(/(moq|sh)$/, "").replace(/[aeiou]$/, ""); }).join(" "); }
+function enBase(x) { return x.replace(/^to /, ""); }
+function variants(correct) {
+  var full = norm(correct), set = {};
+  [full, noParen(full)].forEach(function (f) {
+    set[f] = 1;
+    f.split(/\s*[\/,;]\s*/).forEach(function (p) { if (p) { set[p] = 1; set[noParen(p)] = 1; } });
+  });
+  return Object.keys(set).filter(Boolean);
+}
+function lev(a, b) {
+  if (Math.abs(a.length - b.length) > 1) return 2;
+  var prev = [], cur, i, j;
+  for (j = 0; j <= b.length; j++) prev[j] = j;
+  for (i = 1; i <= a.length; i++) {
+    cur = [i];
+    for (j = 1; j <= b.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[b.length];
+}
+/* natija: 2 — toʻgʻri, 1 — kichik imlo xatosi bilan toʻgʻri, 0 — xato */
+function checkAns(user, correct, lang) {
+  var u = norm(user);
+  if (!u) return 0;
+  var acc = variants(correct);
+  var f = lang === "uz"
+    ? function (x) { return uzStem(bare(x)); }
+    : function (x) { return enBase(x); };
+  var fu = f(u);
+  for (var i = 0; i < acc.length; i++) if (acc[i] === u || f(acc[i]) === fu) return 2;
+  for (i = 0; i < acc.length; i++) {
+    var a = lang === "uz" ? bare(acc[i]) : enBase(acc[i]);
+    var b = lang === "uz" ? bare(u) : enBase(u);
+    if (a.length >= 5 && lev(a, b) <= 1) return 1;
+  }
+  return 0;
+}
+
+/* ---------- koʻrinishlar ---------- */
+var VIEWS = ["setup", "quiz", "result", "units", "mistakes", "starred", "stats"];
+function show(name) {
+  VIEWS.forEach(function (v) { $("v-" + v).hidden = v !== name; });
+  window.scrollTo(0, 0);
+}
+function setTab(t) {
+  Array.prototype.forEach.call(document.querySelectorAll("nav.tabs button"), function (b) {
+    b.setAttribute("aria-selected", String(b.getAttribute("data-view") === t));
+  });
+  if (t === "train") { if (!quiz) renderUnitPick(); show(quiz ? "quiz" : "setup"); }
+  if (t === "units") { renderUnits(); show("units"); }
+  if (t === "mistakes") { renderMistakes(); show("mistakes"); }
+  if (t === "starred") { renderStarred(); show("starred"); }
+  if (t === "stats") { renderStats(); show("stats"); }
+}
+Array.prototype.forEach.call(document.querySelectorAll("nav.tabs button"), function (b) {
+  b.addEventListener("click", function () { setTab(b.getAttribute("data-view")); });
+});
+function pips(lvl) {
+  var h = '<span class="pips" title="Level ' + lvl + " — " + LVLNAME[lvl] + '">';
+  for (var i = 1; i <= MAXLVL; i++) h += '<i class="' + (i <= lvl ? (lvl === MAXLVL ? "full" : "on") : "") + '"></i>';
+  return h + "</span>";
+}
+function unitWords(n) { return WORDS.filter(function (w) { return w.u === n; }); }
+function learnedIn(list) { return list.filter(function (w) { return peek(w).lvl >= MAXLVL; }).length; }
+
+/* ---------- sozlamalar ---------- */
+function radio(name) { var r = document.querySelector("input[name=" + name + "]:checked"); return r ? r.value : null; }
+function setRadio(name, val) {
+  var r = document.querySelector("input[name=" + name + "][value=\"" + val + "\"]");
+  if (r) r.checked = true;
+}
+function selUnits() {
+  return Array.prototype.map.call(document.querySelectorAll("#unitPick input:checked"), function (c) { return parseInt(c.value, 10); });
+}
+function renderUnitPick() {
+  var picked = store.cfg.units || [1];
+  $("unitPick").innerHTML = UNITS.map(function (u) {
+    var list = unitWords(u[0]);
+    return '<label class="uopt"><input type="checkbox" value="' + u[0] + '"' + (picked.indexOf(u[0]) > -1 ? " checked" : "") +
+      '><span><b>Unit ' + u[0] + '</b> ' + esc(u[2]) + '<small>' + learnedIn(list) + " / " + list.length + "</small></span></label>";
+  }).join("");
+  updUnitInfo();
+}
+function updUnitInfo() {
+  var us = selUnits();
+  var n = WORDS.filter(function (w) { return us.indexOf(w.u) > -1; }).length;
+  $("uInfo").textContent = us.length ? us.length + " ta unit · " + n + " ta soʻz" : "Unit tanlanmagan";
+}
+$("unitPick").addEventListener("change", updUnitInfo);
+$("uAll").addEventListener("click", function () {
+  Array.prototype.forEach.call(document.querySelectorAll("#unitPick input"), function (c) { c.checked = true; });
+  updUnitInfo();
+});
+$("uNone").addEventListener("click", function () {
+  Array.prototype.forEach.call(document.querySelectorAll("#unitPick input"), function (c) { c.checked = false; });
+  updUnitInfo();
+});
+Array.prototype.forEach.call(document.querySelectorAll("input[name=cnt]"), function (r) {
+  r.addEventListener("change", function () { $("customBox").hidden = radio("cnt") !== "custom"; });
+});
+["grp", "dir", "mode", "cnt", "ord", "pool"].forEach(function (n) { if (store.cfg[n]) setRadio(n, store.cfg[n]); });
+$("customBox").hidden = radio("cnt") !== "custom";
+if (store.cfg.custom) $("customCount").value = store.cfg.custom;
+
+function pickPool(kind, base) {
+  if (kind === "unseen") return base.filter(unseen);
+  if (kind === "mistakes") return base.filter(function (w) { return peek(w).mis; });
+  if (kind === "unlearned") return base.filter(function (w) { return peek(w).lvl < MAXLVL; });
+  if (kind === "starred") return base.filter(function (w) { return peek(w).star; });
+  return base;
+}
+function shuffle(a) {
+  for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+
+/* ---------- mashq ---------- */
+var quiz = null, cfg = null;
+function buildQuiz(conf, list) {
+  var pool = list ? list.slice() : pickPool(conf.pool, WORDS.filter(function (w) {
+    return conf.units.indexOf(w.u) > -1 && (conf.grp === "all" || w.g === conf.grp);
+  }));
+  if (!pool.length) return null;
+  if (!list) {
+    if (conf.order === "rnd") shuffle(pool);
+    else if (conf.order === "weak") pool.sort(function (a, b) { return (peek(a).lvl - peek(b).lvl) || (peek(b).bad - peek(a).bad) || (a.id - b.id); });
+  }
+  var n = conf.count === "all" ? pool.length : Math.min(pool.length, conf.count);
+  var items = pool.slice(0, n);
+  return {
+    items: items, dirs: items.map(function () { return conf.dir === "mix" ? (Math.random() < 0.5 ? "en" : "uz") : conf.dir; }),
+    i: 0, ok: 0, bad: 0, wrongList: [], hist: [], draft: [], graded: false, flipped: false
+  };
+}
+function startQuiz(conf, list) {
+  var q = buildQuiz(conf, list);
+  if (!q) {
+    $("setupErr").hidden = false;
+    $("setupErr").textContent = "Tanlangan sozlamalar boʻyicha soʻz topilmadi. Boshqa unit yoki variantni tanlang.";
+    setTab("train");
+    return;
+  }
+  $("setupErr").hidden = true;
+  cfg = conf; quiz = q;
+  setTab("train");
+  show("quiz");
+  renderQ();
+}
+function curWord() { return quiz.items[quiz.i]; }
+function asked(i) { return quiz.dirs[i === undefined ? quiz.i : i]; }   /* "en": inglizcha koʻrsatiladi */
+function answerOf(w, dir) { return dir === "en" ? w.uz : w.en; }
+function barUpd() { $("qbar").style.width = (quiz.hist.filter(Boolean).length / quiz.items.length * 100) + "%"; }
+
+function renderQ() {
+  var q = quiz, w = curWord(), r = peek(w), dir = asked(), past = q.hist[q.i];
+  q.graded = false; q.flipped = false;
+  $("qpos").textContent = (q.i + 1) + " / " + q.items.length + " · Unit " + w.u + " · level " + r.lvl;
+  $("qscore").textContent = "✓ " + q.ok + "   ✗ " + q.bad;
+  barUpd();
+  $("ptag").textContent = dir === "en" ? "Inglizcha" : "Oʻzbekcha";
+  $("pword").textContent = dir === "en" ? w.en : w.uz;
+  $("pword").className = "word" + (dir === "uz" ? " uz" : "");
+  $("pmeta").textContent = CATS[w.c][0] + " · " + UNIT_TITLE[w.u][2];
+  $("prevBtn").hidden = q.i === 0;
+  $("reviewNote").hidden = !past;
+  paintStar($("starBtn"), r.star);
+  paintLearnBtn(w);
+
+  var spk = $("spkPrompt");
+  if (TTS && dir === "en") {
+    unhide(spk);
+    spk.onclick = function () { say(w.en, spk); };
+    if (store.cfg.autoSay !== false && !past) say(w.en, spk);
+  } else hide(spk);
+
+  var f = $("ansField"), inp = $("ans");
+  f.className = "field" + (dir === "en" ? " uzf" : "");
+  var old = f.querySelector(".fix"); if (old) old.remove();
+  inp.readOnly = false;
+  inp.value = "";
+  $("verdict").hidden = true;
+  $("cardAns").hidden = true;
+  $("dontknowBtn").hidden = false;
+
+  if (cfg.mode === "card") {
+    $("typeBox").hidden = true;
+    $("checkBtn").textContent = "Javobni koʻrsatish";
+    $("dontknowBtn").textContent = "Bilmadim";
+    $("kbdHint").innerHTML = "Enter — javobni koʻrsatish / Bildim · <b>B</b> — Bilmadim · ↑ yoki <b>O</b> — oldingi soʻz · ↓ — keyingi (javobdan keyin) · ← → — tugmalar orasida · <b>Y</b> — Yodladim · * — yulduzcha";
+  } else {
+    $("typeBox").hidden = false;
+    $("ansLabel").textContent = dir === "en" ? "Oʻzbekchasini yozing" : "Inglizchasini yozing";
+    inp.placeholder = dir === "en" ? "oʻzbekcha maʼnosi" : "inglizcha soʻz";
+    $("checkBtn").textContent = "Tekshirish";
+    $("dontknowBtn").textContent = "Bilmadim";
+    $("kbdHint").innerHTML = "Enter — tekshirish / keyingi soʻz · ↑ — oldingi soʻz · ↓ — tugmalarga · ← → — tugmalar orasida · <b>B</b> — Bilmadim · <b>Y</b> — Yodladim · <b>O</b> — Oldingi (tugmada turganda) · * — yulduzcha";
+  }
+
+  if (past) { paintGraded(past, w, false); return; }
+  if (cfg.mode === "card") { $("checkBtn").focus(); return; }
+  if (q.draft[q.i]) inp.value = q.draft[q.i];
+  inp.focus();
+}
+
+function flip() {
+  var w = curWord(), dir = asked();
+  quiz.flipped = true;
+  var ca = $("cardAns");
+  ca.hidden = false;
+  ca.innerHTML = '<span class="flabel">' + (dir === "en" ? "Oʻzbekchasi" : "Inglizchasi") + "</span><b>" + esc(answerOf(w, dir)) + "</b>";
+  if (dir === "uz" && TTS && store.cfg.autoSay !== false) say(w.en);
+  $("checkBtn").textContent = "✓ Bildim";
+  $("dontknowBtn").textContent = "✗ Bilmadim";
+  $("checkBtn").focus();
+}
+
+function grade(result, giveUp) {
+  var q = quiz, w = curWord(), r = rec(w), dir = asked();
+  var mine = cfg.mode === "card" ? null : $("ans").value;
+  var good = result > 0;
+  var before = r.lvl;
+  if (good) {
+    q.ok++; r.ok++;
+    r.lvl = Math.min(MAXLVL, r.lvl + 1);
+    if (r.mis && r.lvl >= MAXLVL) r.mis = false;
+  } else {
+    q.bad++; r.bad++;
+    r.lvl = Math.max(0, r.lvl - 1);
+    r.mis = true;
+    q.wrongList.push({ w: w, mine: mine, dir: dir });
+  }
+  save();
+  q.hist[q.i] = { mine: mine, good: good, typo: result === 1, giveUp: !!giveUp, before: before, after: r.lvl, mis: r.mis };
+  delete q.draft[q.i];
+  barUpd();
+  paintGraded(q.hist[q.i], w, true);
+  updateBrand();
+}
+
+function paintGraded(h, w, fresh) {
+  var q = quiz, dir = asked(), ans = answerOf(w, dir);
+  if (cfg.mode === "card") {
+    var ca = $("cardAns");
+    ca.hidden = false;
+    ca.innerHTML = '<span class="flabel">' + (dir === "en" ? "Oʻzbekchasi" : "Inglizchasi") + "</span><b>" + esc(ans) + "</b>";
+  } else {
+    var f = $("ansField"), inp = $("ans");
+    inp.value = h.mine || "";
+    inp.readOnly = true;
+    f.classList.remove("good", "wrong");
+    f.classList.add(h.good ? "good" : "wrong");
+    var old = f.querySelector(".fix"); if (old) old.remove();
+    var fix = document.createElement("p");
+    fix.className = "fix" + (h.good && !h.typo ? "" : " no");
+    fix.innerHTML = h.good && !h.typo ? "<b>✓ toʻgʻri</b>" + (norm(h.mine) !== norm(ans) ? " · " + esc(ans) : "")
+      : (h.typo ? "<b>≈ deyarli toʻgʻri</b>, toʻgʻri yozilishi: <b>" : "<b>✗</b> toʻgʻrisi: <b>") + esc(ans) + "</b>";
+    f.appendChild(fix);
+  }
+  if (TTS && dir === "uz" && fresh && store.cfg.autoSay !== false && cfg.mode !== "card") say(w.en);
+  paintVerdict(h);
+  q.graded = true;
+  $("qscore").textContent = "✓ " + q.ok + "   ✗ " + q.bad;
+  $("checkBtn").textContent = q.i + 1 < q.items.length ? "Keyingi soʻz" : "Yakunlash";
+  $("dontknowBtn").hidden = true;
+  $("checkBtn").focus();
+}
+function paintVerdict(h) {
+  var vd = $("verdict");
+  vd.hidden = false;
+  vd.className = "verdict " + (h.good || h.learned ? "good" : "bad");
+  var head = h.learnedOnly ? "Yodlangan deb belgilandi." :
+    (h.good ? (h.typo ? "Qabul qilindi — kichik imlo xatosi bor." : "Toʻgʻri.") :
+      (h.giveUp ? "Toʻgʻri javob yuqorida — soʻz xatolar roʻyxatiga qoʻshildi." : "Xato — soʻz xatolar roʻyxatiga qoʻshildi."));
+  if (h.learned && !h.learnedOnly) head = (h.good ? "Toʻgʻri" : "Xato edi") + " — keyin yodlangan deb belgilandi.";
+  vd.innerHTML = head + '<span class="lvl">Level ' + h.before + " → " + h.after + " · " + LVLNAME[h.after] +
+    (h.mis ? " · xatolar roʻyxatida" : "") + "</span>";
+}
+
+function next() {
+  if (quiz.i + 1 >= quiz.items.length) { finish(false); return; }
+  quiz.i++;
+  renderQ();
+}
+function prev() {
+  var q = quiz;
+  if (!q || q.i === 0) return;
+  if (!q.hist[q.i] && cfg.mode !== "card") q.draft[q.i] = $("ans").value;
+  q.i--;
+  renderQ();
+}
+
+$("qform").addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (!quiz) return;
+  if (quiz.graded) { next(); return; }
+  if (cfg.mode === "card") { if (!quiz.flipped) flip(); else grade(2); return; }
+  var w = curWord();
+  if (!norm($("ans").value)) { $("ans").focus(); return; }
+  grade(checkAns($("ans").value, answerOf(w, asked()), asked() === "en" ? "uz" : "en"));
+});
+$("dontknowBtn").addEventListener("click", function () { if (quiz && !quiz.graded) grade(0, true); });
+$("quitBtn").addEventListener("click", function () { finish(true); });
+$("prevBtn").addEventListener("click", prev);
+
+/* ---------- yulduzcha va "Yodladim" ---------- */
+function paintStar(btn, on) {
+  btn.setAttribute("aria-pressed", String(!!on));
+  var t = on ? "Yulduzchani olib tashlash (*)" : "Yulduzcha qoʻyish — yaxshilab oʻrganish kerak (*)";
+  btn.title = t; btn.setAttribute("aria-label", t);
+}
+function toggleStar(w) { var r = rec(w); r.star = !r.star; save(); updateBrand(); return r.star; }
+$("starBtn").innerHTML = STARSVG;
+$("starBtn").addEventListener("click", function () { if (quiz) paintStar($("starBtn"), toggleStar(curWord())); });
+
+function paintLearnBtn(w) {
+  var b = $("learnBtn"), done = peek(w).lvl >= MAXLVL;
+  b.setAttribute("aria-pressed", String(done));
+  b.textContent = done ? "✓ Yodlangan" : "✓ Yodladim";
+  b.title = done ? "Yodlangan. Bosib bekor qilish mumkin (Y)" : "Bu soʻzni yodladim — level 5 boʻladi (Y)";
+}
+function setLearned(w) {
+  var r = rec(w), before = r.lvl;
+  if (before < MAXLVL) { r.pre = before; r.preMis = r.mis; }
+  r.lvl = MAXLVL; r.mis = false;
+  save(); updateBrand();
+  return before;
+}
+function unsetLearned(w) {
+  var r = rec(w);
+  r.lvl = typeof r.pre === "number" && r.pre < MAXLVL ? r.pre : MAXLVL - 1;
+  if (r.preMis) r.mis = true;
+  delete r.pre; delete r.preMis;
+  save(); updateBrand();
+}
+function toggleLearned(w) { if (peek(w).lvl >= MAXLVL) unsetLearned(w); else setLearned(w); }
+$("learnBtn").addEventListener("click", function () {
+  var q = quiz;
+  if (!q) return;
+  var w = curWord(), h = q.hist[q.i];
+  if (peek(w).lvl >= MAXLVL) {
+    unsetLearned(w);
+    if (h && h.learnedOnly) { delete q.hist[q.i]; renderQ(); return; }
+    if (h) { h.after = peek(w).lvl; h.mis = peek(w).mis; h.learned = false; paintVerdict(h); }
+  } else {
+    var before = setLearned(w);
+    if (!h) {
+      h = q.hist[q.i] = { mine: cfg.mode === "card" ? null : answerOf(w, asked()), good: true, typo: false, before: before,
+        after: MAXLVL, mis: false, learned: true, learnedOnly: true };
+      delete q.draft[q.i];
+      paintGraded(h, w, false);
+    } else { h.after = MAXLVL; h.mis = false; h.learned = true; paintVerdict(h); }
+  }
+  barUpd();
+  $("qpos").textContent = (q.i + 1) + " / " + q.items.length + " · Unit " + w.u + " · level " + peek(w).lvl;
+  paintLearnBtn(w);
+  $("checkBtn").focus();
+});
+
+/* ---------- klaviatura ---------- */
+$("ans").addEventListener("keydown", function (e) {
+  if (e.key === "*" && !e.ctrlKey && !e.altKey && !e.metaKey) { e.preventDefault(); $("starBtn").click(); return; }
+  if (!quiz || quiz.graded || e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) return;
+  if (e.key === "ArrowUp") { e.preventDefault(); prev(); }
+  else if (e.key === "ArrowDown") { e.preventDefault(); $("checkBtn").focus(); }
+  else if (e.key === "ArrowLeft" && $("ans").value === "" && quiz.i > 0) { e.preventDefault(); prev(); }
+});
+$("ans").addEventListener("input", function () {
+  var inp = $("ans");
+  if (inp.value.indexOf("*") > -1) { inp.value = inp.value.replace(/\*/g, ""); $("starBtn").click(); }
+});
+document.addEventListener("keydown", function (e) {
+  if (!quiz || $("v-quiz").hidden || e.ctrlKey || e.altKey || e.metaKey) return;
+  var k = e.key, t = e.target, tag = ((t && t.tagName) || "").toLowerCase();
+  var typing = (tag === "input" && !t.readOnly) || tag === "select" || tag === "textarea";
+  if (typing) return;
+  if (k === "*") { e.preventDefault(); $("starBtn").click(); return; }
+  var row = $("qform").querySelector(".actions");
+  if (tag === "button" && row.contains(t) && (k === "ArrowLeft" || k === "ArrowRight")) {
+    e.preventDefault();
+    var btns = Array.prototype.filter.call(row.querySelectorAll("button"), function (b) { return !b.hidden && !b.disabled && b.offsetParent !== null; });
+    var at = btns.indexOf(t) + (k === "ArrowRight" ? 1 : -1);
+    if (at >= 0 && at < btns.length) btns[at].focus();
+    return;
+  }
+  if (!e.shiftKey) {
+    var lk = k.toLowerCase();
+    var hot = lk === "b" ? "dontknowBtn" : lk === "y" ? "learnBtn" : lk === "o" ? "prevBtn" : null;
+    if (hot) { e.preventDefault(); var hb = $(hot); if (!hb.hidden && !hb.disabled) hb.click(); return; }
+  }
+  if (k === "ArrowUp") { e.preventDefault(); prev(); return; }
+  if (k === "ArrowDown") {
+    e.preventDefault();
+    if (quiz.graded) next(); else if (cfg.mode !== "card") $("ans").focus();
+    return;
+  }
+  if (k === "ArrowLeft") { e.preventDefault(); prev(); return; }
+  if (k === "ArrowRight" && quiz.graded) { e.preventDefault(); next(); }
+});
+
+/* ---------- yakun ---------- */
+function finish(early) {
+  var q = quiz;
+  if (!q) { show("setup"); return; }
+  var done = q.ok + q.bad;
+  $("rscore").textContent = q.ok + " / " + (done || q.items.length);
+  $("rline").textContent = early
+    ? "Mashq toʻxtatildi. " + done + " ta soʻz tekshirildi, " + q.bad + " tasida xato."
+    : (q.bad === 0 ? "Hammasi toʻgʻri. Barakalla!" : q.bad + " ta soʻzda xato boʻldi — ular xatolar roʻyxatida.");
+  var box = $("rwrong");
+  box.innerHTML = "";
+  if (q.wrongList.length) {
+    box.innerHTML = '<ul class="res-list">' + q.wrongList.map(function (x) {
+      return '<li><span class="w">' + esc(x.w.en) + '</span> <span class="c">— ' + esc(x.w.uz) + "</span> " +
+        (TTS ? spkBtn(x.w) : "") + " " + starBtn(x.w) +
+        (x.mine !== null ? '<br><span class="mine">siz: ' + esc(x.mine || "—") + "</span>" : "") + " " + pips(peek(x.w).lvl) + "</li>";
+    }).join("") + "</ul>";
+  }
+  var wrong = q.wrongList.map(function (x) { return x.w; });
+  $("trainWrongBtn").hidden = !wrong.length;
+  $("trainWrongBtn").onclick = function () { startQuiz(cfg, shuffle(wrong.slice())); };
+  quiz = null;
+  show("result");
+  updateBrand();
+}
+$("againBtn").addEventListener("click", function () { startQuiz(cfg); });
+$("backSetupBtn").addEventListener("click", function () { setTab("train"); });
+
+function readCfg() {
+  var cnt = radio("cnt"), count = cnt;
+  if (cnt === "custom") count = Math.max(1, Math.min(WORDS.length, parseInt($("customCount").value, 10) || 20));
+  else if (cnt !== "all") count = parseInt(cnt, 10);
+  return { units: selUnits(), grp: radio("grp"), dir: radio("dir"), mode: radio("mode"), count: count, order: radio("ord"), pool: radio("pool") };
+}
+$("startBtn").addEventListener("click", function () {
+  var c = readCfg();
+  if (!c.units.length) { $("setupErr").hidden = false; $("setupErr").textContent = "Kamida bitta unitni belgilang."; return; }
+  store.cfg.units = c.units;
+  ["grp", "dir", "mode", "cnt", "ord", "pool"].forEach(function (n) { store.cfg[n] = radio(n); });
+  store.cfg.custom = $("customCount").value;
+  save();
+  startQuiz(c);
+});
+function quickCfg(over) {
+  var c = readCfg();
+  for (var k in over) c[k] = over[k];
+  return c;
+}
+
+/* ---------- jadvallar ---------- */
+function spkBtn(w) {
+  return '<button class="spk mini" type="button" data-say="' + w.id + '" title="Talaffuzni eshitish" aria-label="' + esc(w.en) + ' talaffuzi">' + SPKSVG + "</button>";
+}
+function starBtn(w) {
+  var on = !!peek(w).star;
+  return '<button class="star mini" type="button" data-star="' + w.id + '" aria-pressed="' + on + '" title="' +
+    (on ? "Yulduzchani olib tashlash" : "Yulduzcha qoʻyish") + '">' + STARSVG + "</button>";
+}
+function learnBtn(w) {
+  var done = peek(w).lvl >= MAXLVL;
+  return '<button class="mini-learn" type="button" data-learn="' + w.id + '" aria-pressed="' + done + '" title="' +
+    (done ? "Yodlangan. Bosib bekor qilish mumkin" : "Yodlangan deb belgilash — level 5") + '">' + (done ? "✓ Yodlangan" : "✓ Yodladim") + "</button>";
+}
+function rowsHtml(list) {
+  return list.map(function (w) {
+    var p = peek(w);
+    return '<tr class="' + (p.mis ? "hasmistake" : "") + (p.lvl >= MAXLVL ? " learned" : "") + '"><td class="spkcell">' + starBtn(w) + "</td>" +
+      (TTS ? '<td class="spkcell">' + spkBtn(w) + "</td>" : "") +
+      '<td class="v">' + esc(w.en) + '</td><td class="uz">' + esc(w.uz) + '</td><td class="num">' + esc(CATS[w.c][0]) +
+      "</td><td>" + pips(p.lvl) + "</td><td>" + learnBtn(w) + "</td></tr>";
+  }).join("");
+}
+function tableHtml(list) {
+  return '<div class="tablewrap"><table><thead><tr><th class="spkcell">★</th>' + (TTS ? '<th class="spkcell">Ovoz</th>' : "") +
+    "<th>Inglizcha</th><th>Oʻzbekcha</th><th>Turkum</th><th>Level</th><th></th></tr></thead><tbody>" + rowsHtml(list) + "</tbody></table></div>";
+}
+/* jadvaldagi tugmalar: bitta umumiy tinglovchi */
+document.addEventListener("click", function (e) {
+  var b = e.target && e.target.closest ? e.target.closest("button[data-say],button[data-star],button[data-learn]") : null;
+  if (!b) return;
+  if (b.hasAttribute("data-say")) { say(WORDS[+b.getAttribute("data-say")].en, b); return; }
+  if (b.hasAttribute("data-star")) {
+    var on = toggleStar(WORDS[+b.getAttribute("data-star")]);
+    b.setAttribute("aria-pressed", String(on));
+    b.title = on ? "Yulduzchani olib tashlash" : "Yulduzcha qoʻyish";
+    return;
+  }
+  var w = WORDS[+b.getAttribute("data-learn")];
+  toggleLearned(w);
+  var tr = b.closest("tr");
+  if (tr) {
+    var p = peek(w);
+    tr.className = (p.mis ? "hasmistake" : "") + (p.lvl >= MAXLVL ? " learned" : "");
+    tr.querySelector(".pips").outerHTML = pips(p.lvl);
+  }
+  b.outerHTML = learnBtn(w);
+  refreshUnitHeads();
+});
+
+/* ---------- unitlar ---------- */
+var openUnits = {};
+function unitHead(u, list) {
+  var l = learnedIn(list);
+  return '<span class="uh-t"><b>Unit ' + u[0] + " · " + esc(u[2]) + '</b><small>' + esc(u[1]) + '</small></span>' +
+    '<span class="uh-p"><span class="trk"><i style="width:' + (l / list.length * 100) + '%"></i></span><span class="ct">' + l + " / " + list.length + "</span></span>";
+}
+function refreshUnitHeads() {
+  Array.prototype.forEach.call(document.querySelectorAll(".unit[data-u]"), function (d) {
+    var n = +d.getAttribute("data-u");
+    var hd = d.querySelector(".uh");
+    if (hd) hd.innerHTML = unitHead(UNIT_TITLE[n], unitWords(n));
+  });
+}
+function renderUnits() {
+  var term = norm($("search").value);
+  var box = $("unitsBody");
+  if (term) {
+    var hits = WORDS.filter(function (w) { return norm(w.en).indexOf(term) > -1 || norm(w.uz).indexOf(term) > -1 || bare(norm(w.uz)).indexOf(bare(term)) > -1; });
+    box.innerHTML = hits.length
+      ? '<p class="hint" style="margin:0 0 10px">' + hits.length + " ta natija</p>" + tableHtml(hits.slice(0, 300))
+      : '<p class="empty">Hech narsa topilmadi.</p>';
+    return;
+  }
+  box.innerHTML = UNITS.map(function (u) {
+    var list = unitWords(u[0]);
+    return '<div class="unit card" data-u="' + u[0] + '"><button class="uh" type="button" aria-expanded="' + !!openUnits[u[0]] + '">' +
+      unitHead(u, list) + "</button>" +
+      (openUnits[u[0]] ? '<div class="ub"><div class="actions" style="margin:0 0 12px">' +
+        '<button class="btn sm" type="button" data-train="' + u[0] + '">Shu unitni mashq qilish</button>' +
+        '<button class="btn ghost sm" type="button" data-train-new="' + u[0] + '">Faqat koʻrilmaganlar</button></div>' + tableHtml(list) + "</div>" : "") +
+      "</div>";
+  }).join("");
+}
+$("search").addEventListener("input", renderUnits);
+$("unitsBody").addEventListener("click", function (e) {
+  var h = e.target.closest(".uh");
+  if (h) {
+    var n = +h.parentNode.getAttribute("data-u");
+    openUnits[n] = !openUnits[n];
+    renderUnits();
+    return;
+  }
+  var tb = e.target.closest("button[data-train],button[data-train-new]");
+  if (tb) {
+    var nu = +(tb.getAttribute("data-train") || tb.getAttribute("data-train-new"));
+    var isNew = tb.hasAttribute("data-train-new");
+    startQuiz(quickCfg({ units: [nu], grp: "all", count: "all", order: isNew ? "seq" : "rnd", pool: isNew ? "unseen" : "all" }));
+  }
+});
+
+/* ---------- xatolar va belgilanganlar ---------- */
+function renderMistakes() {
+  var list = WORDS.filter(function (w) { return peek(w).mis; });
+  list.sort(function (a, b) { return peek(a).lvl - peek(b).lvl || peek(b).bad - peek(a).bad; });
+  var box = $("misBody");
+  if (!list.length) { box.innerHTML = '<p class="empty">Xato soʻzlar yoʻq. Mashq qilganingizda xatolar shu yerda toʻplanadi.</p>'; return; }
+  box.innerHTML = '<div class="actions" style="margin:0 0 14px"><button class="btn" id="misTrain">Shu ' + list.length +
+    " ta soʻzni mashq qilish</button></div>" + tableHtml(list);
+  $("misTrain").onclick = function () { startQuiz(quickCfg({ count: "all" }), shuffle(list.slice())); };
+}
+function renderStarred() {
+  var list = WORDS.filter(function (w) { return peek(w).star; });
+  var box = $("starBody");
+  if (!list.length) { box.innerHTML = '<p class="empty">Hali yulduzcha qoʻyilmagan. Mashq paytida ☆ ni bosing (yoki <b>*</b> tugmasini).</p>'; return; }
+  box.innerHTML = '<div class="actions" style="margin:0 0 14px"><button class="btn" id="starTrain">Shu ' + list.length +
+    " ta soʻzni mashq qilish</button></div>" + tableHtml(list);
+  $("starTrain").onclick = function () {
+    var now = WORDS.filter(function (w) { return peek(w).star; });
+    if (now.length) startQuiz(quickCfg({ count: "all" }), shuffle(now));
+  };
+}
+
+/* ---------- natijalar ---------- */
+function totals() {
+  var learned = 0, mis = 0, ok = 0, bad = 0, sum = 0, seen = 0;
+  WORDS.forEach(function (w) {
+    var p = peek(w);
+    sum += p.lvl; ok += p.ok; bad += p.bad;
+    if (p.lvl >= MAXLVL) learned++;
+    if (p.mis) mis++;
+    if (!unseen(w)) seen++;
+  });
+  return { learned: learned, mis: mis, ok: ok, bad: bad, seen: seen, pct: Math.round(sum / (WORDS.length * MAXLVL) * 100) };
+}
+function renderStats() {
+  var t = totals();
+  $("statCards").innerHTML =
+    '<div class="stat"><b>' + t.pct + '%</b><span>Umumiy yodlash</span></div>' +
+    '<div class="stat"><b>' + t.learned + " / " + WORDS.length + '</b><span>Yodlangan</span></div>' +
+    '<div class="stat"><b>' + t.seen + '</b><span>Koʻrilgan soʻzlar</span></div>' +
+    '<div class="stat"><b>' + t.mis + '</b><span>Xato roʻyxatida</span></div>';
+  $("unitDist").innerHTML = UNITS.map(function (u) {
+    var list = unitWords(u[0]), l = learnedIn(list);
+    return '<div class="lvlrow"><span class="nm">Unit ' + u[0] + '</span><span class="trk"><i style="width:' + (l / list.length * 100) +
+      '%"></i></span><span class="ct">' + l + "/" + list.length + "</span></div>";
+  }).join("");
+}
+$("resetBtn").addEventListener("click", function () { $("resetHint").hidden = false; });
+$("resetNo").addEventListener("click", function () { $("resetHint").hidden = true; });
+$("resetYes").addEventListener("click", function () {
+  var keep = store.cfg;
+  store = { p: {}, cfg: keep };
+  save();
+  $("resetHint").hidden = true;
+  renderStats(); updateBrand();
+});
+
+function updateBrand() {
+  var t = totals();
+  $("brandStat").textContent = t.learned + " / " + WORDS.length + " yodlangan · " + t.pct + "%";
+  $("mcount").textContent = t.mis ? "(" + t.mis + ")" : "";
+  var st = WORDS.filter(function (w) { return peek(w).star; }).length;
+  $("scount").textContent = st ? "(" + st + ")" : "";
+  $("newCount").textContent = "(" + (WORDS.length - t.seen) + ")";
+}
+
+if (TTS) {
+  $("spkPrompt").innerHTML = SPKSVG;
+  $("autoSay").checked = store.cfg.autoSay !== false;
+  $("autoSay").addEventListener("change", function () { store.cfg.autoSay = this.checked; save(); });
+  if (store.cfg.rate) setRadio("rate", String(store.cfg.rate));
+  Array.prototype.forEach.call(document.querySelectorAll("input[name=rate]"), function (r) {
+    r.addEventListener("change", function () { store.cfg.rate = parseFloat(this.value); save(); say("Hello, how are you?"); });
+  });
+  $("voiceSel").addEventListener("change", function () {
+    var pick = this.value;
+    voice = pick ? (voices.filter(function (v) { return (v.voiceURI || v.name) === pick; })[0] || null) : null;
+    store.cfg.voice = pick; save();
+    say("Hello, how are you?");
+  });
+  loadVoices();
+  try { speechSynthesis.onvoiceschanged = loadVoices; } catch (e) {}
+} else {
+  $("audioSet").hidden = true;
+}
+
+renderUnitPick();
+updateBrand();
+show("setup");
+</script>
+</body>
+</html>

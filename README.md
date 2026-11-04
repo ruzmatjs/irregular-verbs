@@ -21,6 +21,17 @@ Ingliz tilidagi 100 ta notoʻgʻri feʻlni yodlash uchun mashq sayti. Oʻzbek ti
 
 Tutuq belgisini qanday yozsangiz ham qabul qiladi (`boʻlmoq`, `bo'lmoq`, `bolmoq`), `was/were` kabi ikki variantning bittasi ham toʻgʻri hisoblanadi.
 
+## A1 soʻzlar
+
+Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/words.html
+
+- A1 kursining 24 ta unitidagi 1372 ta soʻz (inglizcha — oʻzbekcha), unit va soʻz turkumi boʻyicha
+- Ikki usul: javobni yozish yoki kartochka (javobni ochib, «Bildim» / «Bilmadim»)
+- Yoʻnalish: inglizcha → oʻzbekcha, oʻzbekcha → inglizcha yoki aralash
+- Oʻzbekcha feʻllar `ishlash`, `ishlamoq`, `ishla` shaklida ham qabul qilinadi, kichik imlo xatosi kechiriladi
+- Level, xatolar, yulduzcha, «Yodladim», koʻrilmaganlar filtri va klaviatura — feʻllar sahifasidagidek
+- Natijalari feʻllar natijalaridan alohida saqlanadi
+
 ## Ishlatish
 
-Bitta HTML fayl, server kerak emas. `index.html` ni brauzerda ochsangiz kifoya.
+Server kerak emas: `index.html` (feʻllar) yoki `words.html` (A1 soʻzlar) ni brauzerda ochsangiz kifoya. GitHub Pages uchun `sh build.sh` ikkalasidan `docs/` ichida toʻliq sahifa yasaydi.
