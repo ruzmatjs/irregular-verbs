@@ -2260,7 +2260,8 @@ $("qform").addEventListener("submit", function (e) {
   if (quiz.graded) { next(); return; }
   if (cfg.mode === "card") { if (!quiz.flipped) flip(); else grade(2); return; }
   var w = curWord();
-  if (!norm($("ans").value)) { $("ans").focus(); return; }
+  /* boʻsh javob — «Bilmadim» bilan bir xil: toʻgʻri javob koʻrsatiladi */
+  if (!norm($("ans").value)) { grade(0, true); return; }
   grade(checkAns($("ans").value, answerOf(w, asked()), asked() === "en" ? "uz" : "en"));
 });
 $("dontknowBtn").addEventListener("click", function () { if (quiz && !quiz.graded) grade(0, true); });
