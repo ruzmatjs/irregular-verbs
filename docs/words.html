@@ -1854,8 +1854,18 @@ var W = [
 var MAXLVL = 5;
 var LVLNAME = ["Yangi", "Tanish", "Oʻrganilyapti", "Yaxshi", "Mustahkam", "Yodlangan"];
 var KEY = "a1words.v1";
+/* Qavs ichidagi inglizcha maʼno izohlari oʻzbekchada koʻrsatiladi (A1 oʻquvchisi tushunishi uchun).
+   Saqlash kaliti asl yozuvdan olinadi — natijalar yoʻqolmaydi */
+var HINT_UZ = {
+  "floor (storey)": "floor (binoda)", "to enter (data)": "to enter (kompyuterga)", "reasonable (price)": "reasonable (narx)",
+  "right (correct)": "right (javob haqida)", "high (price)": "high (narx)", "name (of street)": "name (koʻchaning)",
+  "to take (bus)": "to take (avtobus)", "heavy (traffic)": "heavy (tirbandlik)", "heavy (snow)": "heavy (qor)",
+  "cold (illness)": "cold (kasallik)", "temperature (body)": "temperature (tana)", "to visit (doctor)": "to visit (shifokor)",
+  "to take (medicine)": "to take (dori)", "light (food)": "light (ovqat)", "to raise (voice)": "to raise (ovoz)",
+  "cold (personality)": "cold (xarakter)", "to run (buses)": "to run (avtobuslar)", "to save (money)": "to save (pul)"
+};
 var WORDS = W.map(function (w, i) {
-  return { id: i, en: w[0], uz: w[1], u: w[2], c: w[3], g: CATS[w[3]][1], k: (w[0] + "|" + w[1]).toLowerCase() };
+  return { id: i, en: HINT_UZ[w[0]] || w[0], uz: w[1], u: w[2], c: w[3], g: CATS[w[3]][1], k: (w[0] + "|" + w[1]).toLowerCase() };
 });
 var UNIT_TITLE = {};
 UNITS.forEach(function (u) { UNIT_TITLE[u[0]] = u; });
@@ -1999,6 +2009,19 @@ function checkAns(user, correct, lang) {
     if (a.length >= 5 && lev(a, b) <= 1) return 1;
   }
   return 0;
+}
+
+/* Bir xil soʻzning boshqa unitdagi maʼnolari ham qabul qilinadi:
+   izohsiz "cold" uchun "sovuq" ham, "shamollash" ham toʻgʻri. Qavsli soʻzda faqat oʻz maʼnosi */
+var BY_EN = {}, BY_UZ = {};
+WORDS.forEach(function (w) {
+  var e = enBase(noParen(norm(w.en))), u = noParen(norm(w.uz));
+  (BY_EN[e] = BY_EN[e] || []).push(w.uz);
+  (BY_UZ[u] = BY_UZ[u] || []).push(w.en);
+});
+function accepted(w, dir) {
+  if (dir === "en") return w.en.indexOf("(") > -1 ? w.uz : BY_EN[enBase(norm(w.en))].join(" / ");
+  return w.uz.indexOf("(") > -1 ? w.en : BY_UZ[norm(w.uz)].join(" / ");
 }
 
 /* ---------- koʻrinishlar ---------- */
@@ -2262,7 +2285,7 @@ $("qform").addEventListener("submit", function (e) {
   var w = curWord();
   /* boʻsh javob — «Bilmadim» bilan bir xil: toʻgʻri javob koʻrsatiladi */
   if (!norm($("ans").value)) { grade(0, true); return; }
-  grade(checkAns($("ans").value, answerOf(w, asked()), asked() === "en" ? "uz" : "en"));
+  grade(checkAns($("ans").value, accepted(w, asked()), asked() === "en" ? "uz" : "en"));
 });
 $("dontknowBtn").addEventListener("click", function () { if (quiz && !quiz.graded) grade(0, true); });
 $("quitBtn").addEventListener("click", function () { finish(true); });
