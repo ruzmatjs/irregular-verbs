@@ -229,6 +229,7 @@ td.v{white-space:normal;min-width:120px}
       <nav class="switch" aria-label="Boʻlimlar">
         <a href="index.html">Irregular verbs</a>
         <a href="words.html" aria-current="page">A1 soʻzlar</a>
+        <a href="stats.html">Statistika</a>
       </nav>
     </div>
     <nav class="tabs" role="tablist">
@@ -1853,7 +1854,33 @@ try {
   if (raw0) { var o0 = JSON.parse(raw0); if (o0 && o0.p) store = o0; }
 } catch (e) {}
 if (!store.cfg) store.cfg = {};
-function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+function save() { store.sum = summary(); try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+/* Tayyor hisob — stats.html shu sahifadagi raqamlarni oʻzi qayta hisoblamasdan koʻrsatadi.
+   Bir soʻz bir necha unitda boʻlishi mumkin: sanoq bu sahifadagidek (har bir yozuv), qiyinlar roʻyxati takrorsiz */
+function summary() {
+  var lv = [0, 0, 0, 0, 0, 0], seen = 0, mis = 0, ok = 0, bad = 0, hard = [], had = {};
+  WORDS.forEach(function (w) {
+    var p = peek(w);
+    lv[p.lvl]++; ok += p.ok; bad += p.bad;
+    if (!unseen(w)) seen++;
+    if (p.mis) mis++;
+    if (p.bad > 0 && p.lvl < MAXLVL && !had[w.k]) { had[w.k] = 1; hard.push([w.en, w.uz, p.ok, p.bad, p.lvl]); }
+  });
+  hard.sort(function (a, b) { return (b[3] - b[2]) - (a[3] - a[2]) || b[3] - a[3] || a[4] - b[4]; });
+  return { n: WORDS.length, lv: lv, seen: seen, mis: mis, ok: ok, bad: bad, hard: hard.slice(0, 10) };
+}
+/* Kunlik tarix (stats.html uchun): store.d["YYYY-MM-DD"] = [toʻgʻri, xato, yodlangan] */
+function dayKey() {
+  var d = new Date();
+  function p(n) { return (n < 10 ? "0" : "") + n; }
+  return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+}
+function logDay(i, n) {
+  if (!store.d) store.d = {};
+  var k = dayKey(), e = store.d[k] || (store.d[k] = [0, 0, 0]);
+  e[i] = Math.max(0, (e[i] || 0) + (n || 1));
+}
+
 function rec(w) {
   var r = store.p[w.k];
   if (!r) r = store.p[w.k] = { lvl: 0, ok: 0, bad: 0, mis: false };
@@ -2358,6 +2385,8 @@ function grade(result, giveUp) {
     r.mis = true;
     q.wrongList.push({ w: w, mine: mine, dir: dir });
   }
+  logDay(good ? 0 : 1);
+  if (before < MAXLVL && r.lvl >= MAXLVL) logDay(2);
   save();
   q.hist[q.i] = { mine: mine, good: good, typo: result === 1, giveUp: !!giveUp, before: before, after: r.lvl, mis: r.mis };
   delete q.draft[q.i];
@@ -2452,7 +2481,7 @@ function paintLearnBtn(w) {
 }
 function setLearned(w) {
   var r = rec(w), before = r.lvl;
-  if (before < MAXLVL) { r.pre = before; r.preMis = r.mis; }
+  if (before < MAXLVL) { r.pre = before; r.preMis = r.mis; logDay(2); }
   r.lvl = MAXLVL; r.mis = false;
   save(); updateBrand();
   return before;
@@ -2462,6 +2491,7 @@ function unsetLearned(w) {
   r.lvl = typeof r.pre === "number" && r.pre < MAXLVL ? r.pre : MAXLVL - 1;
   if (r.preMis) r.mis = true;
   delete r.pre; delete r.preMis;
+  logDay(2, -1);
   save(); updateBrand();
 }
 function toggleLearned(w) { if (peek(w).lvl >= MAXLVL) unsetLearned(w); else setLearned(w); }
@@ -2767,5 +2797,6 @@ if (TTS) {
 
 renderUnitPick();
 updateBrand();
+save();
 show("setup");
 </script>

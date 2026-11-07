@@ -54,3 +54,5 @@ page index.html docs/index.html "Irregular Verbs Trainer" \
   "100 ta ingliz tilidagi notoʻgʻri feʻlni yodlash uchun mashq sayti. Oʻzbek tilida." "$SITE"
 page words.html docs/words.html "A1 Vocabulary Trainer" \
   "A1 kursining 24 ta unitidagi 1372 ta inglizcha soʻzni yodlash uchun mashq sayti. Oʻzbek tilida." "${SITE}words.html"
+page stats.html docs/stats.html "Statistika — Irregular Verbs va A1 soʻzlar" \
+  "Ingliz tili mashqlari natijalari: kunlik faollik, ketma-ket kunlar, yodlangan soʻzlar va eng qiyin soʻzlar." "${SITE}stats.html"

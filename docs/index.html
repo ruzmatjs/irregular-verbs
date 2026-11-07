@@ -226,6 +226,7 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
       <nav class="switch" aria-label="Boʻlimlar">
         <a href="index.html" aria-current="page">Irregular verbs</a>
         <a href="words.html">A1 soʻzlar</a>
+        <a href="stats.html">Statistika</a>
       </nav>
     </div>
     <nav class="tabs" role="tablist">
@@ -671,8 +672,34 @@ function load() {
   } catch (e) { /* xotira yopiq: natijalar faqat shu sahifada qoladi */ }
 }
 function save() {
+  store.sum = summary();
   try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {}
 }
+/* Tayyor hisob — stats.html shu sahifadagi raqamlarni oʻzi qayta hisoblamasdan koʻrsatadi */
+function summary() {
+  var lv = [0, 0, 0, 0, 0, 0], seen = 0, mis = 0, ok = 0, bad = 0, hard = [];
+  VERBS.forEach(function (v) {
+    var p = store.p[v.v1] || { lvl: 0, ok: 0, bad: 0 };
+    lv[p.lvl]++; ok += p.ok; bad += p.bad;
+    if (p.ok + p.bad > 0 || p.lvl > 0) seen++;
+    if (p.mis) mis++;
+    if (p.bad > 0 && p.lvl < MAXLVL) hard.push([v.v1 + " – " + v.v2 + " – " + v.v3, v.uz, p.ok, p.bad, p.lvl]);
+  });
+  hard.sort(function (a, b) { return (b[3] - b[2]) - (a[3] - a[2]) || b[3] - a[3] || a[4] - b[4]; });
+  return { n: VERBS.length, lv: lv, seen: seen, mis: mis, ok: ok, bad: bad, hard: hard.slice(0, 10) };
+}
+/* Kunlik tarix (stats.html uchun): store.d["YYYY-MM-DD"] = [toʻgʻri, xato, yodlangan] */
+function dayKey() {
+  var d = new Date();
+  function p(n) { return (n < 10 ? "0" : "") + n; }
+  return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+}
+function logDay(i, n) {
+  if (!store.d) store.d = {};
+  var k = dayKey(), e = store.d[k] || (store.d[k] = [0, 0, 0]);
+  e[i] = Math.max(0, (e[i] || 0) + (n || 1));
+}
+
 function rec(v) {
   var r = store.p[v.v1];
   if (!r) { r = store.p[v.v1] = { lvl: 0, ok: 0, bad: 0, mis: false }; }
@@ -680,6 +707,7 @@ function rec(v) {
 }
 load();
 if (!store.cfg) store.cfg = { autoQ: false, autoA: true, rate: 0.9, voice: null };
+save();
 
 /* ---------- talaffuz ---------- */
 var SPKSVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
@@ -1189,6 +1217,8 @@ function grade(giveUp) {
     r.mis = true;
     q.wrongList.push({ v: v, mine: mine });
   }
+  logDay(allOk ? 0 : 1);
+  if (before < MAXLVL && r.lvl >= MAXLVL) logDay(2);
   save();
   q.hist[q.i] = { mine: mine, oks: oks, allOk: allOk, giveUp: giveUp, before: before, after: r.lvl, mis: r.mis };
   delete q.draft[q.i];
@@ -1220,7 +1250,7 @@ function paintLearnBtn(v) {
 function setLearned(v) {
   var r = rec(v);
   var before = r.lvl;
-  if (before < MAXLVL) { r.pre = before; r.preMis = r.mis; }
+  if (before < MAXLVL) { r.pre = before; r.preMis = r.mis; logDay(2); }
   r.lvl = MAXLVL;
   r.mis = false;
   save();
@@ -1233,6 +1263,7 @@ function unsetLearned(v) {
   r.lvl = typeof r.pre === "number" && r.pre < MAXLVL ? r.pre : MAXLVL - 1;
   if (r.preMis) r.mis = true;
   delete r.pre; delete r.preMis;
+  logDay(2, -1);
   save();
   updateBrand();
 }

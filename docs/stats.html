@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f4f4a">
+<meta name="description" content="Ingliz tili mashqlari natijalari: kunlik faollik, ketma-ket kunlar, yodlangan soʻzlar va eng qiyin soʻzlar.">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Statistika — Irregular Verbs va A1 soʻzlar">
+<meta property="og:description" content="Ingliz tili mashqlari natijalari: kunlik faollik, ketma-ket kunlar, yodlangan soʻzlar va eng qiyin soʻzlar.">
+<meta property="og:url" content="https://ruzmatjs.github.io/irregular-verbs/stats.html">
+<meta property="og:image" content="https://ruzmatjs.github.io/irregular-verbs/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  body{margin:0;font:14px system-ui,sans-serif}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Statistika</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: feʻllar va A1 soʻzlar natijalari bitta sahifada — yuqorida 4 ta asosiy raqam, keyin kunlik faollik grafigi, pastda ikki boʻlim kartasi */
+:root{
+  --bg:#f6f3ec; --surface:#fffdf8; --surface-2:#efe9dc; --line:#ded5c3;
+  --fg:#241f18; --muted:#6f6552; --accent:#1f4f4a; --accent-soft:#d6e4e0;
+  --on-accent:#fffdf8;
+  --ok:#2f6b3a; --ok-soft:#dcebdc; --bad:#9c3324; --bad-soft:#f4ddd8;
+  --gold:#b4792a;
+  --display:"Literata",Georgia,"Times New Roman",serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#15181a; --surface:#1d2124; --surface-2:#262b2e; --line:#363d41;
+  --fg:#ece7dd; --muted:#9aa0a0; --accent:#7fc9bb; --accent-soft:#223431;
+  --on-accent:#10201e;
+  --ok:#8ed49a; --ok-soft:#1f2e22; --bad:#f09e90; --bad-soft:#33211e;
+  --gold:#d9a85a;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#15181a; --surface:#1d2124; --surface-2:#262b2e; --line:#363d41;
+  --fg:#ece7dd; --muted:#9aa0a0; --accent:#7fc9bb; --accent-soft:#223431;
+  --on-accent:#10201e;
+  --ok:#8ed49a; --ok-soft:#1f2e22; --bad:#f09e90; --bad-soft:#33211e;
+  --gold:#d9a85a;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--surface)}
+.wrap{max-width:1120px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 48px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-in{max-width:1120px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:12px}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand .mark{width:28px;height:28px;flex:0 0 auto;align-self:center}
+.brand h1{font-family:var(--display);font-size:1.25rem;font-weight:700;margin:0;letter-spacing:-.01em}
+.brand .sub{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.switch{display:flex;gap:4px;margin-left:auto;align-self:center;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px}
+.switch a{font-size:.8rem;font-weight:500;color:var(--muted);text-decoration:none;padding:4px 11px;border-radius:999px;white-space:nowrap}
+.switch a[aria-current="page"]{background:var(--accent);color:var(--on-accent)}
+.switch a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+h2{font-family:var(--display);font-size:1.05rem;margin:0;text-wrap:balance}
+section{padding-block:22px 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
+.hint{font-size:.8rem;color:var(--muted)}
+.flabel{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;display:block}
+
+/* asosiy raqamlar */
+.heroes{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.hero b{display:block;font-family:var(--display);font-size:1.9rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:4px}
+.hero b small{font-size:.95rem;font-weight:400;color:var(--muted)}
+.hero .s{display:block;font-size:.8rem;color:var(--muted);margin-top:4px}
+.hero.fire b{color:var(--gold)}
+
+/* faollik grafigi */
+.chead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+.seg{display:flex;gap:2px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{appearance:none;border:0;background:none;font:inherit;font-size:.8rem;font-weight:500;color:var(--muted);
+  padding:4px 11px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:0 0 0 1px var(--line)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.psum{font-size:.86rem;color:var(--muted);margin:0 0 14px;font-variant-numeric:tabular-nums}
+.psum b{color:var(--fg);font-weight:600}
+.chart{position:relative;padding-top:18px}
+.plot{position:relative;height:170px;display:flex;align-items:flex-end;border-bottom:1px solid var(--line)}
+.grid{position:absolute;left:0;right:0;border-top:1px dashed var(--line);pointer-events:none}
+.grid span{position:absolute;right:0;top:-17px;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;background:var(--surface);padding-left:6px}
+.colm{flex:1 1 0;min-width:0;height:100%;display:flex;align-items:flex-end;padding:0 1px;cursor:default;border-radius:4px 4px 0 0}
+.colm i{display:block;width:100%;max-width:28px;margin:0 auto;background:var(--accent);border-radius:4px 4px 0 0}
+.colm.today i{background:var(--gold)}
+.colm:hover,.colm.on{background:var(--surface-2)}
+.xlab{display:flex;margin-top:6px;height:16px}
+.xlab span{flex:1 1 0;min-width:0;position:relative;font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.xlab span em{position:absolute;left:50%;transform:translateX(-50%);font-style:normal;white-space:nowrap}
+.xlab span:last-child em{left:auto;right:0;transform:none}
+.tip{position:absolute;z-index:3;pointer-events:none;background:var(--fg);color:var(--bg);border-radius:8px;padding:8px 11px;
+  font-size:.8rem;line-height:1.4;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.tip b{display:block;font-weight:600}
+.empty{text-align:center;color:var(--muted);font-size:.9rem;padding:28px 10px;border:1px dashed var(--line);border-radius:var(--r)}
+.empty a{color:var(--accent);font-weight:600}
+
+/* boʻlim kartalari */
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px}
+.phead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}
+.go{font-size:.86rem;font-weight:600;color:var(--accent);text-decoration:none;white-space:nowrap}
+.go:hover{text-decoration:underline}
+.pct{display:flex;align-items:baseline;gap:10px}
+.pct b{font-family:var(--display);font-size:2.2rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.big{height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin:10px 0 14px}
+.big i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.facts div{background:var(--surface-2);border-radius:8px;padding:8px 10px;min-width:0}
+.facts b{display:block;font-variant-numeric:tabular-nums;font-size:1.05rem}
+.facts span{font-size:.74rem;color:var(--muted)}
+.facts .bad b{color:var(--bad)}
+.lvlrow{display:flex;align-items:center;gap:10px;font-size:.86rem;padding:4px 0}
+.lvlrow .nm{flex:0 0 112px;color:var(--muted);min-width:0}
+.lvlrow .trk{flex:1 1 auto;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;min-width:0}
+.lvlrow .trk i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.lvlrow .ct{flex:0 0 44px;text-align:right;font-variant-numeric:tabular-nums}
+.hard{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.hard li{display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:8px;padding:8px 12px;font-size:.88rem;min-width:0}
+.hard .w{flex:1 1 auto;min-width:0}
+.hard .w b{font-family:var(--mono);font-weight:600;overflow-wrap:anywhere}
+.hard .w span{display:block;color:var(--muted);font-size:.8rem}
+.hard .n{flex:0 0 auto;font-size:.78rem;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hard .n .x{color:var(--bad);font-weight:600}
+.sub-h{margin:18px 0 0}
+.note{font-size:.8rem;color:var(--muted);margin:12px 0 0}
+@media (max-width:420px){.facts{grid-template-columns:repeat(3,minmax(0,1fr))}.lvlrow .nm{flex-basis:96px}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+        <rect width="256" height="256" rx="56" fill="var(--accent)"/>
+        <g fill="none" stroke="var(--surface)" stroke-width="11" stroke-linecap="round">
+          <path d="M62 156 A33 64 0 0 1 128 156"/>
+          <path d="M128 156 A33 38 0 0 1 194 156"/>
+        </g>
+        <circle cx="62" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="128" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="194" cy="156" r="14" fill="var(--gold)"/>
+      </svg>
+      <h1>Statistika</h1>
+      <span class="sub" id="brandStat"></span>
+      <nav class="switch" aria-label="Boʻlimlar">
+        <a href="index.html">Irregular verbs</a>
+        <a href="words.html">A1 soʻzlar</a>
+        <a href="stats.html" aria-current="page">Statistika</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section>
+    <div class="heroes">
+      <div class="hero"><span class="flabel">Bugun</span><b id="hToday">0</b><span class="s" id="hTodayS"></span></div>
+      <div class="hero fire"><span class="flabel">Ketma-ket</span><b id="hStreak">0</b><span class="s" id="hStreakS"></span></div>
+      <div class="hero"><span class="flabel">Yodlangan</span><b id="hLearned">0</b><span class="s" id="hLearnedS"></span></div>
+      <div class="hero"><span class="flabel">Aniqlik</span><b id="hAcc">—</b><span class="s" id="hAccS"></span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <div class="chead">
+        <h2>Kunlik faollik</h2>
+        <div class="seg" role="group" aria-label="Davr">
+          <button type="button" data-days="7" aria-pressed="false">7 kun</button>
+          <button type="button" data-days="30" aria-pressed="true">30 kun</button>
+          <button type="button" data-days="90" aria-pressed="false">90 kun</button>
+        </div>
+      </div>
+      <p class="psum" id="psum"></p>
+      <div id="chartBox"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="parts" id="parts"></div>
+  </section>
+</div>
+
+<script>
+(function () {
+var MAXLVL = 5;
+var LVLNAME = ["Yangi", "Tanish", "Oʻrganilyapti", "Yaxshi", "Mustahkam", "Yodlangan"];
+var MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"];
+var WDAYS = ["yakshanba", "dushanba", "seshanba", "chorshanba", "payshanba", "juma", "shanba"];
+var WSHORT = ["Ya", "Du", "Se", "Ch", "Pa", "Ju", "Sh"];
+/* Har bir boʻlim oʻz natijalarini oʻz kalitida saqlaydi; bu sahifa ularni faqat oʻqiydi */
+var PARTS = [
+  { key: "irrverbs.v1", title: "Irregular verbs", href: "index.html", n: 100, unit: "feʻl" },
+  { key: "a1words.v1", title: "A1 soʻzlar", href: "words.html", n: 1372, unit: "soʻz" }
+];
+var days = 30;
+try { var sd = parseInt(localStorage.getItem("stats.days"), 10); if (sd === 7 || sd === 30 || sd === 90) days = sd; } catch (e) {}
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function p2(n) { return (n < 10 ? "0" : "") + n; }
+function keyOf(d) { return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()); }
+function daysAgo(i) { var d = new Date(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() - i); return d; }
+function num(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
+
+function read(key) {
+  try { var o = JSON.parse(localStorage.getItem(key) || "null"); if (o && typeof o === "object") return o; } catch (e) {}
+  return null;
+}
+
+/* Boʻlim hisobi: sahifaning oʻzi yozgan tayyor hisob (sum) boʻlsa — shuni, boʻlmasa saqlangan yozuvlardan taxminan */
+function partStats(P, st) {
+  if (st && st.sum && st.sum.lv) return { s: st.sum, exact: true };
+  var lv = [0, 0, 0, 0, 0, 0], seen = 0, mis = 0, ok = 0, bad = 0, any = false;
+  if (st && st.p) Object.keys(st.p).forEach(function (k) {
+    var r = st.p[k]; if (!r) return;
+    var l = Math.max(0, Math.min(MAXLVL, r.lvl | 0));
+    if (l > 0) lv[l]++;
+    ok += r.ok | 0; bad += r.bad | 0;
+    if ((r.ok | 0) + (r.bad | 0) > 0 || l > 0) { seen++; any = true; }
+    if (r.mis) mis++;
+  });
+  lv[0] = Math.max(0, P.n - lv[1] - lv[2] - lv[3] - lv[4] - lv[5]);
+  return { s: { n: P.n, lv: lv, seen: Math.min(seen, P.n), mis: mis, ok: ok, bad: bad, hard: [] }, exact: !any };
+}
+
+function render() {
+  var stores = PARTS.map(function (P) { return read(P.key); });
+  var stats = PARTS.map(function (P, i) { return partStats(P, stores[i]); });
+
+  /* ikkala boʻlimning kunlik tarixi qoʻshiladi */
+  var day = {};
+  stores.forEach(function (st) {
+    if (!st || !st.d) return;
+    Object.keys(st.d).forEach(function (k) {
+      var e = st.d[k] || [], t = day[k] || (day[k] = [0, 0, 0]);
+      t[0] += e[0] | 0; t[1] += e[1] | 0; t[2] += e[2] | 0;
+    });
+  });
+  function at(i) { return day[keyOf(daysAgo(i))] || [0, 0, 0]; }
+  function active(e) { return e[0] + e[1] > 0; }
+
+  /* ketma-ketlik: bugun hali mashq qilinmagan boʻlsa, kechagidan sanaladi (zanjir uzilmagan) */
+  var streak = 0, i0 = active(at(0)) ? 0 : 1;
+  for (var i = i0; i < 3660 && active(at(i)); i++) streak++;
+  var best = 0, run = 0, prev = null;
+  Object.keys(day).filter(function (k) { return active(day[k]); }).sort().forEach(function (k) {
+    var d = new Date(k + "T12:00:00");
+    run = prev && Math.round((d - prev) / 864e5) === 1 ? run + 1 : 1;
+    if (run > best) best = run;
+    prev = d;
+  });
+  best = Math.max(best, streak);
+
+  var td = at(0), tdN = td[0] + td[1];
+  $("hToday").innerHTML = num(tdN) + " <small>javob</small>";
+  $("hTodayS").textContent = tdN ? td[0] + " toʻgʻri · " + td[1] + " xato" + (td[2] ? " · " + td[2] + " ta yodlandi" : "") : "Bugun hali mashq qilinmadi";
+  $("hStreak").innerHTML = (streak ? "🔥 " : "") + streak + " <small>kun</small>";
+  $("hStreakS").textContent = streak && !active(td) ? "Bugun mashq qilsangiz, zanjir davom etadi" : "Eng uzoq: " + best + " kun";
+
+  var learned = 0, total = 0, ok = 0, bad = 0;
+  stats.forEach(function (x) { learned += x.s.lv[MAXLVL]; total += x.s.n; ok += x.s.ok; bad += x.s.bad; });
+  $("hLearned").innerHTML = num(learned) + " <small>/ " + num(total) + "</small>";
+  $("hLearnedS").textContent = stats.map(function (x, i) { return PARTS[i].unit + ": " + x.s.lv[MAXLVL]; }).join(" · ");
+  $("hAcc").innerHTML = ok + bad ? Math.round(ok / (ok + bad) * 100) + "<small>%</small>" : "—";
+  $("hAccS").textContent = ok + bad ? num(ok + bad) + " ta javobdan " + num(ok) + " tasi toʻgʻri" : "Hali javob berilmagan";
+  $("brandStat").textContent = streak ? "🔥 " + streak + " kun ketma-ket" : "";
+
+  renderChart(at);
+  renderParts(stats);
+}
+
+function renderChart(at) {
+  var cols = [], max = 0, sum = 0, act = 0, lrn = 0;
+  for (var i = days - 1; i >= 0; i--) {
+    var e = at(i), n = e[0] + e[1], d = daysAgo(i);
+    cols.push({ d: d, e: e, n: n, today: i === 0 });
+    if (n > max) max = n;
+    sum += n; lrn += e[2]; if (n) act++;
+  }
+  $("psum").innerHTML = days + " kunda: <b>" + num(sum) + "</b> javob · <b>" + act + "</b> kun mashq" +
+    (lrn ? " · <b>" + lrn + "</b> ta soʻz yodlandi" : "") + (act ? " · kuniga oʻrtacha <b>" + Math.round(sum / act) + "</b>" : "");
+  if (!sum) {
+    $("chartBox").innerHTML = '<div class="empty">Bu davrda mashq qilinmagan. Kunlik tarix yangi versiyadan boshlab yoziladi —<br>' +
+      '<a href="index.html">feʻllar</a> yoki <a href="words.html">A1 soʻzlar</a> boʻyicha mashq qiling, natija shu yerda chiqadi.</div>';
+    return;
+  }
+  /* yuqori chiziq — chiroyli yaxlit son */
+  var top = niceTop(max);
+  var step = days <= 7 ? 1 : days <= 30 ? 5 : 15;
+  var html = '<div class="chart" id="chart" aria-label="' + days + ' kunlik faollik: jami ' + sum + ' javob">' +
+    '<div class="plot" id="plot">' +
+    '<div class="grid" style="bottom:100%"><span>' + top + '</span></div>' +
+    '<div class="grid" style="bottom:50%"><span>' + top / 2 + '</span></div>';
+  cols.forEach(function (c, k) {
+    var h = c.n ? Math.max(2, c.n / top * 100) : 0;
+    html += '<div class="colm' + (c.today ? " today" : "") + '" data-k="' + k + '" role="img" aria-label="' + esc(tipText(c, true)) + '">' +
+      (h ? '<i style="height:' + h + '%"></i>' : "") + "</div>";
+  });
+  html += '</div><div class="xlab" aria-hidden="true">';
+  cols.forEach(function (c, k) {
+    var lab = "";
+    if (c.today) lab = "Bugun";
+    else if (days <= 7) lab = WSHORT[c.d.getDay()];
+    else if ((days - 1 - k) % step === 0 && days - 1 - k >= step) lab = c.d.getDate() + "." + p2(c.d.getMonth() + 1);
+    html += "<span>" + (lab ? "<em>" + lab + "</em>" : "") + "</span>";
+  });
+  html += '</div><div class="tip" id="tip" hidden></div></div>';
+  $("chartBox").innerHTML = html;
+
+  var chart = $("chart"), tip = $("tip"), on = null;
+  function showTip(el) {
+    if (on) on.classList.remove("on");
+    on = el; el.classList.add("on");
+    var c = cols[+el.getAttribute("data-k")];
+    tip.innerHTML = tipText(c);
+    tip.hidden = false;
+    var cr = chart.getBoundingClientRect(), r = el.getBoundingClientRect();
+    var x = r.left - cr.left + r.width / 2 - tip.offsetWidth / 2;
+    tip.style.left = Math.max(0, Math.min(cr.width - tip.offsetWidth, x)) + "px";
+    tip.style.top = "-" + (tip.offsetHeight - 10) + "px";
+  }
+  function hideTip() { tip.hidden = true; if (on) on.classList.remove("on"); on = null; }
+  Array.prototype.forEach.call(chart.querySelectorAll(".colm"), function (el) {
+    el.addEventListener("pointerenter", function (ev) { if (ev.pointerType === "mouse") showTip(el); });
+    el.addEventListener("click", function () { if (on === el) hideTip(); else showTip(el); });
+  });
+  chart.addEventListener("pointerleave", function (ev) { if (ev.pointerType === "mouse") hideTip(); });
+}
+function niceTop(max) {
+  var steps = [10, 20, 30, 40, 50, 60, 80, 100, 120, 150, 200, 250, 300, 400, 500, 600, 800, 1000];
+  for (var i = 0; i < steps.length; i++) if (max <= steps[i]) return steps[i];
+  return Math.ceil(max / 500) * 500;
+}
+function tipText(c, plain) {
+  var d = c.d, head = (c.today ? "Bugun, " : "") + d.getDate() + "-" + MONTHS[d.getMonth()] + ", " + WDAYS[d.getDay()];
+  var body = c.n ? c.n + " ta javob: " + c.e[0] + " toʻgʻri, " + c.e[1] + " xato" + (c.e[2] ? " · " + c.e[2] + " ta yodlandi" : "") : "Mashq qilinmagan";
+  return plain ? head + ". " + body : "<b>" + esc(head) + "</b>" + esc(body);
+}
+
+function renderParts(stats) {
+  $("parts").innerHTML = stats.map(function (x, i) {
+    var P = PARTS[i], s = x.s, sumL = 0;
+    s.lv.forEach(function (c, l) { sumL += c * l; });
+    var pct = Math.round(sumL / (s.n * MAXLVL) * 100);
+    var lmax = Math.max.apply(null, s.lv) || 1;
+    var html = '<div class="card">' +
+      '<div class="phead"><h2>' + esc(P.title) + '</h2><a class="go" href="' + P.href + '">Mashq qilish →</a></div>' +
+      '<div class="pct"><b>' + pct + '%</b><span class="hint">umumiy yodlash (barcha level’lar boʻyicha)</span></div>' +
+      '<div class="big"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="facts">' +
+        '<div><b>' + num(s.lv[MAXLVL]) + ' / ' + num(s.n) + '</b><span>Yodlangan</span></div>' +
+        '<div><b>' + num(s.seen) + '</b><span>Koʻrilgan</span></div>' +
+        '<div class="' + (s.mis ? "bad" : "") + '"><b>' + num(s.mis) + '</b><span>Xatolarda</span></div>' +
+      '</div>' +
+      '<span class="flabel">Level boʻyicha</span>';
+    for (var l = MAXLVL; l >= 0; l--) {
+      html += '<div class="lvlrow"><span class="nm">' + l + " · " + LVLNAME[l] + '</span><span class="trk"><i style="width:' +
+        (s.lv[l] / lmax * 100) + '%"></i></span><span class="ct">' + num(s.lv[l]) + "</span></div>";
+    }
+    var hard = (s.hard || []).slice(0, 5);
+    if (hard.length) {
+      html += '<span class="flabel sub-h">Eng qiyin ' + P.unit + 'lar</span><ul class="hard">' + hard.map(function (h) {
+        return '<li><span class="w"><b>' + esc(h[0]) + "</b><span>" + esc(h[1]) + '</span></span>' +
+          '<span class="n"><span class="x">' + h[3] + " xato</span><br>" + h[2] + " toʻgʻri · level " + h[4] + "</span></li>";
+      }).join("") + "</ul>";
+      if (s.mis) html += '<p class="note">Xatolarni alohida mashq qilish: <a class="go" href="' + P.href + '">' + esc(P.title) + " → Xatolar</a></p>";
+    }
+    if (!x.exact) html += '<p class="note">Aniq raqamlar uchun «' + esc(P.title) + '» sahifasini bir marta oching.</p>';
+    return html + "</div>";
+  }).join("");
+}
+
+Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function (b) {
+  b.setAttribute("aria-pressed", String(+b.getAttribute("data-days") === days));
+  b.addEventListener("click", function () {
+    days = +b.getAttribute("data-days");
+    try { localStorage.setItem("stats.days", String(days)); } catch (e) {}
+    Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+    render();
+  });
+});
+/* boshqa oynada mashq qilinsa yoki sahifaga qaytilsa — raqamlar yangilanadi */
+window.addEventListener("storage", render);
+window.addEventListener("pageshow", render);
+document.addEventListener("visibilitychange", function () { if (!document.hidden) render(); });
+render();
+})();
+</script>
+</body>
+</html>
