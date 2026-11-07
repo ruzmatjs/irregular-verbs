@@ -28,6 +28,7 @@ Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/words.html
 - A1 kursining 24 ta unitidagi 1372 ta soʻz (inglizcha — oʻzbekcha), unit va soʻz turkumi boʻyicha
 - Ikki usul: javobni yozish yoki kartochka (javobni ochib, «Bildim» / «Bilmadim»)
 - Yoʻnalish: inglizcha → oʻzbekcha, oʻzbekcha → inglizcha yoki aralash
+- Har bir inglizcha soʻz tagida oʻqilishi oʻzbek harflarida (`workplace — uoʻrkpleys`, `think — θink`) — mashqda, kartochkada, jadvalda va xatolar roʻyxatida
 - Oʻzbekcha feʻllar `ishlash`, `ishlamoq`, `ishla` shaklida ham qabul qilinadi, kichik imlo xatosi kechiriladi
 - Level, xatolar, yulduzcha, «Yodladim», koʻrilmaganlar filtri va klaviatura — feʻllar sahifasidagidek
 - Natijalari feʻllar natijalaridan alohida saqlanadi

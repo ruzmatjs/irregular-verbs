@@ -219,6 +219,7 @@ small.ct{color:var(--muted);font-size:.8em}
 .cardans{margin:6px 0 0;padding:16px;border-radius:8px;background:var(--surface-2);text-align:center}
 .cardans .flabel{padding-bottom:4px}
 .cardans b{font-size:1.4rem;font-family:var(--display)}
+.cardans .rd{display:block;font-family:var(--body);font-size:.84rem;color:var(--muted);font-style:italic;margin-top:3px}
 .unit{padding:0;margin-bottom:10px;overflow:hidden}
 .uh{appearance:none;border:0;background:none;font:inherit;color:inherit;width:100%;text-align:left;cursor:pointer;
   display:flex;align-items:center;gap:14px;padding:14px 16px;flex-wrap:wrap}
@@ -270,7 +271,7 @@ td.v{white-space:normal;min-width:120px}
 
 <section id="v-setup">
   <h2>A1 soʻzlarini yodlash</h2>
-  <p class="lede">A1 kursining 24 ta unitidagi 1372 ta soʻz — inglizcha va oʻzbekcha. Unitlarni, yoʻnalishni va mashq usulini tanlang.</p>
+  <p class="lede">A1 kursining 24 ta unitidagi 1372 ta soʻz — inglizcha va oʻzbekcha. Unitlarni, yoʻnalishni va mashq usulini tanlang. Inglizcha soʻz koʻrsatilganda uning oʻqilishi ham yozib qoʻyiladi.</p>
   <div class="card stack">
     <fieldset>
       <legend>Unitlar</legend>
@@ -393,6 +394,7 @@ td.v{white-space:normal;min-width:120px}
         <button class="spk" type="button" id="spkPrompt" title="Talaffuzni eshitish" aria-label="Talaffuzni eshitish" hidden></button>
         <button class="star" type="button" id="starBtn" aria-pressed="false"></button>
       </div>
+      <p class="reading" id="pread" hidden></p>
       <p class="extra" id="pmeta"></p>
     </div>
     <p class="review-note" id="reviewNote" hidden>Bu soʻzga javob bergansiz — koʻrib chiqish rejimi, natija oʻzgarmaydi.</p>
@@ -434,7 +436,7 @@ td.v{white-space:normal;min-width:120px}
 
 <section id="v-units" hidden>
   <h2>Unitlar boʻyicha soʻzlar</h2>
-  <p class="lede">Har bir unitni ochib soʻzlarini koʻring, eshiting, yulduzcha qoʻying yoki shu unitni alohida mashq qiling.</p>
+  <p class="lede">Har bir unitni ochib soʻzlarini koʻring, eshiting, yulduzcha qoʻying yoki shu unitni alohida mashq qiling. Har bir inglizcha soʻz tagida oʻqilishi yozilgan (taxminiy, oʻzbek harflarida: <b>θ</b> — til uchini tishlar orasiga qoʻyib aytiladigan «s», <b>ð</b> — xuddi shunday, lekin ovozli «z», <b>u</b> — inglizcha <i>w</i>).</p>
   <div class="toolbar">
     <div class="col"><input type="text" id="search" placeholder="Qidirish: inglizcha yoki oʻzbekcha"></div>
   </div>
@@ -1891,6 +1893,167 @@ function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&
 function hide(el) { el.hidden = true; el.style.display = "none"; }
 function unhide(el) { el.hidden = false; el.style.display = ""; }
 
+/* ---------- oʻqilishi: inglizcha soʻzning oʻzbek harflarida taxminiy yozuvi ----------
+   Har bir inglizcha soʻz uchun bitta yozuv; iboralar soʻzlab yigʻiladi.
+   θ — til uchini tishlar orasiga qoʻyib aytiladigan «s» (think → θink)
+   ð — xuddi shunday, lekin ovozli «z» (the → ðe)
+   oʻ — choʻzilgan «o» (door → doʻr), u — inglizcha w (water → uoʻter) */
+var RD = {
+a:"a",accountant:"akauntant",active:"ektiv",activity:"ektiviti",adjust:"ajast",adult:"edalt",
+advice:"advays",affect:"afekt",affordable:"afoʻrdabl",afternoon:"afternun",age:"eyj",almost:"oʻlmoust",
+aloud:"alaud",answer:"anser",apartment:"apartment",apple:"epl",apply:"aplay",area:"eria",
+around:"araund",arrange:"areynj",arrival:"arayvl",arrive:"arayv",art:"art",article:"artikl",
+ask:"ask",assistant:"asistant",at:"et",atmosphere:"etmosfir",attention:"atenshn",attitude:"etityud",
+author:"oʻθer",autumn:"oʻtam",available:"aveylabl",avoid:"avoyd",away:"auey",backpack:"bekpek",
+bag:"beg",bags:"begz",bakery:"beykeri",balance:"belans",balanced:"belanst",balcony:"belkeni",
+banana:"banana",bank:"benk",bathroom:"baθrum",be:"bi",beach:"bich",beautiful:"byutiful",
+beauty:"byuti",become:"bikam",bedroom:"bedrum",begin:"bigin",beginner:"biginer",beginning:"bigining",
+behavior:"biheyvyer",believe:"biliv",bench:"bench",beside:"bisayd",better:"beter",between:"bituin",
+big:"big",biggest:"bigest",birthday:"boʻrθdey",black:"blek",block:"blok",blue:"blu",
+board:"boʻrd",body:"bodi",book:"buk",bowl:"boul",bread:"bred",break:"breyk",
+bright:"brayt",bring:"bring",brother:"braðer",build:"bild",building:"bilding",bus:"bas",
+busier:"bizier",business:"biznes",busy:"bizi",butter:"bater",buy:"bay",by:"bay",
+cabinet:"kebinet","café":"kafey",cafe:"kafey",cake:"keyk",call:"koʻl",calm:"kam",calmer:"kamer",
+camera:"kemera",can:"ken",capital:"kepitl",capture:"kepcher",car:"kar",care:"ker",
+career:"karier",careful:"kerful",carefully:"kerfuli",carrot:"kerot",carry:"keri",cart:"kart",
+cause:"koʻz",celebrate:"selibreyt",celebration:"selibreyshn",center:"senter",ceremony:"serimouni",chair:"cher",
+challenge:"chelinj",chance:"chans",change:"cheynj",chapter:"chepter",character:"kerekter",cheap:"chip",
+cheaper:"chiper",check:"chek",cheese:"chiz",chicken:"chikin",child:"chayld",childhood:"chayldhud",
+children:"childran",chocolate:"choklet",choose:"chuz",city:"siti","class":"klas",classmate:"klasmeyt",
+classroom:"klasrum",clean:"klin",clearly:"klirli",client:"klayant",close:"klouz",closely:"klousli",
+clothes:"klouðz",clothing:"klouðing",cloudy:"klaudi",club:"klab",coach:"kouch",coast:"koust",
+coat:"kout",coffee:"kofi",cold:"kould",colleague:"kolig",comfortable:"kamftabl",company:"kampani",
+compare:"komper",computer:"kampyuter",condition:"kandishn",confident:"konfident",confused:"kanfyuzd",congratulate:"kangrechuleyt",
+"continue":"kantinyu",convenient:"kanvinient",conversation:"konverseyshn",cook:"kuk",cool:"kul",copy:"kopi",
+corner:"koʻrner",correct:"karekt",cost:"kost",counter:"kaunter",country:"kantri",cousin:"kazn",
+coworker:"kouuoʻrker",cozy:"kouzi",create:"krieyt",creativity:"krieytiviti",cross:"kros",crowded:"kraudid",
+cucumber:"kyukamber",culture:"kalcher",cup:"kap",current:"karant",customer:"kastamer",cut:"kat",
+daily:"deyli",dairy:"deri",dangerous:"deynjeras",dark:"dark",daughter:"doʻter",day:"dey",
+decide:"disayd",decision:"disijn",delicious:"dilishas",demanding:"dimanding",describe:"diskrayb",desk:"desk",
+detail:"diteyl",developed:"divelapt",dialogue:"dayalog",different:"difrant",difficult:"difikalt",dinner:"diner",
+direction:"direkshn",discuss:"diskas",dish:"dish",distant:"distant",district:"distrikt",doctor:"dokter",
+document:"dokyument",door:"doʻr",down:"daun",draw:"droʻ",drawing:"droʻing",drink:"drink",
+drive:"drayv",driver:"drayver",drop:"drop",early:"oʻrli",easiest:"iziest",easy:"izi",
+eat:"it",education:"edyukeyshn",egg:"eg",email:"imeyl",employee:"imployi",empty:"empti",
+encouraging:"inkarijing",ending:"ending",energetic:"enerjetik",energy:"enerji",engineer:"enjinir",english:"inglish",
+enjoy:"injoy",enjoyable:"injoyabl",enough:"inaf",enter:"enter",entrance:"entrans",environment:"invayranment",
+equipment:"ikuipment",evening:"ivning",examine:"igzemin",example:"igzampl",excited:"iksaytid",exciting:"iksayting",
+exercise:"eksersayz",expect:"ikspekt",expensive:"ikspensiv",experience:"ikspirians",explain:"ikspleyn",explanation:"eksplaneyshn",
+extreme:"ikstrim",factory:"fektari",familiar:"familier",family:"femili",fast:"fast",father:"faðer",
+favorite:"feyvrit",feel:"fil",fever:"fiver",field:"fild",film:"film",find:"faynd",
+finish:"finish",first:"foʻrst",flexible:"fleksibl",flight:"flayt",floor:"floʻr",fly:"flay",
+focus:"foukas",follow:"folou",food:"fud","for":"foʻr",forest:"forest",forget:"forget",
+free:"fri",fresh:"fresh",friday:"fraydey",friend:"frend",friendly:"frendli",friendship:"frendship",
+front:"frant",fruit:"frut",fulfilling:"fulfiling",full:"ful",furniture:"foʻrnicher",future:"fyucher",
+gain:"geyn",game:"geym",garden:"gardn",give:"giv",glad:"gled",glass:"glas",
+go:"gou",good:"gud",graduation:"grejueyshn",gray:"grey",greet:"grit",grocery:"grousari",
+group:"grup",grow:"grou",guest:"gest",guesthouse:"gesthaus",guidebook:"gaydbuk",habit:"hebit",
+hall:"hoʻl",hallway:"hoʻluey",happiest:"hepiest",happy:"hepi",hard:"hard",hardest:"hardest",
+hardworking:"harduoʻrking",harshly:"harshli",headache:"hedeyk",health:"helθ",healthy:"helθi",heat:"hit",
+heavy:"hevi",height:"hayt",help:"help",helpful:"helpful",high:"hay",history:"histari",
+hobby:"hobi",holiday:"holidey",home:"houm",hometown:"houmtaun",homework:"houmuoʻrk",hope:"houp",
+hospital:"hospitl",hot:"hot",hotel:"houtel",hour:"auer",hours:"auerz",house:"haus",
+housing:"hauzing",hungry:"hangri",husband:"hazband",idea:"aydia",ignore:"ignoʻr",imagine:"imejin",
+immediately:"imidiatli",impatient:"impeyshant",important:"impoʻrtant",improve:"impruv","in":"in",independent:"indipendant",
+information:"informeyshn",inspiration:"inspireyshn",instruction:"instrakshn",intelligent:"intelijant",interest:"intrest",interesting:"intresting",
+invite:"invayt",item:"aytam",jacket:"jekit",job:"job",join:"joyn",journey:"joʻrni",
+juice:"jus",kind:"kaynd",kindly:"kayndli",kitchen:"kichin",know:"nou",knowledge:"nolij",
+lake:"leyk",lamp:"lemp",language:"lenguij",large:"larj",late:"leyt",leader:"lider",
+learn:"loʻrn",leave:"liv",left:"left",less:"les",lesson:"lesn",library:"laybrari",
+life:"layf",lifestyle:"layfstayl",light:"layt",like:"layk",line:"layn",list:"list",
+listen:"lisn",live:"liv",lively:"layvli",living:"living",local:"loukl",location:"loukeyshn",
+lonely:"lounli","long":"long",look:"luk",loud:"laud",loudly:"laudli",love:"lav",
+loving:"laving",low:"lou",luggage:"lagij",lunch:"lanch",machine:"mashin",make:"meyk",
+mall:"moʻl",manager:"menijer",map:"mep",market:"markit",math:"meθ",may:"mey",
+meal:"mil",mean:"min",meaningful:"miningful",media:"midia",medicine:"medisin",medium:"midiam",
+meet:"mit",meeting:"miting",memorable:"memarabl",memory:"memari",menu:"menyu",middle:"midl",
+might:"mayt",milk:"milk",miss:"mis",mistake:"misteyk",modern:"modern",moment:"moumant",
+money:"mani",month:"manθ",more:"moʻr",morning:"moʻrning",most:"moust",mother:"maðer",
+mountains:"mauntinz",move:"muv",movie:"muvi",museum:"myuziam",music:"myuzik",must:"mast",
+name:"neym",narrow:"nerou",nature:"neycher",near:"nir",nearby:"nirbay",neat:"nit",
+need:"nid",neighbor:"neyber",neighborhood:"neyberhud",nervous:"noʻrvas","new":"nyu",news:"nyuz",
+next:"nekst",nice:"nays",night:"nayt",noise:"noyz",noisier:"noyzier",noisy:"noyzi",
+noodles:"nudlz",normal:"noʻrml",note:"nout",notebook:"noutbuk",notice:"noutis",novel:"novl",
+nurse:"noʻrs",of:"ov",offer:"ofer",office:"ofis",old:"ould",on:"on",
+once:"uans",open:"oupn",opportunity:"opertyuniti",option:"opshn",orange:"orinj",order:"oʻrder",
+orders:"oʻrderz",organize:"oʻrganayz",organized:"oʻrganayzd",outdoor:"autdoʻr",pace:"peys",pain:"peyn",
+paint:"peynt",painting:"peynting",paints:"peynts",pair:"per",paper:"peyper",parents:"perants",
+park:"park",part:"part",partner:"partner",pasta:"pasta",patience:"peyshans",patient:"peyshant",
+patiently:"peyshantli",pay:"pey",peace:"pis",peaceful:"pisful",people:"pipl",perfect:"poʻrfikt",
+perfectly:"poʻrfiktli",person:"poʻrsn",personal:"poʻrsanl",pharmacy:"farmasi",phone:"foun",photo:"foutou",
+photograph:"foutagraf",photography:"fatografi",photos:"foutouz",phrase:"freyz",pick:"pik",picture:"pikcher",
+place:"pleys",plan:"plen",plane:"pleyn",plate:"pleyt",play:"pley",player:"pleyer",
+pleasant:"plezant",pleasure:"plejer",point:"poynt",polite:"palayt",popular:"popyuler",position:"pazishn",
+pot:"pot",potato:"pateytou",practical:"prektikl",practice:"prektis",prefer:"prifoʻr",prepare:"priper",
+pressure:"presher",price:"prays",private:"prayvit",problem:"problem",product:"prodakt",professional:"profeshanl",
+progress:"prougres",pronunciation:"pranansieyshn",protect:"pratekt",proud:"praud",provide:"pravayd","public":"pablik",
+punctual:"pankchual",put:"put",question:"kueschn",queue:"kyu",quick:"kuik",quickly:"kuikli",
+quiet:"kuayat",quieter:"kuayater",quietest:"kuayatist",rain:"reyn",rainy:"reyni",raise:"reyz",
+rarely:"rerli",reach:"rich",react:"riekt",read:"rid",reading:"riding",ready:"redi",
+real:"ril",reasonable:"riznabl",receive:"risiv",recipe:"resipi",recover:"rikaver",regain:"rigeyn",
+relationship:"rileyshnship",relatives:"relativz",relax:"rileks",relaxed:"rilekst",remember:"rimember",rent:"rent",
+repeat:"ripit",report:"ripoʻrt",represent:"riprizent",reserve:"rizoʻrv",respect:"rispekt",rest:"rest",
+restaurant:"restrant",result:"rizalt",retired:"ritayerd","return":"ritoʻrn",rewarding:"riuoʻrding",rice:"rays",
+ride:"rayd",right:"rayt",rise:"rayz",river:"river",road:"roud",role:"roul",
+room:"rum",route:"rut",routine:"rutin",rule:"rul",run:"ran",salad:"seled",
+sales:"seylz",satisfied:"setisfayd",satisfying:"setisfaying",saturday:"seterdey",save:"seyv",scenery:"sinari",
+schedule:"skejul",school:"skul",sea:"si",season:"sizn",section:"sekshn",see:"si",
+sentence:"sentans",serious:"sirias",serve:"soʻrv",service:"soʻrvis",session:"seshn",set:"set",
+shade:"sheyd",share:"sher",shelf:"shelf",shift:"shift",shirt:"shoʻrt",shoes:"shuz",
+shop:"shop",shopping:"shoping","short":"shoʻrt",should:"shud",show:"shou",sick:"sik",
+simple:"simpl",sister:"sister",sit:"sit",situation:"sichueyshn",size:"sayz",skill:"skil",
+sleep:"slip",slim:"slim",slow:"slou",slowly:"slouli",small:"smoʻl",smaller:"smoʻler",
+smell:"smel",smile:"smayl",snow:"snou",social:"soushl",sofa:"soufa",soft:"soft",
+solve:"solv",son:"san",soup:"sup",speak:"spik",special:"speshl",spend:"spend",
+spoon:"spun",sports:"spoʻrts",spring:"spring",square:"skuer",stage:"steyj",stand:"stend",
+start:"start",station:"steyshn",stay:"stey",steadier:"stedier",step:"step",stomach:"stamak",
+stop:"stop",store:"stoʻr",story:"stoʻri",straight:"streyt",street:"strit",strength:"strengθ",
+stressed:"strest",stressful:"stresful",strict:"strikt",strong:"strong",student:"styudant",study:"stadi",
+style:"stayl",subway:"sabuey",suit:"sut",summer:"samer",sun:"san",sunday:"sandey",
+sunny:"sani",supermarket:"supermarkit",support:"sapoʻrt",supportive:"sapoʻrtiv",symptom:"simptam",table:"teybl",
+take:"teyk",talk:"toʻk",tall:"toʻl",taller:"toʻler",task:"task",tasty:"teysti",
+tea:"ti",teach:"tich",teacher:"ticher",team:"tim",teapot:"tipot",technology:"teknoloji",television:"telivijn",
+tell:"tel",temperature:"temprecher",text:"tekst",thank:"θenk","the":"ðe",thin:"θin",
+think:"θink",ticket:"tikit",time:"taym",tired:"tayerd",to:"tu",tomato:"tameytou",
+too:"tu",topic:"topik",tourist:"turist",town:"taun",traffic:"trefik",train:"treyn",
+training:"treyning",transport:"trenspoʻrt",travel:"trevl",treatment:"tritmant",trip:"trip",trousers:"trauzerz",
+"try":"tray",turn:"toʻrn",tv:"tivi",uncle:"ankl",uncomfortable:"ankamftabl",under:"ander",
+underground:"andergraund",understand:"anderstend",university:"yunivoʻrsiti",unwell:"anuel",up:"ap",use:"yuz",
+useful:"yusful",valuable:"velyuabl",vegetable:"vejtabl",video:"vidiou",view:"vyu",village:"vilij",
+visit:"vizit",visitor:"viziter",vocabulary:"vakebyuleri",voice:"voys",wait:"ueyt",waiter:"ueyter",
+waiting:"ueyting",wake:"ueyk",walk:"uoʻk",wall:"uoʻl",want:"uont",warm:"uoʻrm",
+waste:"ueyst",watch:"uoch",water:"uoʻter",way:"uey",weak:"uik",weakness:"uiknas",
+wear:"uer",weather:"ueðer",week:"uik",weekend:"uikend",welcome:"uelkam",welcoming:"uelkaming",
+wide:"uayd",wife:"uayf",wind:"uind",window:"uindou",windy:"uindi",winter:"uinter",
+woman:"uuman",word:"uoʻrd",work:"uoʻrk",workplace:"uoʻrkpleys",worried:"uarid",worry:"uari",
+write:"rayt",yard:"yard",year:"yir",yogurt:"yougert",young:"yang"
+};
+/* Ibora yoki soʻzning oʻqilishi. Qavs ichidagi izoh oʻqilmaydi.
+   Agar birorta soʻz lugʻatda boʻlmasa — hech narsa koʻrsatilmaydi (yarim yozuv chalgʻitmasin) */
+var RDCACHE = {};
+function reading(en) {
+  if (RDCACHE.hasOwnProperty(en)) return RDCACHE[en];
+  var src = String(en).replace(/\([^)]*\)/g, " ");
+  var parts = src.match(/[A-Za-zÀ-ÿ’']+|[^A-Za-zÀ-ÿ’']+/g) || [];
+  var out = "", got = false, ok = true;
+  for (var i = 0; i < parts.length; i++) {
+    var t = parts[i];
+    if (/^[A-Za-zÀ-ÿ’']+$/.test(t)) {
+      var r = RD[t.toLowerCase().replace(/’/g, "'")];
+      if (!r) { ok = false; break; }
+      out += r; got = true;
+    } else out += t;
+  }
+  var res = ok && got ? out.replace(/\s+/g, " ").trim() : "";
+  RDCACHE[en] = res;
+  return res;
+}
+/* Jadval/roʻyxat uchun: soʻz tagida (yoki yonida) oʻqilishi */
+function rdSpan(en) {
+  var r = reading(en);
+  return r ? "<span class=\"rd\">[" + esc(r) + "]</span>" : "";
+}
+
 /* ---------- talaffuz ---------- */
 var SPKSVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
   '<path d="M4 9.3h3.3L12 5.4v13.2L7.3 14.7H4z" fill="currentColor"/>' +
@@ -2148,6 +2311,9 @@ function renderQ() {
   $("ptag").textContent = dir === "en" ? "Inglizcha" : "Oʻzbekcha";
   $("pword").textContent = dir === "en" ? w.en : w.uz;
   $("pword").className = "word" + (dir === "uz" ? " uz" : "");
+  var prd = dir === "en" ? reading(w.en) : "";
+  $("pread").textContent = prd ? "[" + prd + "]" : "";
+  if (prd) unhide($("pread")); else hide($("pread"));
   $("pmeta").textContent = CATS[w.c][0] + " · " + UNIT_TITLE[w.u][2];
   $("prevBtn").hidden = q.i === 0;
   $("reviewNote").hidden = !past;
@@ -2195,7 +2361,8 @@ function flip() {
   quiz.flipped = true;
   var ca = $("cardAns");
   ca.hidden = false;
-  ca.innerHTML = '<span class="flabel">' + (dir === "en" ? "Oʻzbekchasi" : "Inglizchasi") + "</span><b>" + esc(answerOf(w, dir)) + "</b>";
+  ca.innerHTML = '<span class="flabel">' + (dir === "en" ? "Oʻzbekchasi" : "Inglizchasi") + "</span><b>" + esc(answerOf(w, dir)) + "</b>" +
+    (dir === "uz" ? rdSpan(answerOf(w, dir)) : "");
   if (dir === "uz" && TTS && store.cfg.autoSay !== false) say(w.en);
   $("checkBtn").textContent = "✓ Bildim";
   $("dontknowBtn").textContent = "✗ Bilmadim";
@@ -2230,7 +2397,8 @@ function paintGraded(h, w, fresh) {
   if (cfg.mode === "card") {
     var ca = $("cardAns");
     ca.hidden = false;
-    ca.innerHTML = '<span class="flabel">' + (dir === "en" ? "Oʻzbekchasi" : "Inglizchasi") + "</span><b>" + esc(ans) + "</b>";
+    ca.innerHTML = '<span class="flabel">' + (dir === "en" ? "Oʻzbekchasi" : "Inglizchasi") + "</span><b>" + esc(ans) + "</b>" +
+      (dir === "uz" ? rdSpan(ans) : "");
   } else {
     var f = $("ansField"), inp = $("ans");
     inp.value = h.mine || "";
@@ -2240,8 +2408,9 @@ function paintGraded(h, w, fresh) {
     var old = f.querySelector(".fix"); if (old) old.remove();
     var fix = document.createElement("p");
     fix.className = "fix" + (h.good && !h.typo ? "" : " no");
-    fix.innerHTML = h.good && !h.typo ? "<b>✓ toʻgʻri</b>" + (norm(h.mine) !== norm(ans) ? " · " + esc(ans) : "")
-      : (h.typo ? "<b>≈ deyarli toʻgʻri</b>, toʻgʻri yozilishi: <b>" : "<b>✗</b> toʻgʻrisi: <b>") + esc(ans) + "</b>";
+    fix.innerHTML = (h.good && !h.typo ? "<b>✓ toʻgʻri</b>" + (norm(h.mine) !== norm(ans) ? " · " + esc(ans) : "")
+      : (h.typo ? "<b>≈ deyarli toʻgʻri</b>, toʻgʻri yozilishi: <b>" : "<b>✗</b> toʻgʻrisi: <b>") + esc(ans) + "</b>") +
+      (dir === "uz" ? " " + rdSpan(ans) : "");
     f.appendChild(fix);
   }
   if (TTS && dir === "uz" && fresh && store.cfg.autoSay !== false && cfg.mode !== "card") say(w.en);
@@ -2399,7 +2568,7 @@ function finish(early) {
   box.innerHTML = "";
   if (q.wrongList.length) {
     box.innerHTML = '<ul class="res-list">' + q.wrongList.map(function (x) {
-      return '<li><span class="w">' + esc(x.w.en) + '</span> <span class="c">— ' + esc(x.w.uz) + "</span> " +
+      return '<li><span class="w">' + esc(x.w.en) + "</span> " + rdSpan(x.w.en) + ' <span class="c">— ' + esc(x.w.uz) + "</span> " +
         (TTS ? spkBtn(x.w) : "") + " " + starBtn(x.w) +
         (x.mine !== null ? '<br><span class="mine">siz: ' + esc(x.mine || "—") + "</span>" : "") + " " + pips(peek(x.w).lvl) + "</li>";
     }).join("") + "</ul>";
@@ -2454,7 +2623,7 @@ function rowsHtml(list) {
     var p = peek(w);
     return '<tr class="' + (p.mis ? "hasmistake" : "") + (p.lvl >= MAXLVL ? " learned" : "") + '"><td class="spkcell">' + starBtn(w) + "</td>" +
       (TTS ? '<td class="spkcell">' + spkBtn(w) + "</td>" : "") +
-      '<td class="v">' + esc(w.en) + '</td><td class="uz">' + esc(w.uz) + '</td><td class="num">' + esc(CATS[w.c][0]) +
+      '<td class="v">' + esc(w.en) + rdSpan(w.en) + '</td><td class="uz">' + esc(w.uz) + '</td><td class="num">' + esc(CATS[w.c][0]) +
       "</td><td>" + pips(p.lvl) + "</td><td>" + learnBtn(w) + "</td></tr>";
   }).join("");
 }
