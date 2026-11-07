@@ -1856,14 +1856,14 @@ try {
 if (!store.cfg) store.cfg = {};
 function save() { store.sum = summary(); try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
 /* Tayyor hisob — stats.html shu sahifadagi raqamlarni oʻzi qayta hisoblamasdan koʻrsatadi.
-   Bir soʻz bir necha unitda boʻlishi mumkin: sanoq bu sahifadagidek (har bir yozuv), qiyinlar roʻyxati takrorsiz */
+   Bir soʻz bir necha unitda boʻlishi mumkin: sanoq bu sahifadagidek (har bir yozuv), xatolar soni va qiyinlar roʻyxati takrorsiz */
 function summary() {
-  var lv = [0, 0, 0, 0, 0, 0], seen = 0, mis = 0, ok = 0, bad = 0, hard = [], had = {};
+  var lv = [0, 0, 0, 0, 0, 0], seen = 0, mis = 0, ok = 0, bad = 0, hard = [], had = {}, misHad = {};
   WORDS.forEach(function (w) {
     var p = peek(w);
     lv[p.lvl]++; ok += p.ok; bad += p.bad;
     if (!unseen(w)) seen++;
-    if (p.mis) mis++;
+    if (p.mis && !misHad[w.k]) { misHad[w.k] = 1; mis++; }
     if (p.bad > 0 && p.lvl < MAXLVL && !had[w.k]) { had[w.k] = 1; hard.push([w.en, w.uz, p.ok, p.bad, p.lvl]); }
   });
   hard.sort(function (a, b) { return (b[3] - b[2]) - (a[3] - a[2]) || b[3] - a[3] || a[4] - b[4]; });
@@ -1888,6 +1888,12 @@ function rec(w) {
 }
 function peek(w) { return store.p[w.k] || { lvl: 0, ok: 0, bad: 0, mis: false }; }
 function unseen(w) { var r = peek(w); return r.ok + r.bad === 0 && r.lvl === 0; }
+/* Bir soʻz bir necha unitda boʻlishi mumkin, natijasi esa umumiy (w.k) —
+   xatolar va belgilanganlar roʻyxatida har bir soʻz bir marta chiqadi */
+function uniq(list) {
+  var had = {};
+  return list.filter(function (w) { if (had[w.k]) return false; had[w.k] = 1; return true; });
+}
 
 function $(id) { return document.getElementById(id); }
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -2256,9 +2262,9 @@ if (store.cfg.custom) $("customCount").value = store.cfg.custom;
 
 function pickPool(kind, base) {
   if (kind === "unseen") return base.filter(unseen);
-  if (kind === "mistakes") return base.filter(function (w) { return peek(w).mis; });
+  if (kind === "mistakes") return uniq(base.filter(function (w) { return peek(w).mis; }));
   if (kind === "unlearned") return base.filter(function (w) { return peek(w).lvl < MAXLVL; });
-  if (kind === "starred") return base.filter(function (w) { return peek(w).star; });
+  if (kind === "starred") return uniq(base.filter(function (w) { return peek(w).star; }));
   return base;
 }
 function shuffle(a) {
@@ -2711,7 +2717,7 @@ $("unitsBody").addEventListener("click", function (e) {
 
 /* ---------- xatolar va belgilanganlar ---------- */
 function renderMistakes() {
-  var list = WORDS.filter(function (w) { return peek(w).mis; });
+  var list = uniq(WORDS.filter(function (w) { return peek(w).mis; }));
   list.sort(function (a, b) { return peek(a).lvl - peek(b).lvl || peek(b).bad - peek(a).bad; });
   var box = $("misBody");
   if (!list.length) { box.innerHTML = '<p class="empty">Xato soʻzlar yoʻq. Mashq qilganingizda xatolar shu yerda toʻplanadi.</p>'; return; }
@@ -2720,25 +2726,25 @@ function renderMistakes() {
   $("misTrain").onclick = function () { startQuiz(quickCfg({ count: "all" }), shuffle(list.slice())); };
 }
 function renderStarred() {
-  var list = WORDS.filter(function (w) { return peek(w).star; });
+  var list = uniq(WORDS.filter(function (w) { return peek(w).star; }));
   var box = $("starBody");
   if (!list.length) { box.innerHTML = '<p class="empty">Hali yulduzcha qoʻyilmagan. Mashq paytida ☆ ni bosing (yoki <b>*</b> tugmasini).</p>'; return; }
   box.innerHTML = '<div class="actions" style="margin:0 0 14px"><button class="btn" id="starTrain">Shu ' + list.length +
     " ta soʻzni mashq qilish</button></div>" + tableHtml(list);
   $("starTrain").onclick = function () {
-    var now = WORDS.filter(function (w) { return peek(w).star; });
+    var now = uniq(WORDS.filter(function (w) { return peek(w).star; }));
     if (now.length) startQuiz(quickCfg({ count: "all" }), shuffle(now));
   };
 }
 
 /* ---------- natijalar ---------- */
 function totals() {
-  var learned = 0, mis = 0, ok = 0, bad = 0, sum = 0, seen = 0;
+  var learned = 0, mis = 0, ok = 0, bad = 0, sum = 0, seen = 0, had = {};
   WORDS.forEach(function (w) {
     var p = peek(w);
     sum += p.lvl; ok += p.ok; bad += p.bad;
     if (p.lvl >= MAXLVL) learned++;
-    if (p.mis) mis++;
+    if (p.mis && !had[w.k]) { had[w.k] = 1; mis++; }
     if (!unseen(w)) seen++;
   });
   return { learned: learned, mis: mis, ok: ok, bad: bad, seen: seen, pct: Math.round(sum / (WORDS.length * MAXLVL) * 100) };
@@ -2770,7 +2776,7 @@ function updateBrand() {
   var t = totals();
   $("brandStat").textContent = t.learned + " / " + WORDS.length + " yodlangan · " + t.pct + "%";
   $("mcount").textContent = t.mis ? "(" + t.mis + ")" : "";
-  var st = WORDS.filter(function (w) { return peek(w).star; }).length;
+  var st = uniq(WORDS.filter(function (w) { return peek(w).star; })).length;
   $("scount").textContent = st ? "(" + st + ")" : "";
   $("newCount").textContent = "(" + (WORDS.length - t.seen) + ")";
 }
