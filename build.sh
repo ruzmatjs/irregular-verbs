@@ -1,5 +1,5 @@
 #!/bin/sh
-# index.html va words.html — artifact uchun yoziladi: ularda <!doctype>, <html>, <head> yoʻq,
+# index.html, words.html, a2.html va stats.html — artifact uchun yoziladi: ularda <!doctype>, <html>, <head> yoʻq,
 # chunki Claude artifact sahifani nashr paytida oʻzi shu qobiqqa oʻraydi.
 # GitHub Pages uchun esa toʻliq hujjat kerak, shuning uchun shu skript
 # ulardan docs/ ichidagi sahifalarni yasaydi. Saytni yangilash:
@@ -54,5 +54,7 @@ page index.html docs/index.html "Irregular Verbs Trainer" \
   "100 ta ingliz tilidagi notoʻgʻri feʻlni yodlash uchun mashq sayti. Oʻzbek tilida." "$SITE"
 page words.html docs/words.html "A1 Vocabulary Trainer" \
   "A1 kursining 24 ta unitidagi 1372 ta inglizcha soʻzni yodlash uchun mashq sayti. Oʻzbek tilida." "${SITE}words.html"
-page stats.html docs/stats.html "Statistika — Irregular Verbs va A1 soʻzlar" \
+page a2.html docs/a2.html "A2 Vocabulary Trainer" \
+  "A2 kursining 24 ta unitidagi 1028 ta inglizcha soʻzni yodlash uchun mashq sayti. Oʻzbek tilida." "${SITE}a2.html"
+page stats.html docs/stats.html "Statistika — Irregular Verbs, A1 va A2 soʻzlar" \
   "Ingliz tili mashqlari natijalari: kunlik faollik, ketma-ket kunlar, yodlangan soʻzlar va eng qiyin soʻzlar." "${SITE}stats.html"

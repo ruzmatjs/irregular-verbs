@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="site.webmanifest">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Statistika — Irregular Verbs va A1 soʻzlar">
+<meta property="og:title" content="Statistika — Irregular Verbs, A1 va A2 soʻzlar">
 <meta property="og:description" content="Ingliz tili mashqlari natijalari: kunlik faollik, ketma-ket kunlar, yodlangan soʻzlar va eng qiyin soʻzlar.">
 <meta property="og:url" content="https://ruzmatjs.github.io/irregular-verbs/stats.html">
 <meta property="og:image" content="https://ruzmatjs.github.io/irregular-verbs/og.png">
@@ -27,7 +27,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
-/* Layout: feʻllar va A1 soʻzlar natijalari bitta sahifada — yuqorida 4 ta asosiy raqam, keyin kunlik faollik grafigi, pastda ikki boʻlim kartasi */
+/* Layout: feʻllar, A1 va A2 soʻzlar natijalari bitta sahifada — yuqorida 4 ta asosiy raqam, keyin kunlik faollik grafigi, pastda boʻlim kartalari */
 :root{
   --bg:#f6f3ec; --surface:#fffdf8; --surface-2:#efe9dc; --line:#ded5c3;
   --fg:#241f18; --muted:#6f6552; --accent:#1f4f4a; --accent-soft:#d6e4e0;
@@ -72,10 +72,11 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;backgroun
 .brand .mark{width:28px;height:28px;flex:0 0 auto;align-self:center}
 .brand h1{font-family:var(--display);font-size:1.25rem;font-weight:700;margin:0;letter-spacing:-.01em}
 .brand .sub{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
-.switch{display:flex;gap:4px;margin-left:auto;align-self:center;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px}
+.switch{display:flex;gap:4px;margin-left:auto;align-self:center;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px;max-width:100%;overflow-x:auto;scrollbar-width:none}
 .switch a{font-size:.8rem;font-weight:500;color:var(--muted);text-decoration:none;padding:4px 11px;border-radius:999px;white-space:nowrap}
 .switch a[aria-current="page"]{background:var(--accent);color:var(--on-accent)}
 .switch a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media (max-width:420px){.switch{gap:0}.switch a{padding:4px 8px}}
 h2{font-family:var(--display);font-size:1.05rem;margin:0;text-wrap:balance}
 section{padding-block:22px 0}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
@@ -168,6 +169,7 @@ section{padding-block:22px 0}
       <nav class="switch" aria-label="Boʻlimlar">
         <a href="index.html">Irregular verbs</a>
         <a href="words.html">A1 soʻzlar</a>
+        <a href="a2.html">A2 soʻzlar</a>
         <a href="stats.html" aria-current="page">Statistika</a>
       </nav>
     </div>
@@ -213,8 +215,9 @@ var WDAYS = ["yakshanba", "dushanba", "seshanba", "chorshanba", "payshanba", "ju
 var WSHORT = ["Ya", "Du", "Se", "Ch", "Pa", "Ju", "Sh"];
 /* Har bir boʻlim oʻz natijalarini oʻz kalitida saqlaydi; bu sahifa ularni faqat oʻqiydi */
 var PARTS = [
-  { key: "irrverbs.v1", title: "Irregular verbs", href: "index.html", n: 100, unit: "feʻl" },
-  { key: "a1words.v1", title: "A1 soʻzlar", href: "words.html", n: 1372, unit: "soʻz" }
+  { key: "irrverbs.v1", title: "Irregular verbs", href: "index.html", n: 100, unit: "feʻl", short: "feʻl" },
+  { key: "a1words.v1", title: "A1 soʻzlar", href: "words.html", n: 1372, unit: "soʻz", short: "A1" },
+  { key: "a2words.v1", title: "A2 soʻzlar", href: "a2.html", n: 1028, unit: "soʻz", short: "A2" }
 ];
 var days = 30;
 try { var sd = parseInt(localStorage.getItem("stats.days"), 10); if (sd === 7 || sd === 30 || sd === 90) days = sd; } catch (e) {}
@@ -251,7 +254,7 @@ function render() {
   var stores = PARTS.map(function (P) { return read(P.key); });
   var stats = PARTS.map(function (P, i) { return partStats(P, stores[i]); });
 
-  /* ikkala boʻlimning kunlik tarixi qoʻshiladi */
+  /* barcha boʻlimlarning kunlik tarixi qoʻshiladi */
   var day = {};
   stores.forEach(function (st) {
     if (!st || !st.d) return;
@@ -284,7 +287,7 @@ function render() {
   var learned = 0, total = 0, ok = 0, bad = 0;
   stats.forEach(function (x) { learned += x.s.lv[MAXLVL]; total += x.s.n; ok += x.s.ok; bad += x.s.bad; });
   $("hLearned").innerHTML = num(learned) + " <small>/ " + num(total) + "</small>";
-  $("hLearnedS").textContent = stats.map(function (x, i) { return PARTS[i].unit + ": " + x.s.lv[MAXLVL]; }).join(" · ");
+  $("hLearnedS").textContent = stats.map(function (x, i) { return PARTS[i].short + ": " + x.s.lv[MAXLVL]; }).join(" · ");
   $("hAcc").innerHTML = ok + bad ? Math.round(ok / (ok + bad) * 100) + "<small>%</small>" : "—";
   $("hAccS").textContent = ok + bad ? num(ok + bad) + " ta javobdan " + num(ok) + " tasi toʻgʻri" : "Hali javob berilmagan";
   $("brandStat").textContent = streak ? "🔥 " + streak + " kun ketma-ket" : "";
@@ -305,7 +308,7 @@ function renderChart(at) {
     (lrn ? " · <b>" + lrn + "</b> ta soʻz yodlandi" : "") + (act ? " · kuniga oʻrtacha <b>" + Math.round(sum / act) + "</b>" : "");
   if (!sum) {
     $("chartBox").innerHTML = '<div class="empty">Bu davrda mashq qilinmagan. Kunlik tarix yangi versiyadan boshlab yoziladi —<br>' +
-      '<a href="index.html">feʻllar</a> yoki <a href="words.html">A1 soʻzlar</a> boʻyicha mashq qiling, natija shu yerda chiqadi.</div>';
+      '<a href="index.html">feʻllar</a>, <a href="words.html">A1</a> yoki <a href="a2.html">A2 soʻzlar</a> boʻyicha mashq qiling, natija shu yerda chiqadi.</div>';
     return;
   }
   /* yuqori chiziq — chiroyli yaxlit son */

@@ -33,15 +33,24 @@ Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/words.html
 - Level, xatolar, yulduzcha, «Yodladim», koʻrilmaganlar filtri va klaviatura — feʻllar sahifasidagidek
 - Natijalari feʻllar natijalaridan alohida saqlanadi
 
+## A2 soʻzlar
+
+Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/a2.html
+
+- A2 kursining 24 ta unitidagi 1028 ta soʻz (unitlar boʻyicha 3000 ta yozuv), A1 sahifasidagi barcha imkoniyatlar bilan
+- Turkumlar: otlar, feʻllar, frazali feʻllar, sifatlar, ravishlar, olmoshlar va iboralar
+- Bir soʻz bir necha unitda uchrasa, mashqda bir marta soʻraladi va natijasi umumiy; jami sonlar ham takrorsiz
+- Natijalari A1 va feʻllar natijalaridan alohida saqlanadi
+
 ## Statistika
 
 Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/stats.html
 
-- Ikkala boʻlim natijalari bitta joyda: bugungi javoblar, ketma-ket mashq qilingan kunlar 🔥, jami yodlangan soʻzlar va aniqlik foizi
+- Uchala boʻlim natijalari bitta joyda: bugungi javoblar, ketma-ket mashq qilingan kunlar 🔥, jami yodlangan soʻzlar va aniqlik foizi
 - Kunlik faollik grafigi (7, 30 yoki 90 kun): har kuni nechta javob, nechtasi toʻgʻri, nechta soʻz yodlandi
 - Har bir boʻlim uchun umumiy yodlash foizi, level boʻyicha taqsimot va eng qiyin 5 ta soʻz
 - Kunlik tarix ushbu versiyadan boshlab yoziladi; boshqa oynada mashq qilinsa, sahifa oʻzi yangilanadi
 
 ## Ishlatish
 
-Server kerak emas: `index.html` (feʻllar), `words.html` (A1 soʻzlar) yoki `stats.html` (statistika) ni brauzerda ochsangiz kifoya. GitHub Pages uchun `sh build.sh` uchalasidan `docs/` ichida toʻliq sahifa yasaydi.
+Server kerak emas: `index.html` (feʻllar), `words.html` (A1 soʻzlar), `a2.html` (A2 soʻzlar) yoki `stats.html` (statistika) ni brauzerda ochsangiz kifoya. GitHub Pages uchun `sh build.sh` ularning hammasidan `docs/` ichida toʻliq sahifa yasaydi.

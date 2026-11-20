@@ -178,10 +178,11 @@ tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 
 /* ---------- A1 soʻzlar sahifasi ---------- */
-.switch{display:flex;gap:4px;margin-left:auto;align-self:center;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px}
+.switch{display:flex;gap:4px;margin-left:auto;align-self:center;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px;max-width:100%;overflow-x:auto;scrollbar-width:none}
 .switch a{font-size:.8rem;font-weight:500;color:var(--muted);text-decoration:none;padding:4px 11px;border-radius:999px;white-space:nowrap}
 .switch a[aria-current="page"]{background:var(--accent);color:var(--on-accent)}
 .switch a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media (max-width:420px){.switch{gap:0}.switch a{padding:4px 8px}}
 .unitgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
 .uopt{position:relative;display:block}
 .uopt input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
@@ -229,6 +230,7 @@ td.v{white-space:normal;min-width:120px}
       <nav class="switch" aria-label="Boʻlimlar">
         <a href="index.html">Irregular verbs</a>
         <a href="words.html" aria-current="page">A1 soʻzlar</a>
+        <a href="a2.html">A2 soʻzlar</a>
         <a href="stats.html">Statistika</a>
       </nav>
     </div>
