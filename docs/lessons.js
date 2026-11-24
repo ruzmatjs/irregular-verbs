@@ -77,6 +77,7 @@ function unitName(n) { return UNIT_TITLE[n] ? UNIT_TITLE[n][2] : ""; }
 function renderLessons() {
   var box = $("lessonList");
   box.innerHTML = LESSONS.length ? '<div class="lessons">' + LESSONS.map(function (L, i) {
+    if (window.lessonVisible && !lessonVisible(L)) return "";
     var r = peek(L);
     return '<button class="lesson" type="button" data-i="' + i + '"><span class="un">Unit ' + L.u + (L.sample ? ' <span class="chip">Namuna</span>' : "") +
       "</span><b>" + esc(L.title) + '</b><span class="d">' + esc(L.desc || unitName(L.u)) + '</span><span class="foot">' +

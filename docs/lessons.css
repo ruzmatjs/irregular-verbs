@@ -1,4 +1,9 @@
 /* Listening va Speaking sahifalari uchun umumiy qism: darslar roʻyxati, pleyer, savollar */
+.books{display:inline-flex;gap:2px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px;margin-bottom:16px;max-width:100%}
+.books button{appearance:none;border:0;background:none;font:inherit;font-size:.86rem;font-weight:600;color:var(--muted);padding:7px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.books button small{font-weight:500;margin-left:4px;font-variant-numeric:tabular-nums}
+.books button[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:0 0 0 1px var(--line)}
+.books button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:10px}
 .lesson{appearance:none;font:inherit;color:inherit;text-align:left;cursor:pointer;background:var(--surface);border:1px solid var(--line);
   border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:3px;min-width:0}
