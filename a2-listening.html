@@ -98,37 +98,20 @@ var KEY = "a2listening.v1";
      audio: "audio/l2-1.mp3",           — ixtiyoriy; boʻlmasa matnni brauzer ovozi oʻqiydi
      lines: [["Kim", "English", "Oʻzbekcha", 3.5], ...],   — oxirgisi: shu qator boshlanadigan soniya (faqat audio bilan, ixtiyoriy)
      q: [{ t: "Savol?", o: ["A", "B", "C"], a: 0, why: "izoh (ixtiyoriy)" }, ...] } */
-var LESSONS = [
-  { id: "sample-1", u: 1, sample: true, title: "A busy morning", desc: "Ikki doʻst ertalabki odatlari haqida gaplashadi",
-    lines: [
-      ["Tom", "Hi, Anna. You look tired. What time do you usually get up?", "Salom, Anna. Charchagan koʻrinasan. Odatda soat nechada turasan?"],
-      ["Anna", "I get up at half past five every day.", "Har kuni besh yarimda turaman."],
-      ["Tom", "That is really early! What do you do before work?", "Juda erta-ku! Ishdan oldin nima qilasan?"],
-      ["Anna", "First I go for a run, then I have a shower and make breakfast.", "Avval yuguraman, keyin dush qabul qilib, nonushta tayyorlayman."],
-      ["Tom", "I never have time for breakfast. I just drink a coffee on the bus.", "Menda nonushtaga hech vaqt boʻlmaydi. Avtobusda shunchaki qahva ichaman."],
-      ["Anna", "That is not a healthy habit, Tom. Try to wake up fifteen minutes earlier.", "Bu sogʻlom odat emas, Tom. Oʻn besh daqiqa ertaroq uygʻonishga harakat qil."],
-      ["Tom", "You are right. I will start on Monday.", "Toʻgʻri aytasan. Dushanbadan boshlayman."]
-    ],
-    q: [
-      { t: "What time does Anna get up?", o: ["5:15", "5:30", "6:30"], a: 1, why: "half past five — besh yarim." },
-      { t: "What does Anna do first?", o: ["She makes breakfast", "She has a shower", "She goes for a run"], a: 2 },
-      { t: "What does Tom have in the morning?", o: ["Only coffee", "A big breakfast", "Tea and bread"], a: 0 },
-      { t: "When will Tom change his habit?", o: ["Tomorrow", "On Monday", "Next month"], a: 1 }
-    ] }
-];
+var LESSONS = [];
 </script>
 <script src="lessons.js"></script>
 <script>
-/* Student's Book va Workbook audiolari (a2-listening-data.js): ular namuna darsdan keyin roʻyxatga qoʻshiladi */
+/* Student's Book va Workbook darslari a2-listening-data.js da; shu yerda roʻyxatga qoʻshiladi */
 AUDIO_LESSONS.forEach(function (l) { l.desc = unitName(l.u); LESSONS.push(l); });
-/* Kitob almashtirgichi: roʻyxatda faqat tanlangan kitob darslari koʻrinadi (namuna dars — Student's Book bilan) */
+/* Kitob almashtirgichi: roʻyxatda faqat tanlangan kitob darslari koʻrinadi */
 var BOOK = store.cfg.book === "Workbook" ? "Workbook" : "Student's Book";
-function lessonVisible(L) { return (L.book || "Student's Book") === BOOK; }
+function lessonVisible(L) { return L.book === BOOK; }
 function paintBooks() {
   Array.prototype.forEach.call(document.querySelectorAll("#bookSeg button"), function (b) {
     b.setAttribute("aria-selected", String(b.getAttribute("data-book") === BOOK));
   });
-  $("nSb").textContent = LESSONS.filter(function (L) { return (L.book || "Student's Book") === "Student's Book"; }).length;
+  $("nSb").textContent = LESSONS.filter(function (L) { return L.book === "Student's Book"; }).length;
   $("nWb").textContent = LESSONS.filter(function (L) { return L.book === "Workbook"; }).length;
 }
 Array.prototype.forEach.call(document.querySelectorAll("#bookSeg button"), function (b) {
