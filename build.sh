@@ -9,7 +9,16 @@ set -e
 cd "$(dirname "$0")"
 mkdir -p docs
 cp assets/* docs/
-cp ui.css ui.js lessons.css lessons.js a2-units.js a2-listening-data.js a2-speaking-data.js docs/
+SHARED="ui.css ui.js lessons.css lessons.js a2-units.js a2-listening-data.js a2-speaking-data.js"
+cp $SHARED docs/
+# GitHub Pages fayllarni 10 daqiqa keshda saqlaydi: yangi sahifa eski css/js bilan ochilib qolmasligi uchun
+# manzilga fayl mazmunidan olingan versiya qoʻshiladi (ui.css -> ui.css?v=123456). Fayl oʻzgarsa, versiya ham oʻzgaradi.
+VERS=""
+for f in $SHARED; do
+  v=$(tr -d '' < "$f" | cksum | cut -d' ' -f1)
+  VERS="$VERS;s#\"$f\"#\"$f?v=$v\"#g"
+done
+VERS="${VERS#;}"
 # audio/ ichida ichki papkalar ham bor (audio/a2/student, audio/a2/workbook), shuning uchun -r
 if [ -d audio ]; then rm -rf docs/audio && mkdir -p docs/audio && cp -r audio/. docs/audio/; fi
 
@@ -49,7 +58,7 @@ HEAD
     printf '</head>\n<body>\n'
     sed -n '/^<header class="top"/,$p' "$1"
     printf '</body>\n</html>\n'
-  } > "$2"
+  } | sed "$VERS" > "$2"
   echo "$2 tayyor ($(wc -l < "$2") qator)"
 }
 
