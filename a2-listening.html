@@ -63,7 +63,7 @@
         <button class="btn ghost" type="button" id="retryBtn" hidden>Qayta ishlash</button>
       </div>
     </form>
-    <div class="card">
+    <div class="card scard" id="scriptCard">
       <details class="more" id="scriptBox">
         <summary>Matnni koʻrish <small>avval matnsiz tinglang</small></summary>
         <div class="opts" style="margin-top:12px"><label class="opt"><input type="checkbox" id="uzOn"><span>Tarjimasi bilan</span></label></div>
@@ -71,7 +71,7 @@
       </details>
     </div>
   </div>
-  <div class="player" role="group" aria-label="Pleyer">
+  <div class="player" id="player" role="group" aria-label="Pleyer">
     <button class="pbtn" type="button" id="prevLine" aria-label="Oldingi qator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
     <button class="pbtn main" type="button" id="playBtn" aria-label="Tinglash"></button>
     <button class="pbtn" type="button" id="nextLine" aria-label="Keyingi qator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
@@ -129,8 +129,10 @@ function openLesson(x) {
   setPlaying(false);
   paintHead(L);
   $("scriptBox").open = false;
+  $("qForm").classList.toggle("noq", !L.q);
   renderQuestions();
   renderScript();
+  $("script").scrollTop = 0;
   audio = null;
   $("pMsg").textContent = "";
   if (L.audio) {
@@ -196,7 +198,31 @@ function renderScript() {
       '<span class="uz"' + ($("uzOn").checked ? "" : " hidden") + ">" + esc(x[2] || "") + "</span></button></li>";
   }).join("");
 }
-$("uzOn").addEventListener("change", function () { renderScript(); paintPos(); });
+$("uzOn").addEventListener("change", function () { renderScript(); paintPos(); followLine(); });
+
+/* matn ekranga sigʻadigan balandlikda turadi va oʻz ichida suriladi: sarlavha va pleyer orasidagi joy */
+function fitScript() {
+  if ($("v-lesson").hidden || !$("scriptBox").open) return;
+  var card = $("scriptCard"), ul = $("script"), hh = document.querySelector("header.top").offsetHeight;
+  document.documentElement.style.setProperty("--hh", hh + "px");
+  var cr = card.getBoundingClientRect(), inner = ul.getBoundingClientRect().top - cr.top;
+  /* yopishib turgan paytda ham kartaning asl joyi olinadi */
+  var sticky = getComputedStyle(card).position === "sticky";
+  var top = (sticky ? card.parentNode.getBoundingClientRect().top : cr.top) + window.scrollY;
+  var free = window.innerHeight - $("player").offsetHeight - inner - 46;   /* 46 — karta ichki cheti va oraliqlar */
+  var h = free - top;
+  if (h < 240) h = free - hh - 12;   /* karta pastda boshlansa — surilganda toʻliq sigʻsin */
+  ul.style.maxHeight = Math.max(160, h) + "px";
+}
+$("scriptBox").addEventListener("toggle", function () { fitScript(); followLine(); });
+window.addEventListener("resize", fitScript);
+/* oʻqilayotgan qator roʻyxat ichida koʻrinib turadi (sahifaning oʻzi surilmaydi) */
+function followLine() {
+  var ul = $("script"), li = ul.querySelector("li.on");
+  if (!li) return;
+  ul.scrollTop += li.getBoundingClientRect().top - ul.getBoundingClientRect().top - (ul.clientHeight - li.offsetHeight) / 2;
+}
+var shownLine = -1;
 $("script").addEventListener("click", function (e) {
   var li = e.target.closest("li");
   if (!li) return;
@@ -221,6 +247,8 @@ function paintPos() {
   }
   var mark = playing && (!audio || timed());
   Array.prototype.forEach.call($("script").children, function (li, i) { li.className = mark && i === line ? "on" : ""; });
+  var now = mark ? line : -1;
+  if (now !== shownLine) { shownLine = now; if (now > -1) followLine(); }
 }
 function setPlaying(on) {
   playing = on;

@@ -1,6 +1,6 @@
 /* Listening va Speaking sahifalari uchun umumiy qism.
    Sahifa quyidagilarni eʼlon qiladi: LESSONS (darslar), KEY (saqlash kaliti), openLesson(dars);
-   ixtiyoriy: inList(dars) — roʻyxatda koʻrinadimi (listening da kitob tablari uchun).
+   ixtiyoriy: lessonNote(dars) — kartadagi qisqa izoh; inList(dars) — roʻyxatda koʻrinadimi (listening da kitob tablari uchun).
    Dars: { id, u: unit raqami, title, desc, sample: true (ixtiyoriy — «Namuna» belgisi), ... }
    Saqlanadi: store.p[dars.id] = { best, n, ok, bad } — eng yaxshi natija, savollar soni, jami javoblar */
 function $(id) { return document.getElementById(id); }
@@ -76,18 +76,22 @@ function show(name) {
   ["list", "lesson"].forEach(function (v) { $("v-" + v).hidden = v !== name; });
   window.scrollTo(0, 0);
 }
+/* dars unitga yoki (speaking da) mavzuga tegishli */
+function lessonNo(L) { return L.topic ? "Topic " + L.topic : "Unit " + L.u; }
 function unitName(n) { return UNIT_TITLE[n] ? UNIT_TITLE[n][2] : ""; }
 function renderLessons() {
   var box = $("lessonList");
   var list = typeof inList === "function" ? LESSONS.filter(inList) : LESSONS;
   box.innerHTML = list.length ? '<div class="lessons">' + list.map(function (L) {
     var r = peek(L);
-    return '<button class="lesson" type="button" data-i="' + LESSONS.indexOf(L) + '"><span class="un">Unit ' + L.u + (L.sample ? ' <span class="chip">Namuna</span>' : "") +
+    return '<button class="lesson" type="button" data-i="' + LESSONS.indexOf(L) + '"><span class="un">' + lessonNo(L) + (L.sample ? ' <span class="chip">Namuna</span>' : "") +
       "</span><b>" + esc(L.title) + '</b><span class="d">' + esc(L.desc || unitName(L.u)) + '</span><span class="foot">' +
       (r.n ? '<span class="trk"><i style="width:' + (r.best / r.n * 100) + '%"></i></span><span>' + r.best + " / " + r.n + "</span>"
-        : "<span>" + lessonSize(L) + "</span>") + "</span></button>";
+        : "<span>" + lessonSize(L) + "</span>") +
+      (typeof lessonNote === "function" && lessonNote(L) ? '<span class="nt">' + lessonNote(L) + "</span>" : "") + "</span></button>";
   }).join("") + "</div>" : '<p class="empty">Hali dars qoʻshilmagan.</p>';
-  var rest = UNITS.filter(function (u) { return !list.some(function (L) { return L.u === u[0] && !L.sample; }); });
+  /* mavzuli darslarda unitlar roʻyxati kerak emas */
+  var rest = list.some(function (L) { return L.topic; }) ? [] : UNITS.filter(function (u) { return !list.some(function (L) { return L.u === u[0] && !L.sample; }); });
   $("soonBox").hidden = !rest.length;
   $("soonList").innerHTML = rest.map(function (u) {
     return "<li><b>Unit " + u[0] + "</b><span>" + esc(u[2]) + '</span><a href="a2.html#unit-' + u[0] + '">Soʻzlari →</a></li>';
@@ -104,5 +108,5 @@ function startLessons() {
 }
 function paintHead(L) {
   $("lTitle").textContent = L.title;
-  $("lDesc").textContent = (L.book ? L.book + " · " : "") + "Unit " + L.u + " · " + unitName(L.u);
+  $("lDesc").textContent = (L.book ? L.book + " · " : "") + lessonNo(L) + " · " + (L.topic ? L.desc || "" : unitName(L.u));
 }
