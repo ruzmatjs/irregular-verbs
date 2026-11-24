@@ -1,9 +1,4 @@
 /* Listening va Speaking sahifalari uchun umumiy qism: darslar roʻyxati, pleyer, savollar */
-.books{display:inline-flex;gap:2px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px;margin-bottom:16px;max-width:100%}
-.books button{appearance:none;border:0;background:none;font:inherit;font-size:.86rem;font-weight:600;color:var(--muted);padding:7px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}
-.books button small{font-weight:500;margin-left:4px;font-variant-numeric:tabular-nums}
-.books button[aria-selected="true"]{background:var(--surface);color:var(--fg);box-shadow:0 0 0 1px var(--line)}
-.books button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:10px}
 .lesson{appearance:none;font:inherit;color:inherit;text-align:left;cursor:pointer;background:var(--surface);border:1px solid var(--line);
   border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:3px;min-width:0}
@@ -32,7 +27,12 @@
 
 /* listening */
 .lgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
-@media (min-width:860px){.lgrid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:start}}
+@media (min-width:860px){
+  .lgrid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:start}
+  .scard{position:sticky;top:calc(var(--hh,148px) + 12px)}
+}
+/* telefonda «savollar yoʻq» kartasi matnga joy qoldirib yashirinadi */
+@media (max-width:859px){#qForm.noq{display:none}}
 .q{border:0;margin:0;padding:0}
 .q+.q{border-top:1px solid var(--line);padding-top:16px}
 .q legend{font-size:1rem;font-weight:600;color:var(--fg);text-transform:none;letter-spacing:0;padding:0 0 8px;float:left;width:100%}
@@ -48,7 +48,9 @@
 .ans .wrong span{border-color:var(--bad)!important;background:var(--bad-soft)!important}
 .ans .wrong span::after{content:" ✗";color:var(--bad);font-weight:700}
 .q .note{font-size:.84rem;color:var(--muted);margin:8px 0 0}
-.script{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:2px}
+.script{list-style:none;margin:12px -8px 0 0;padding:0 8px 0 0;display:flex;flex-direction:column;gap:2px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.script li{flex:0 0 auto}
+.wrap:has(#v-lesson:not([hidden])){padding-bottom:8px}
 .script button{appearance:none;border:0;background:none;font:inherit;color:inherit;text-align:left;width:100%;cursor:pointer;border-radius:8px;padding:8px 10px;display:block}
 .script button:hover{background:var(--surface-2)}
 .script .on button{background:var(--accent-soft)}
@@ -92,6 +94,13 @@
 .rec .time{font-variant-numeric:tabular-nums;font-weight:600}
 .rec .hint{text-align:center}
 .rec audio{width:100%;max-width:420px}
-.model{margin:14px 0 0;padding:14px 16px;border-left:3px solid var(--accent);background:var(--surface-2);border-radius:0 8px 8px 0}
+.models{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+.answers{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+.answers.has .mine{order:-1}
+.mine{padding:14px 16px;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 8px 8px 0}
+.mine textarea{display:block;width:100%;font:inherit;line-height:1.5;color:var(--fg);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;resize:vertical;min-height:104px;field-sizing:content}
+.mine textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.mrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.lesson .nt{flex:0 0 auto;color:var(--gold)}
+.model{padding:14px 16px;border-left:3px solid var(--accent);background:var(--surface-2);border-radius:0 8px 8px 0}
 .model p{margin:0}
-.model .uz{color:var(--muted);font-size:.88rem;margin-top:4px}

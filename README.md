@@ -47,9 +47,10 @@ Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/a2.html
 Sahifalar: https://ruzmatjs.github.io/irregular-verbs/a2-listening.html va https://ruzmatjs.github.io/irregular-verbs/a2-speaking.html
 
 - Listening: dialogni tinglash (mp3 yoki brauzer ovozi), tezlik, qatorma-qator oʻtish, savollar, matn va tarjimasi
-- Speaking: savolga ovoz chiqarib javob berish, oʻzini yozib eshitish (yozuv hech qayerga yuborilmaydi), namuna javob
+- Speaking: 24 mavzu, 96 savol; savolga ovoz chiqarib javob berish, oʻzini yozib eshitish (yozuv hech qayerga yuborilmaydi), har savolga ikkitadan namuna javob (Version A va B), namunani oʻziga moslab «Mening javobim» ga yozib qoʻyish (shu brauzerda saqlanadi)
 - Listening'da Student's Book va Workbook'ning 48 ta audiosi (24 + 24 unit) bor: `audio/a2/student/` va `audio/a2/workbook/` (64 kbps mono mp3), matnlari `a2-listening-data.js` da (audiodan avtomatik chiqarilgan, xato boʻlishi mumkin). Bu darslarda savollar va oʻzbekcha tarjima hali yoʻq: darsga `q` va qatorlarga tarjima qoʻshilsa, sahifa oʻzi koʻrsatadi.
-- Hozircha har birida bittadan namuna dars bor. Yangi dars — `a2-listening.html` yoki `a2-speaking.html` ichidagi `LESSONS` roʻyxatiga qoʻshiladi (koʻrinishi shu yerda izohda), mp3 fayllar — `audio/` papkasiga
+- Listening darslari ikki tabda: Student's Book va Workbook
+- Yangi dars — listening uchun `a2-listening-data.js` ga, speaking uchun `a2-speaking-data.js` ga qoʻshiladi (koʻrinishi shu fayllarda izohda), mp3 fayllar — `audio/` papkasiga
 
 ## Statistika
 

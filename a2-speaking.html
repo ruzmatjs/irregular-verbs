@@ -33,12 +33,13 @@
 </header>
 <script src="ui.js"></script>
 <script src="a2-units.js"></script>
+<script src="a2-speaking-data.js"></script>
 
 <div class="wrap">
 
 <section id="v-list">
-  <h2>Darslar</h2>
-  <p class="lede">Savolga ovoz chiqarib javob bering, oʻzingizni yozib eshiting va namuna javob bilan solishtiring.</p>
+  <h2>Mavzular</h2>
+  <p class="lede">Savolga ovoz chiqarib javob bering, oʻzingizni yozib eshiting va ikkita namuna javob bilan solishtiring.</p>
   <div id="lessonList"></div>
   <div class="soon" id="soonBox">
     <span class="flabel">Tayyorlanmoqda</span>
@@ -48,7 +49,7 @@
 
 <section id="v-lesson" hidden>
   <div class="lhead">
-    <button class="back" type="button" id="backBtn" aria-label="Darslar roʻyxatiga qaytish">←</button>
+    <button class="back" type="button" id="backBtn" aria-label="Mavzular roʻyxatiga qaytish">←</button>
     <div class="t"><h2 id="lTitle"></h2><p class="lede" id="lDesc"></p></div>
   </div>
   <div id="askBox">
@@ -68,13 +69,21 @@
         <audio id="recAudio" controls hidden></audio>
         <span class="hint" id="recHint"></span>
       </div>
-      <div class="model" id="model" hidden>
-        <span class="flabel">Namuna javob</span>
-        <p id="modelEn"></p><p class="uz" id="modelUz"></p>
-        <button class="btn ghost sm" type="button" id="hearModel" style="margin-top:10px">🔊 Eshitish</button>
+      <div class="answers" id="answers" hidden>
+        <div class="models" id="model"></div>
+        <div class="mine" id="mineBox">
+          <label class="flabel" for="mine">Mening javobim</label>
+          <textarea id="mine" rows="4" lang="en" spellcheck="true" placeholder="Oʻz javobingizni inglizcha yozing yoki namunadan «Oʻzimga moslash» ni bosing"></textarea>
+          <div class="mrow">
+            <button class="btn ghost sm" type="button" id="mineHear">🔊 Eshitish</button>
+            <button class="btn ghost sm" type="button" id="mineClear">Tozalash</button>
+            <button class="btn ghost sm" type="button" id="mineUndo" hidden>↶ Qaytarish</button>
+            <span class="hint" id="mineHint" role="status"></span>
+          </div>
+        </div>
       </div>
       <div class="actions">
-        <button class="btn" type="button" id="showBtn">Namunani koʻrish</button>
+        <button class="btn" type="button" id="showBtn">Namuna javoblar</button>
         <button class="btn" type="button" id="goodBtn" hidden>✓ Yaxshi aytdim</button>
         <button class="btn ghost" type="button" id="hardBtn" hidden>Qiynaldim</button>
       </div>
@@ -85,7 +94,7 @@
     <p class="lede" id="rline" style="margin:6px 0 0"></p>
     <div class="actions">
       <button class="btn" type="button" id="againBtn">Yana bir bor</button>
-      <button class="btn ghost" type="button" id="listBtn">Darslar roʻyxati</button>
+      <button class="btn ghost" type="button" id="listBtn">Mavzular roʻyxati</button>
     </div>
   </div>
 </section>
@@ -94,24 +103,17 @@
 
 <script>
 var KEY = "a2speaking.v1";
-/* Dars qoʻshish:
-   { id: "s2-1", u: 2, title: "...", desc: "...",
-     q: [{ en: "Question?", uz: "Savol?", use: ["foydali ibora", ...], model: "Model answer.", muz: "Namuna tarjimasi" }, ...] } */
-var LESSONS = [
-  { id: "sample-1", u: 1, sample: true, title: "My daily routine", desc: "Kun tartibingiz haqida gapirib bering",
-    q: [
-      { en: "What time do you usually get up?", uz: "Odatda soat nechada turasiz?", use: ["I usually…", "at half past…", "on weekdays"],
-        model: "I usually get up at half past six on weekdays. At the weekend I get up later.", muz: "Ish kunlari odatda olti yarimda turaman. Dam olish kunlari kechroq turaman." },
-      { en: "What do you do before work or school?", uz: "Ish yoki oʻqishdan oldin nima qilasiz?", use: ["First,…", "then", "after that"],
-        model: "First, I have a shower. Then I make breakfast, and after that I check my phone.", muz: "Avval dush qabul qilaman. Keyin nonushta tayyorlayman, undan soʻng telefonimni tekshiraman." },
-      { en: "Which habit do you want to change? Why?", uz: "Qaysi odatingizni oʻzgartirmoqchisiz? Nega?", use: ["I want to…", "because", "it is not healthy"],
-        model: "I want to go to bed earlier because I often feel tired in the morning.", muz: "Ertaroq uxlashni xohlayman, chunki ertalab koʻpincha charchoq his qilaman." }
-    ] }
-];
+/* Mavzular a2-speaking-data.js da */
+var LESSONS = SPEAK_LESSONS;
 </script>
 <script src="lessons.js"></script>
 <script>
 function lessonSize(L) { return L.q.length + " ta savol"; }
+/* kartada: nechta savolga oʻz javobi yozilgan */
+function lessonNote(L) {
+  var n = L.q.filter(function (q) { return store.mine && store.mine[L.id + "|" + q.en]; }).length;
+  return n ? "✎ " + n + " ta javobim" : "";
+}
 var MIC = '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICON.speaking + "</svg>";
 var STOP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10H7z"/></svg>';
 var L = null, qi = 0, good = 0, recorder = null, stream = null, recUrl = null, tick = null, recTok = 0;
@@ -129,22 +131,70 @@ function renderAsk() {
   $("qpos").textContent = (qi + 1) + " / " + L.q.length;
   $("qscore").textContent = "✓ " + good;
   $("qbar").style.width = (qi / L.q.length * 100) + "%";
-  $("ask").textContent = q.en; $("askuz").textContent = q.uz || "";
+  $("ask").textContent = q.en; $("askuz").textContent = q.uz || ""; $("askuz").hidden = !q.uz;
   $("useful").innerHTML = (q.use || []).map(function (u) { return "<span>" + esc(u) + "</span>"; }).join("");
-  $("modelEn").textContent = q.model || ""; $("modelUz").textContent = q.muz || "";
-  $("model").hidden = true;
-  $("showBtn").hidden = !q.model;
-  $("goodBtn").hidden = $("hardBtn").hidden = !!q.model;
-  $("hearAsk").hidden = $("hearModel").hidden = !TTS;
+  $("useful").hidden = !(q.use || []).length;
+  $("model").innerHTML = (q.models || []).map(function (m, i) {
+    return '<div class="model"><span class="flabel">Version ' + "ABCD".charAt(i) + "</span><p>" + esc(m) + "</p>" +
+      '<div class="mrow">' + (TTS ? '<button class="btn ghost sm" type="button" data-hear="' + i + '">🔊 Eshitish</button>' : "") +
+      '<button class="btn ghost sm" type="button" data-copy="' + i + '">✎ Oʻzimga moslash</button></div></div>';
+  }).join("");
+  $("answers").hidden = true;
+  $("mine").value = myText();
+  $("answers").classList.toggle("has", !!myText());   /* yozilgan javob namunalardan oldin turadi */
+  paintMine("");
+  setUndo(null);
+  var has = !!(q.models && q.models.length);
+  $("showBtn").hidden = false;
+  $("showBtn").textContent = has ? "Namuna javoblar" : "Javobni yozish";
+  $("goodBtn").hidden = $("hardBtn").hidden = true;
+  $("hearAsk").hidden = !TTS;
   window.scrollTo(0, 0);
 }
 $("hearAsk").addEventListener("click", function () { say(L.q[qi].en); });
-$("hearModel").addEventListener("click", function () { say(L.q[qi].model); });
+$("model").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-hear]");
+  if (b) { say(L.q[qi].models[+b.getAttribute("data-hear")]); return; }
+  b = e.target.closest("[data-copy]");
+  if (!b) return;
+  setMine(L.q[qi].models[+b.getAttribute("data-copy")], "Namuna nusxalandi — endi oʻzingizga moslab oʻzgartiring.");
+  $("mine").focus();
+  $("mine").scrollIntoView({ block: "center" });
+});
+
+/* ---------- oʻz javobi: har savol uchun shu brauzerda saqlanadi (store.mine) ---------- */
+var undoText = null;
+function myKey() { return L.id + "|" + L.q[qi].en; }
+function myText() { return (store.mine && store.mine[myKey()]) || ""; }
+function keepMine(v) {
+  if (!store.mine) store.mine = {};
+  if (v.trim()) store.mine[myKey()] = v; else delete store.mine[myKey()];
+  save();
+}
+function paintMine(hint) {
+  var empty = !$("mine").value.trim();
+  $("mineHear").hidden = !TTS || empty;
+  $("mineClear").hidden = empty;
+  $("mineHint").textContent = hint;
+}
+function setUndo(v) { undoText = v; $("mineUndo").hidden = v === null; }
+/* butun matn almashsa, eskisini qaytarish mumkin */
+function setMine(v, hint) {
+  var old = $("mine").value;
+  $("mine").value = v;
+  keepMine(v);
+  setUndo(old.trim() && old !== v ? old : null);
+  paintMine(hint);
+}
+$("mine").addEventListener("input", function () { keepMine(this.value); setUndo(null); paintMine("Saqlandi"); });
+$("mineHear").addEventListener("click", function () { say($("mine").value); });
+$("mineClear").addEventListener("click", function () { setMine("", "Tozalandi"); $("mine").focus(); });
+$("mineUndo").addEventListener("click", function () { var v = undoText; setUndo(null); if (v !== null) { $("mine").value = v; keepMine(v); paintMine("Qaytarildi"); } });
 $("showBtn").addEventListener("click", function () {
   stopRec();
-  $("model").hidden = false;
+  $("answers").hidden = false;
   $("showBtn").hidden = true; $("goodBtn").hidden = $("hardBtn").hidden = false;
-  $("goodBtn").focus();
+  $("goodBtn").focus({ preventScroll: true });
 });
 function rateMe(ok) {
   if (ok) good++;
