@@ -42,15 +42,28 @@ Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/a2.html
 - Bir soʻz bir necha unitda uchrasa, mashqda bir marta soʻraladi va natijasi umumiy; jami sonlar ham takrorsiz
 - Natijalari A1 va feʻllar natijalaridan alohida saqlanadi
 
+## A2 Listening va Speaking
+
+Sahifalar: https://ruzmatjs.github.io/irregular-verbs/a2-listening.html va https://ruzmatjs.github.io/irregular-verbs/a2-speaking.html
+
+- Listening: dialogni tinglash (mp3 yoki brauzer ovozi), tezlik, qatorma-qator oʻtish, savollar, matn va tarjimasi
+- Speaking: savolga ovoz chiqarib javob berish, oʻzini yozib eshitish (yozuv hech qayerga yuborilmaydi), namuna javob
+- Hozircha har birida bittadan namuna dars bor. Yangi dars — `a2-listening.html` yoki `a2-speaking.html` ichidagi `LESSONS` roʻyxatiga qoʻshiladi (koʻrinishi shu yerda izohda), mp3 fayllar — `audio/` papkasiga
+
 ## Statistika
 
 Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/stats.html
 
-- Uchala boʻlim natijalari bitta joyda: bugungi javoblar, ketma-ket mashq qilingan kunlar 🔥, jami yodlangan soʻzlar va aniqlik foizi
+- Barcha boʻlimlar natijalari bitta joyda: bugungi javoblar, ketma-ket mashq qilingan kunlar 🔥, jami yodlangan soʻzlar va aniqlik foizi
 - Kunlik faollik grafigi (7, 30 yoki 90 kun): har kuni nechta javob, nechtasi toʻgʻri, nechta soʻz yodlandi
 - Har bir boʻlim uchun umumiy yodlash foizi, level boʻyicha taqsimot va eng qiyin 5 ta soʻz
 - Kunlik tarix ushbu versiyadan boshlab yoziladi; boshqa oynada mashq qilinsa, sahifa oʻzi yangilanadi
 
+## Tuzilishi
+
+- `ui.css` — barcha sahifalar uchun umumiy koʻrinish, `ui.js` — navigatsiya (boʻlim va koʻnikma qoʻshish uchun `SECTIONS` ga bitta qator yoziladi)
+- `lessons.css`, `lessons.js` — listening va speaking uchun umumiy qism, `a2-units.js` — A2 unitlari nomi
+
 ## Ishlatish
 
-Server kerak emas: `index.html` (feʻllar), `words.html` (A1 soʻzlar), `a2.html` (A2 soʻzlar) yoki `stats.html` (statistika) ni brauzerda ochsangiz kifoya. GitHub Pages uchun `sh build.sh` ularning hammasidan `docs/` ichida toʻliq sahifa yasaydi.
+Server kerak emas: `index.html` (feʻllar), `words.html` (A1 soʻzlar), `a2.html` (A2 soʻzlar), `a2-listening.html`, `a2-speaking.html` yoki `stats.html` (statistika) ni brauzerda ochsangiz kifoya. GitHub Pages uchun `sh build.sh` ularning hammasidan `docs/` ichida toʻliq sahifa yasaydi.

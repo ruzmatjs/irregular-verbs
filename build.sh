@@ -1,5 +1,5 @@
 #!/bin/sh
-# index.html, words.html, a2.html va stats.html — artifact uchun yoziladi: ularda <!doctype>, <html>, <head> yoʻq,
+# index.html, words.html, a2*.html va stats.html — artifact uchun yoziladi: ularda <!doctype>, <html>, <head> yoʻq,
 # chunki Claude artifact sahifani nashr paytida oʻzi shu qobiqqa oʻraydi.
 # GitHub Pages uchun esa toʻliq hujjat kerak, shuning uchun shu skript
 # ulardan docs/ ichidagi sahifalarni yasaydi. Saytni yangilash:
@@ -9,9 +9,9 @@ set -e
 cd "$(dirname "$0")"
 mkdir -p docs
 cp assets/* docs/
-# A2 Listening audiolari (audio/a2/student, audio/a2/workbook) sayt bilan birga chiqishi kerak
-rm -rf docs/audio
-cp -r audio docs/audio
+cp ui.css ui.js lessons.css lessons.js a2-units.js a2-listening-data.js docs/
+# audio/ ichida ichki papkalar ham bor (audio/a2/student, audio/a2/workbook), shuning uchun -r
+if [ -d audio ]; then rm -rf docs/audio && mkdir -p docs/audio && cp -r audio/. docs/audio/; fi
 
 SITE="https://ruzmatjs.github.io/irregular-verbs/"
 
@@ -47,7 +47,7 @@ page() {
 HEAD
     sed -n '1,/^<\/style>$/p' "$1"
     printf '</head>\n<body>\n'
-    sed -n '/^<header class="top">/,$p' "$1"
+    sed -n '/^<header class="top"/,$p' "$1"
     printf '</body>\n</html>\n'
   } > "$2"
   echo "$2 tayyor ($(wc -l < "$2") qator)"
@@ -59,5 +59,9 @@ page words.html docs/words.html "A1 Vocabulary Trainer" \
   "A1 kursining 24 ta unitidagi 1372 ta inglizcha soʻzni yodlash uchun mashq sayti. Oʻzbek tilida." "${SITE}words.html"
 page a2.html docs/a2.html "A2 Vocabulary Trainer" \
   "A2 kursining 24 ta unitidagi 1028 ta inglizcha soʻzni yodlash uchun mashq sayti. Oʻzbek tilida." "${SITE}a2.html"
+page a2-listening.html docs/a2-listening.html "A2 Listening" \
+  "A2 darajasidagi listening mashqlari: dialoglar, savollar va matni. Oʻzbek tilida." "${SITE}a2-listening.html"
+page a2-speaking.html docs/a2-speaking.html "A2 Speaking" \
+  "A2 darajasidagi speaking mashqlari: savollar, ovoz yozish va namuna javoblar. Oʻzbek tilida." "${SITE}a2-speaking.html"
 page stats.html docs/stats.html "Statistika — Irregular Verbs, A1 va A2 soʻzlar" \
   "Ingliz tili mashqlari natijalari: kunlik faollik, ketma-ket kunlar, yodlangan soʻzlar va eng qiyin soʻzlar." "${SITE}stats.html"

@@ -26,232 +26,15 @@
 <title>A2 Vocabulary Trainer</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<!-- IBM Plex dagi «ʻ» juda keng (so ʻ z boʻlib koʻrinadi) — faqat shu belgi Noto Sans dan olinadi, u --body da birinchi turadi -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&text=%CA%BB%CA%BC&display=swap">
+<link rel="stylesheet" href="ui.css">
 <style>
-/* Layout: lug'at sahifasi - markazda bitta ustun, ustida yopishqoq sarlavha, pastda karta va jadval bloklari */
-:root{
-  --bg:#f6f3ec; --surface:#fffdf8; --surface-2:#efe9dc; --line:#ded5c3;
-  --fg:#241f18; --muted:#6f6552; --accent:#1f4f4a; --accent-soft:#d6e4e0;
-  --on-accent:#fffdf8;
-  --ok:#2f6b3a; --ok-soft:#dcebdc; --bad:#9c3324; --bad-soft:#f4ddd8;
-  --gold:#b4792a;
-  --display:"Literata",Georgia,"Times New Roman",serif;
-  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
-  --r:10px;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#15181a; --surface:#1d2124; --surface-2:#262b2e; --line:#363d41;
-  --fg:#ece7dd; --muted:#9aa0a0; --accent:#7fc9bb; --accent-soft:#223431;
-  --on-accent:#10201e;
-  --ok:#8ed49a; --ok-soft:#1f2e22; --bad:#f09e90; --bad-soft:#33211e;
-  --gold:#d9a85a;
-  color-scheme:dark;
-}}
-:root[data-theme="dark"]{
-  --bg:#15181a; --surface:#1d2124; --surface-2:#262b2e; --line:#363d41;
-  --fg:#ece7dd; --muted:#9aa0a0; --accent:#7fc9bb; --accent-soft:#223431;
-  --on-accent:#10201e;
-  --ok:#8ed49a; --ok-soft:#1f2e22; --bad:#f09e90; --bad-soft:#33211e;
-  --gold:#d9a85a;
-  color-scheme:dark;
-}
-*{box-sizing:border-box}
-/* hidden xossasi flex/grid elementlarda ham ishlashi uchun */
-[hidden]{display:none!important}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--surface)}
-.wrap{max-width:1120px;margin:0 auto;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:0 48px}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
-.top-in{max-width:1120px;margin:0 auto;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:12px 0}
-.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.brand .mark{width:28px;height:28px;flex:0 0 auto;align-self:center}
-.brand h1{font-family:var(--display);font-size:1.25rem;font-weight:700;margin:0;letter-spacing:-.01em}
-.brand .sub{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
-nav.tabs{display:flex;gap:2px;margin-top:10px;overflow-x:auto}
-nav.tabs button{appearance:none;border:0;background:none;font:inherit;font-size:.86rem;font-weight:500;color:var(--muted);
-  padding:8px 12px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
-nav.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
-nav.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-h2{font-family:var(--display);font-size:1.05rem;margin:0 0 4px;text-wrap:balance}
-.lede{color:var(--muted);font-size:.88rem;margin:0 0 18px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
-.stack{display:flex;flex-direction:column;gap:18px}
-section{padding-block:22px 0}
-fieldset{border:0;margin:0;padding:0;min-width:0}
-legend,.flabel{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;padding:0 0 8px;display:block}
-.opts{display:flex;flex-wrap:wrap;gap:8px}
-.opt{position:relative}
-.opt input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
-.opt span{display:block;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;
-  padding:7px 14px;font-size:.88rem;cursor:pointer;transition:background .12s,border-color .12s}
-.opt input:checked+span{background:var(--accent-soft);border-color:var(--accent);color:var(--fg);font-weight:500}
-.opt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
-.row{display:flex;gap:14px;flex-wrap:wrap}
-.row>*{min-width:0}
-.col{flex:1 1 220px;min-width:0}
-input[type=number],input[type=text],select{width:100%;font:inherit;background:var(--surface-2);color:var(--fg);
-  border:1px solid var(--line);border-radius:8px;padding:10px 12px}
-input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-.btn{font:inherit;font-weight:600;font-size:.95rem;border:1px solid var(--accent);background:var(--accent);
-  color:var(--on-accent);padding:11px 20px;border-radius:8px;cursor:pointer}
-.btn.ghost{background:none;color:var(--fg);border-color:var(--line);font-weight:500}
-.btn.sm{padding:7px 13px;font-size:.84rem}
-.btn.danger{color:var(--bad);border-color:var(--bad);background:none}
-.hint{font-size:.8rem;color:var(--muted)}
-.kbd{margin:14px 0 0;font-size:.76rem}
-@media (pointer: coarse){.kbd{display:none}}
-.err{font-size:.84rem;color:var(--bad);font-weight:500;margin:10px 0 0}
-.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.8rem;color:var(--muted);
-  font-variant-numeric:tabular-nums;margin-bottom:10px}
-.bar{height:4px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin-bottom:18px}
-.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
-.prompt{text-align:center;padding-block:10px 20px}
-.prompt .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
-.prompt .word{font-family:var(--display);font-size:clamp(1.9rem,6vw,3.2rem);font-weight:700;line-height:1.15;margin:2px 0 0;overflow-wrap:break-word}
-.prompt .word.uz{font-size:clamp(1.3rem,6vw,1.8rem);font-style:italic;font-weight:400}
-.prompt .extra{font-family:var(--mono);font-size:.9rem;color:var(--muted);margin:6px 0 0}
-.wordrow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
-.spk{appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);padding:0;
-  width:36px;height:36px;border-radius:50%;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
-.spk svg{width:18px;height:18px}
-.spk:hover{border-color:var(--accent);color:var(--accent)}
-.spk.mini{width:26px;height:26px}
-.spk.mini svg{width:13px;height:13px}
-.spk.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-.star{appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);padding:0;
-  width:36px;height:36px;border-radius:50%;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
-.star svg{width:19px;height:19px}
-.star svg path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
-.star:hover{border-color:var(--gold);color:var(--gold)}
-.star[aria-pressed="true"]{color:var(--gold);border-color:var(--gold)}
-.star[aria-pressed="true"] svg path{fill:currentColor}
-.star.mini{width:26px;height:26px}
-.star.mini svg{width:14px;height:14px}
-.btn.learn{background:none;color:var(--ok);border-color:var(--ok)}
-.btn.learn[aria-pressed="true"]{background:var(--ok);color:var(--surface)}
-.mini-learn{appearance:none;font:inherit;font-size:.78rem;font-weight:600;color:var(--ok);background:none;
-  border:1px solid var(--ok);border-radius:999px;padding:2px 9px;cursor:pointer;white-space:nowrap}
-.mini-learn[aria-pressed="true"]{background:var(--ok);color:var(--surface)}
-tr.learned td.v{color:var(--ok)}
-td.v .rd{display:block;font-family:var(--body);font-size:.74rem;color:var(--muted);font-style:italic;margin-top:1px}
-.prompt .reading{font-size:1rem;color:var(--muted);font-style:italic;margin:0}
-.field .fix .rd,.res-list .rd{color:var(--muted);font-family:var(--body);font-style:italic;font-weight:400}
-.spkall .rd{display:block;font-family:var(--body);font-style:italic;font-size:.78rem;color:var(--muted);margin-top:1px}
-.review-note{font-size:.8rem;color:var(--muted);margin:0 0 12px;text-align:center}
-.spkall{display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:.9rem;font-family:var(--mono);
-  color:var(--fg);border:1px solid var(--line);background:var(--surface-2);border-radius:999px;
-  padding:7px 16px 7px 12px;cursor:pointer;margin-top:12px}
-.spkall svg{width:16px;height:16px;flex:0 0 auto;color:var(--accent)}
-.spkall:hover{border-color:var(--accent)}
-.spkall.on{background:var(--accent-soft);border-color:var(--accent)}
-.spkall .now{color:var(--accent);font-weight:700}
-.spkall .sep{color:var(--muted)}
-select:disabled{opacity:.6}
-td.spkcell{padding-left:8px;padding-right:8px}
-.fields{display:flex;flex-direction:column;gap:12px}
-.field label{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:4px}
-.field input{font-family:var(--mono);font-size:1rem}
-.field.uzf input{font-family:var(--body)}
-.field.good input{border-color:var(--ok);background:var(--ok-soft)}
-.field.wrong input{border-color:var(--bad);background:var(--bad-soft)}
-.field .fix{font-size:.82rem;margin:4px 0 0;font-family:var(--mono)}
-.field .fix b{color:var(--ok)}
-.field .fix.no b{color:var(--bad)}
-.verdict{margin:16px 0 0;padding:12px 14px;border-radius:8px;font-size:.92rem;font-weight:500}
-.verdict.good{background:var(--ok-soft);color:var(--ok)}
-.verdict.bad{background:var(--bad-soft);color:var(--bad)}
-.verdict .lvl{display:block;font-weight:400;font-size:.82rem;color:var(--muted);margin-top:4px}
-.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
-.actions .spacer{flex:1 1 auto}
-.pips{display:inline-flex;gap:3px;vertical-align:middle}
-.pips i{width:7px;height:12px;border-radius:2px;background:var(--surface-2);border:1px solid var(--line);display:block}
-.pips i.on{background:var(--gold);border-color:var(--gold)}
-.pips i.full{background:var(--ok);border-color:var(--ok)}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-table{width:100%;border-collapse:collapse;font-size:.9rem}
-.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
-th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
-th{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;
-  position:sticky;top:0;background:var(--surface)}
-tr:last-child td{border-bottom:0}
-td.v{font-family:var(--mono)}
-td.uz{white-space:normal;color:var(--muted);font-size:.86rem;min-width:140px}
-td.num{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.82rem}
-tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
-.stat b{display:block;font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums;line-height:1.1}
-.stat span{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.lvlrow{display:flex;align-items:center;gap:10px;font-size:.86rem;padding:5px 0}
-.lvlrow .nm{flex:0 0 120px;color:var(--muted);min-width:0}
-.lvlrow .trk{flex:1 1 auto;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;min-width:0}
-.lvlrow .trk i{display:block;height:100%;background:var(--accent)}
-.lvlrow .ct{flex:0 0 34px;text-align:right;font-variant-numeric:tabular-nums}
-.empty{text-align:center;color:var(--muted);font-size:.9rem;padding:28px 10px;border:1px dashed var(--line);border-radius:var(--r)}
-.res-list{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
-.res-list li{background:var(--surface-2);border-radius:8px;padding:10px 12px;font-size:.9rem}
-.res-list .w{font-family:var(--mono);font-weight:600}
-.res-list .c{color:var(--muted)}
-.res-list .mine{color:var(--bad);font-family:var(--mono);font-size:.84rem}
-.score{font-family:var(--display);font-size:2.4rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;margin:0}
-@media (prefers-reduced-motion: reduce){*{transition:none!important}}
-
-/* ---------- A2 soʻzlar sahifasi ---------- */
-.switch{display:flex;gap:4px;margin-left:auto;align-self:center;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px;max-width:100%;overflow-x:auto;scrollbar-width:none}
-.switch a{font-size:.8rem;font-weight:500;color:var(--muted);text-decoration:none;padding:4px 11px;border-radius:999px;white-space:nowrap}
-.switch a[aria-current="page"]{background:var(--accent);color:var(--on-accent)}
-.switch a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-@media (max-width:420px){.switch{gap:0}.switch a{padding:4px 8px}}
-.unitgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
-.uopt{position:relative;display:block}
-.uopt input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
-.uopt span{display:block;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:8px 11px;font-size:.84rem;cursor:pointer;line-height:1.3;height:100%}
-.uopt span b{font-weight:600}
-.uopt small{display:block;color:var(--muted);font-size:.74rem;font-variant-numeric:tabular-nums;margin-top:2px}
-.uopt input:checked+span{background:var(--accent-soft);border-color:var(--accent)}
-.uopt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
-small.ct{color:var(--muted);font-size:.8em}
-.cardans{margin:6px 0 0;padding:16px;border-radius:8px;background:var(--surface-2);text-align:center}
-.cardans .flabel{padding-bottom:4px}
-.cardans b{font-size:1.4rem;font-family:var(--display)}
-.cardans .rd{display:block;font-family:var(--body);font-size:.84rem;color:var(--muted);font-style:italic;margin-top:3px}
-.unit{padding:0;margin-bottom:10px;overflow:hidden}
-.uh{appearance:none;border:0;background:none;font:inherit;color:inherit;width:100%;text-align:left;cursor:pointer;
-  display:flex;align-items:center;gap:14px;padding:14px 16px;flex-wrap:wrap}
-.uh:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.uh-t{flex:1 1 240px;min-width:0}
-.uh-t small{display:block;color:var(--muted);font-size:.8rem}
-.uh-p{flex:0 1 220px;display:flex;align-items:center;gap:10px;min-width:0}
-.uh-p .trk{flex:1 1 auto;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden}
-.uh-p .trk i{display:block;height:100%;background:var(--ok)}
-.uh-p .ct{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.uh::after{content:"▾";color:var(--muted);transition:transform .15s}
-.uh[aria-expanded="true"]::after{transform:rotate(180deg)}
-.ub{padding:0 16px 16px}
-td.v{white-space:normal;min-width:120px}
-/* Listening */
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;align-self:flex-start;max-width:100%}
-.seg button{appearance:none;border:0;background:none;font:inherit;font-size:.88rem;font-weight:500;color:var(--muted);padding:8px 16px;cursor:pointer}
-.seg button+button{border-left:1px solid var(--line)}
-.seg button[aria-selected="true"]{background:var(--accent);color:var(--on-accent)}
-.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.lstext{border-top:1px solid var(--line);padding-top:6px}
-.lstext p{margin:0;padding:7px 10px;border-radius:6px;cursor:pointer;line-height:1.55}
-.lstext p:hover{background:var(--surface-2)}
-.lstext p.on{background:var(--accent-soft)}
-.lstext p .ts{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-right:10px}
-.lstext p.ttl{font-family:var(--display);font-weight:700;cursor:default}
-.lstext p.ttl:hover{background:none}
+/* umumiy koʻrinish — ui.css da */
 </style>
 </head>
 <body>
-<header class="top">
+<header class="top" data-section="a2" data-skill="words">
   <div class="top-in">
     <div class="brand">
       <svg class="mark" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
@@ -266,29 +49,28 @@ td.v{white-space:normal;min-width:120px}
       </svg>
       <h1>A2 Vocabulary</h1>
       <span class="sub" id="brandStat"></span>
-      <nav class="switch" aria-label="Boʻlimlar">
-        <a href="index.html">Irregular verbs</a>
-        <a href="words.html">A1 soʻzlar</a>
-        <a href="a2.html" aria-current="page">A2 soʻzlar</a>
-        <a href="stats.html">Statistika</a>
+      <nav class="switch" id="secNav" aria-label="Boʻlimlar"></nav>
+    </div>
+    <div class="subnav">
+      <nav class="skills" id="skillNav" aria-label="Koʻnikmalar" hidden></nav>
+      <nav class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-view="train">Mashq</button>
+        <button role="tab" aria-selected="false" data-view="units">Unitlar</button>
+        <button role="tab" aria-selected="false" data-view="mistakes">Xatolar <span id="mcount"></span></button>
+        <button role="tab" aria-selected="false" data-view="starred">★ Belgilangan <span id="scount"></span></button>
+        <button role="tab" aria-selected="false" data-view="stats">Natijalar</button>
       </nav>
     </div>
-    <nav class="tabs" role="tablist">
-      <button role="tab" aria-selected="true" data-view="train">Mashq</button>
-      <button role="tab" aria-selected="false" data-view="listen">Listening</button>
-      <button role="tab" aria-selected="false" data-view="units">Unitlar</button>
-      <button role="tab" aria-selected="false" data-view="mistakes">Xatolar <span id="mcount"></span></button>
-      <button role="tab" aria-selected="false" data-view="starred">★ Belgilangan <span id="scount"></span></button>
-      <button role="tab" aria-selected="false" data-view="stats">Natijalar</button>
-    </nav>
   </div>
 </header>
+<script src="ui.js"></script>
+<script src="a2-units.js"></script>
 
 <div class="wrap">
 
 <section id="v-setup">
   <h2>A2 soʻzlarini yodlash</h2>
-  <p class="lede">A2 kursining 24 ta unitidagi 1028 ta soʻz — inglizcha va oʻzbekcha. Unitlarni, yoʻnalishni va mashq usulini tanlang. Koʻp soʻz bir necha unitda uchraydi, lekin mashqda bir marta soʻraladi va natijasi umumiy. Inglizcha soʻz koʻrsatilganda uning oʻqilishi ham yozib qoʻyiladi.</p>
+  <p class="lede">24 unit, 1028 ta soʻz. Unitlarni va mashq usulini tanlang. Bir necha unitda uchraydigan soʻz mashqda bir marta soʻraladi.</p>
   <div class="card stack">
     <fieldset>
       <legend>Unitlar</legend>
@@ -297,17 +79,6 @@ td.v{white-space:normal;min-width:120px}
         <button class="btn ghost sm" type="button" id="uAll">Hammasini belgilash</button>
         <button class="btn ghost sm" type="button" id="uNone">Tozalash</button>
         <span class="hint" id="uInfo"></span>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Soʻz turkumi</legend>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="grp" value="all" checked><span>Hammasi</span></label>
-        <label class="opt"><input type="radio" name="grp" value="n"><span>Otlar</span></label>
-        <label class="opt"><input type="radio" name="grp" value="v"><span>Feʻllar</span></label>
-        <label class="opt"><input type="radio" name="grp" value="a"><span>Sifatlar</span></label>
-        <label class="opt"><input type="radio" name="grp" value="o"><span>Ravish va boshqalar</span></label>
       </div>
     </fieldset>
 
@@ -348,15 +119,9 @@ td.v{white-space:normal;min-width:120px}
       </div>
     </fieldset>
 
-    <fieldset>
-      <legend>Tartib</legend>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="ord" value="seq"><span>Ketma-ket</span></label>
-        <label class="opt"><input type="radio" name="ord" value="rnd" checked><span>Aralash</span></label>
-        <label class="opt"><input type="radio" name="ord" value="weak"><span>Eng zaiflari avval</span></label>
-      </div>
-    </fieldset>
-
+    <details class="more" id="moreSet">
+      <summary>Qoʻshimcha sozlamalar <small id="moreInfo"></small></summary>
+      <div class="stack">
     <fieldset>
       <legend>Qaysi soʻzlardan</legend>
       <div class="opts">
@@ -365,6 +130,26 @@ td.v{white-space:normal;min-width:120px}
         <label class="opt"><input type="radio" name="pool" value="mistakes"><span>Faqat xatolar</span></label>
         <label class="opt"><input type="radio" name="pool" value="unlearned"><span>Yodlanmaganlar</span></label>
         <label class="opt"><input type="radio" name="pool" value="starred"><span>★ Belgilanganlar</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Soʻz turkumi</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="grp" value="all" checked><span>Hammasi</span></label>
+        <label class="opt"><input type="radio" name="grp" value="n"><span>Otlar</span></label>
+        <label class="opt"><input type="radio" name="grp" value="v"><span>Feʻllar</span></label>
+        <label class="opt"><input type="radio" name="grp" value="a"><span>Sifatlar</span></label>
+        <label class="opt"><input type="radio" name="grp" value="o"><span>Ravish va boshqalar</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Tartib</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="ord" value="seq"><span>Ketma-ket</span></label>
+        <label class="opt"><input type="radio" name="ord" value="rnd" checked><span>Aralash</span></label>
+        <label class="opt"><input type="radio" name="ord" value="weak"><span>Eng zaiflari avval</span></label>
       </div>
     </fieldset>
 
@@ -389,9 +174,12 @@ td.v{white-space:normal;min-width:120px}
       </div>
       <p class="hint" style="margin-top:10px" id="audioHint"></p>
     </fieldset>
+      </div>
+    </details>
 
-    <div>
+    <div class="startbar">
       <button class="btn" id="startBtn">Mashqni boshlash</button>
+      <span class="hint" id="startInfo"></span>
       <p class="err" id="setupErr" hidden></p>
     </div>
   </div>
@@ -451,46 +239,6 @@ td.v{white-space:normal;min-width:120px}
   </div>
 </section>
 
-<section id="v-listen" hidden>
-  <h2>Listening</h2>
-  <p class="lede">Student's Book va Workbook audiolari. Avval eshiting, keyin kerak boʻlsa matnga qarang.</p>
-  <div class="card stack" style="gap:14px">
-    <div class="seg" role="tablist" aria-label="Kitob">
-      <button type="button" role="tab" data-book="s" aria-selected="true">Student's Book</button>
-      <button type="button" role="tab" data-book="w" aria-selected="false">Workbook</button>
-    </div>
-    <div class="row">
-      <div class="col" style="flex:2 1 260px">
-        <label class="flabel" for="lsUnit">Unit</label>
-        <select id="lsUnit"></select>
-      </div>
-      <div class="col">
-        <label class="flabel" for="lsRate">Tezlik</label>
-        <select id="lsRate">
-          <option value="0.75">0.75×  (sekin)</option>
-          <option value="0.9">0.9×</option>
-          <option value="1" selected>1×  (oddiy)</option>
-          <option value="1.15">1.15×</option>
-        </select>
-      </div>
-    </div>
-    <audio id="lsAudio" controls preload="none" style="width:100%"></audio>
-    <div class="actions" style="margin:0">
-      <button class="btn ghost sm" type="button" id="lsBack">⟲ 10 soniya</button>
-      <button class="btn ghost sm" type="button" id="lsFwd">10 soniya ⟳</button>
-      <label class="opt"><input type="checkbox" id="lsLoop"><span>Takrorlash</span></label>
-      <span class="spacer"></span>
-      <button class="btn ghost sm" type="button" id="lsPrev">← Oldingi unit</button>
-      <button class="btn ghost sm" type="button" id="lsNext">Keyingi unit →</button>
-    </div>
-    <div class="actions" style="margin:0">
-      <button class="btn" type="button" id="lsToggle" aria-expanded="false">Matnni koʻrsatish</button>
-      <span class="hint" id="lsInfo"></span>
-    </div>
-    <div id="lsText" class="lstext" hidden></div>
-  </div>
-</section>
-
 <section id="v-units" hidden>
   <h2>Unitlar boʻyicha soʻzlar</h2>
   <p class="lede">Har bir unitni ochib soʻzlarini koʻring, eshiting, yulduzcha qoʻying yoki shu unitni alohida mashq qiling. Har bir inglizcha soʻz tagida oʻqilishi yozilgan (taxminiy, oʻzbek harflarida: <b>θ</b> — til uchini tishlar orasiga qoʻyib aytiladigan «s», <b>ð</b> — xuddi shunday, lekin ovozli «z», <b>u</b> — inglizcha <i>w</i>).</p>
@@ -532,7 +280,6 @@ td.v{white-space:normal;min-width:120px}
 </div>
 
 <script>
-var UNITS = [[1, "Daily Routines and Habits", "Kundalik tartib va odatlar"], [2, "Family, Friends and Relationships", "Oila, doʻstlar va munosabatlar"], [3, "Hobbies and Free Time", "Qiziqishlar va boʻsh vaqt"], [4, "Food, Cooking and Eating", "Ovqat, pishirish va ovqatlanish"], [5, "Shopping and Money", "Xarid va pul"], [6, "School, Learning and Study", "Maktab, oʻrganish va oʻqish"], [7, "Jobs and Working Life", "Kasblar va ish hayoti"], [8, "Travel and Transport", "Sayohat va transport"], [9, "Cities, Towns and Neighbourhoods", "Shaharlar va mahallalar"], [10, "Technology and Everyday Life", "Texnologiya va kundalik hayot"], [11, "Health, Exercise and Sleep", "Sogʻliq, jismoniy mashq va uyqu"], [12, "Sports and Competitions", "Sport va musobaqalar"], [13, "Weather and Seasonal Activities", "Ob-havo va mavsumiy mashgʻulotlar"], [14, "Animals and Wildlife", "Hayvonlar va yovvoyi tabiat"], [15, "Nature and the Environment", "Tabiat va atrof-muhit"], [16, "Films, Music, Books and Entertainment", "Filmlar, musiqa, kitoblar va koʻngilochar"], [17, "Interesting People and Their Lives", "Qiziqarli odamlar va ularning hayoti"], [18, "Festivals, Celebrations and Traditions", "Festivallar, bayramlar va anʼanalar"], [19, "Childhood and Memories", "Bolalik va xotiralar"], [20, "Everyday Problems and Solutions", "Kundalik muammolar va yechimlar"], [21, "Helping People and Community Life", "Odamlarga yordam va jamiyat hayoti"], [22, "Trying Something New", "Yangi narsani sinab koʻrish"], [23, "Interesting Places and Different Cultures", "Qiziqarli joylar va turli madaniyatlar"], [24, "Life in the Past and Life Today", "Oʻtmishdagi va bugungi hayot"]];
 var CATS = [["Otlar", "n"], ["Feʻllar", "v"], ["Frazali feʻllar", "v"], ["Olmoshlar", "o"], ["Sifatlar", "a"], ["Ravishlar", "o"], ["Iboralar", "o"]];
 /* [inglizcha, oʻzbekcha, unit, turkum] */
 var W = [
@@ -3902,7 +3649,7 @@ function accepted(w, dir) {
 }
 
 /* ---------- koʻrinishlar ---------- */
-var VIEWS = ["setup", "quiz", "result", "listen", "units", "mistakes", "starred", "stats"];
+var VIEWS = ["setup", "quiz", "result", "units", "mistakes", "starred", "stats"];
 function show(name) {
   VIEWS.forEach(function (v) { $("v-" + v).hidden = v !== name; });
   window.scrollTo(0, 0);
@@ -3912,8 +3659,6 @@ function setTab(t) {
     b.setAttribute("aria-selected", String(b.getAttribute("data-view") === t));
   });
   if (t === "train") { if (!quiz) renderUnitPick(); show(quiz ? "quiz" : "setup"); }
-  if (t === "listen") { show("listen"); listenOpen(); }
-  if (t !== "listen" && window.lsAudioPause) window.lsAudioPause();
   if (t === "units") { renderUnits(); show("units"); }
   if (t === "mistakes") { renderMistakes(); show("mistakes"); }
   if (t === "starred") { renderStarred(); show("starred"); }
@@ -3952,15 +3697,32 @@ function updUnitInfo() {
   var us = selUnits();
   var n = uniq(WORDS.filter(function (w) { return us.indexOf(w.u) > -1; })).length;
   $("uInfo").textContent = us.length ? us.length + " ta unit · " + n + " ta soʻz" : "Unit tanlanmagan";
+  updStart();
 }
-$("unitPick").addEventListener("change", updUnitInfo);
+/* boshlash tugmasi yonidagi qisqa xulosa va yigʻilgan sozlamalardagi oʻzgarishlar */
+function updStart() {
+  var c = readCfg();
+  var n = poolOf(c).length;
+  if (c.count !== "all") n = Math.min(n, c.count);
+  $("startInfo").textContent = !c.units.length ? "Unit tanlanmagan" : n ? n + " ta soʻz" : "Bu sozlamalar boʻyicha soʻz yoʻq";
+  var on = [["pool", "all"], ["grp", "all"], ["ord", "rnd"]].filter(function (x) { return radio(x[0]) !== x[1]; }).map(function (x) {
+    var s = document.querySelector("input[name=" + x[0] + "]:checked").parentNode.querySelector("span");
+    return s.firstChild.textContent.trim();
+  });
+  $("moreInfo").textContent = on.length ? on.join(" · ") : "filtr, turkum, tartib, talaffuz";
+}
+$("v-setup").addEventListener("change", updStart);
+$("customCount").addEventListener("input", updStart);
+/* tanlov darrov saqlanadi — boshqa tabga oʻtib qaytganda yoʻqolmaydi */
+function pickChanged() { store.cfg.units = selUnits(); save(); updUnitInfo(); }
+$("unitPick").addEventListener("change", pickChanged);
 $("uAll").addEventListener("click", function () {
   Array.prototype.forEach.call(document.querySelectorAll("#unitPick input"), function (c) { c.checked = true; });
-  updUnitInfo();
+  pickChanged();
 });
 $("uNone").addEventListener("click", function () {
   Array.prototype.forEach.call(document.querySelectorAll("#unitPick input"), function (c) { c.checked = false; });
-  updUnitInfo();
+  pickChanged();
 });
 Array.prototype.forEach.call(document.querySelectorAll("input[name=cnt]"), function (r) {
   r.addEventListener("change", function () { $("customBox").hidden = radio("cnt") !== "custom"; });
@@ -3983,10 +3745,13 @@ function shuffle(a) {
 
 /* ---------- mashq ---------- */
 var quiz = null, cfg = null;
-function buildQuiz(conf, list) {
-  var pool = list ? list.slice() : pickPool(conf.pool, uniq(WORDS.filter(function (w) {
+function poolOf(conf) {
+  return pickPool(conf.pool, uniq(WORDS.filter(function (w) {
     return conf.units.indexOf(w.u) > -1 && (conf.grp === "all" || w.g === conf.grp);
   })));
+}
+function buildQuiz(conf, list) {
+  var pool = list ? list.slice() : poolOf(conf);
   if (!pool.length) return null;
   if (!list) {
     if (conf.order === "rnd") shuffle(pool);
@@ -4340,14 +4105,14 @@ function learnBtn(w) {
 function rowsHtml(list) {
   return list.map(function (w) {
     var p = peek(w);
-    return '<tr class="' + (p.mis ? "hasmistake" : "") + (p.lvl >= MAXLVL ? " learned" : "") + '"><td class="spkcell">' + starBtn(w) + "</td>" +
-      (TTS ? '<td class="spkcell">' + spkBtn(w) + "</td>" : "") +
+    return '<tr class="' + (p.mis ? "hasmistake" : "") + (p.lvl >= MAXLVL ? " learned" : "") + '"><td class="spkcell st">' + starBtn(w) + "</td>" +
+      (TTS ? '<td class="spkcell sp">' + spkBtn(w) + "</td>" : "") +
       '<td class="v">' + esc(w.en) + rdSpan(w.en) + '</td><td class="uz">' + esc(w.uz) + '</td><td class="num">' + esc(CATS[w.c][0]) +
-      "</td><td>" + pips(p.lvl) + "</td><td>" + learnBtn(w) + "</td></tr>";
+      '</td><td class="lv">' + pips(p.lvl) + '</td><td class="ln">' + learnBtn(w) + "</td></tr>";
   }).join("");
 }
 function tableHtml(list) {
-  return '<div class="tablewrap"><table><thead><tr><th class="spkcell">★</th>' + (TTS ? '<th class="spkcell">Ovoz</th>' : "") +
+  return '<div class="tablewrap"><table class="wt"><thead><tr><th class="spkcell">★</th>' + (TTS ? '<th class="spkcell">Ovoz</th>' : "") +
     "<th>Inglizcha</th><th>Oʻzbekcha</th><th>Turkum</th><th>Level</th><th></th></tr></thead><tbody>" + rowsHtml(list) + "</tbody></table></div>";
 }
 /* jadvaldagi tugmalar: bitta umumiy tinglovchi */
@@ -4510,104 +4275,9 @@ if (TTS) {
   $("audioSet").hidden = true;
 }
 
-/* ---------- Listening ---------- */
-/* LISTEN[kitob][unit] = [[boshlanish soniyasi, matn], ...]; matnlar build_listen skripti bilan joylanadi */
-var LISTEN = /*LISTEN:start*/{"s":{"1":[[0.0,"Unit 1. Daily Routines and Habits"],[5.4,"Good morning. I'm doing a survey about people's daily routines."],[9.7,"Could I ask you a few questions? Sure."],[13.3,"Great. First, can I have your name? Yes, it's Sophie Carter."],[19.7,"Could you spell your surname, please? Sure. It's C-A-R-T-E-R."],[27.9,"Thank you. Now, let's talk about your mornings. What time do you usually get up?"],[34.0,"Quite early. My alarm goes off at 6, but I don't get up immediately. I usually stay in bed for"],[40.9,"another 15 minutes, so I get up at 6.15. Then I have a shower and get dressed."],[48.0,"Do you have breakfast at home? Yes, always. I usually have some cereal and a banana."],[55.4,"I used to drink coffee in the morning, but these days I prefer tea."],[60.2,"And what time do you leave home? At about 7.20. I work at a"],[65.2,"bookshop in the town centre, and I normally go there by bus."],[69.7,"Is it a long journey? Not really. It usually takes about 30 minutes."],[75.8,"I sometimes listen to music on the bus, but I often just look out of the window."],[81.1,"What happens after work? I finish at half past four."],[85.6,"On Tuesdays, I go swimming at the sports centre. I swim for about an hour,"],[90.8,"so I normally get home just after six. What do you do in the evening?"],[96.1,"I make dinner first. I really enjoy cooking, especially pasta and soup."],[102.1,"After dinner, I usually watch TV or talk to my friends online."],[107.0,"And what time do you normally go to bed? Around 10.45. Before I sleep,"],[113.5,"I usually read for about 20 minutes. It helps me relax."],[118.5,"One last question. Are weekends different?"],[122.2,"Very different. On Saturdays, I don't use an alarm."],[126.5,"I usually wake up around nine and meet my friends for breakfast."]],"2":[[0.0,"Unit 2. Family, Friends and Relationships"],[6.0,"Hi, I'm collecting information for a class project about families and friendships."],[11.4,"Can I ask you a few questions?"],[13.8,"Sure, that sounds interesting."],[16.6,"Great! First, could you tell me your name?"],[20.6,"My name's Lucy Bennett."],[23.3,"Could you spell your surname, please?"],[25.1,"Yes, it's B-E-N-N-E-T-T."],[32.6,"Thanks. So, Lucy, do you have a big family?"],[37.5,"Not really. There are four people in my family. My parents, my younger brother and me. My brother's"],[44.9,"name is Jack. He's 15, so he's three years younger than I am."],[50.2,"Do you spend much time together?"],[52.6,"Yes, especially at weekends. Jack and I sometimes argue about small things,"],[58.6,"but we're actually quite close. We both love films, so we usually watch one together on Friday evenings."],[66.2,"What about your parents?"],[68.6,"My mum works at a hospital, and my dad is a bus driver. They're both busy during the week."],[75.1,"We always try to have dinner together at about 7.30."],[79.1,"Do any other relatives live near you?"],[82.1,"My grandmother does. She lives about 10 minutes away, so I visit her every Wednesday after college."],[88.7,"We usually have tea and talk for an hour or two."],[92.4,"And what about your friends? Who are you closest to?"],[96.5,"My best friend is Emma. We met at primary school when we were seven. She's friendly and really"],[103.0,"funny. We don't study at the same college now, but we still see each other regularly."],[108.8,"When do you normally meet?"],[110.1,"Usually on Saturdays. We often go shopping or meet at a café called Corner."],[117.3,"Sometimes we just walk around town and talk."],[120.6,"How often do you speak during the week?"],[123.8,"Almost every day. We usually send messages, and we have a longer phone call on Thursday evenings."]],"3":[[0.0,"Unit 3. Hobbies and free time"],[4.5,"Hi. I'm doing a survey about how people spend their free time. Could I ask you a few questions?"],[11.6,"Of course."],[13.2,"Great. First, what's your name?"],[16.4,"My name's Anna Wilson."],[19.1,"Could you spell your surname for me?"],[21.8,"Sure. It's W-I-L-S-O-N."],[27.4,"Thanks. So, Anna, what do you like doing in your free time?"],[32.8,"I have several hobbies, but my favourite is photography."],[37.1,"I started about two years ago when my parents gave me a camera for my birthday."],[42.3,"I usually take pictures of buildings, streets and people."],[46.6,"When do you normally have time for photography?"],[49.9,"Mostly at the weekend. On Saturday mornings, I usually walk around the town centre with"],[55.4,"my camera. I sometimes spend two or three hours outside if the weather is nice."],[61.3,"Do you prefer doing things outside?"],[64.5,"Not always. During the week, I often stay at home after work. I enjoy reading,"],[70.9,"especially adventure stories. I normally read for about 30 minutes before dinner."],[76.9,"Do you have any hobbies that you do with other people?"],[80.3,"Yes. My friend Chloe and I go to a dance class together. We used to go on Tuesdays,"],[86.6,"but the class moved to Thursday this month. It starts at seven in the evening."],[91.8,"That sounds busy. Do you have time to relax?"],[96.1,"Definitely. I don't like planning every minute of my free time."],[100.8,"Some evenings, I just listen to music or watch something online."],[105.3,"Is there anything new you'd like to try?"],[108.3,"Yes, actually. I'd really like to learn painting."],[112.3,"There's an art club near my house, and I'm thinking about joining it next month."],[117.8,"Sounds good. Thanks for answering my questions."],[121.3,"You're welcome."]],"4":[[0.0,"Unit 4. Food, Cooking and Eating"],[5.4,"Hello. I'm doing a survey about people's eating and cooking habits."],[9.8,"Would you mind answering a few questions?"],[12.5,"Not at all."],[14.1,"Great. Could I have your name first?"],[17.3,"Sure. I'm Emily Clark."],[20.1,"And how do you spell your surname?"],[22.6,"It's C-L-A-R-K."],[26.6,"Thank you. Let's start with breakfast."],[29.4,"What do you normally eat in the morning?"],[31.9,"On work days, I need something quick. I used to have cereal every morning,"],[37.0,"but now I usually have yogurt with some fruit."],[40.3,"I also drink tea, but I never have coffee."],[43.9,"What about lunch?"],[45.8,"I work in an office, so I take my lunch with me."],[49.5,"I normally make a sandwich at home."],[52.0,"Sometimes I take soup instead, especially when the weather is cold."],[56.8,"Do you enjoy cooking?"],[59.0,"Yes, very much. I usually cook dinner at around seven o'clock."],[64.2,"I don't make anything difficult during the week because I'm tired after work."],[69.0,"Pasta is probably the easiest thing for me to make."],[72.6,"Do you cook every day?"],[74.9,"Almost. But on Friday evenings, I usually eat out with my sister."],[80.1,"There's a small restaurant near her apartment that we both like."],[83.8,"What kind of food do you order there?"],[86.3,"I often order chicken, but my favourite dish there is actually fish with rice and vegetables."],[92.6,"My sister usually chooses pizza."],[95.3,"Do you ever cook with other people?"],[97.9,"Yes. On Sundays, my dad and I sometimes cook together."],[102.5,"He's really good at making bread."],[105.0,"I normally prepare the vegetables while he works on the main dish."],[109.0,"Is there anything you'd like to learn to make?"],[111.9,"Definitely. I'd love to learn how to make cake."],[115.6,"I can make simple biscuits, but cakes are still difficult for me."],[120.3,"Thanks, Emily. That's everything."],[122.8,"You're welcome."]],"5":[[0.0,"Unit 5. Shopping and money"],[4.9,"Good afternoon. Customer services, how can I help you?"],[9.4,"Hi, I bought a jacket from your shop yesterday, but I think I need to change it."],[15.4,"That's fine. Can I take your name first?"],[19.0,"Yes, it's Tom Harris."],[21.6,"Could you spell your surname, please?"],[24.7,"Sure, it's H-A-R-R-I-S."],[30.4,"Thank you. Now, what seems to be the problem with the jacket?"],[35.2,"I bought a medium, but it's too small. I tried a large one in another colour,"],[40.5,"and that fitted much better. So, I'd like a large, please."],[45.0,"No problem. What colour did you buy?"],[48.2,"Blue. I really like it, so I don't want to change the colour. I saw a black one too,"],[54.2,"but blue looks better on me."],[56.5,"Do you still have your receipt?"],[58.9,"Yes, I do. The jacket was £45, but there was a special offer yesterday,"],[64.7,"so I actually paid £36 for it."],[68.2,"That's fine. You can exchange it at the shop. When would you like to come in?"],[73.5,"I'm working tomorrow, so I can't come then. I'm free on Thursday afternoon. Is that OK?"],[80.0,"Yes, we're open until 8. Do you remember which branch you bought it from?"],[85.8,"Yes. The one in the town centre, next to the big supermarket."],[90.1,"I usually shop there because it's close to my office."],[93.4,"Good. We currently have three large blue jackets there,"],[97.5,"so there should be one available for you."],[100.3,"Perfect. Do I need to bring anything apart from the jacket and receipt?"],[105.1,"No. Just make sure the price label is still on the jacket."],[109.8,"Yes, it is. I only tried the jacket on at home."],[114.0,"Great. Then there shouldn't be any problem."],[117.3,"Thanks for your help."],[119.0,"You're welcome."]],"6":[[0.0,"Unit 6. School, learning and study"],[5.8,"Good morning. Welcome to Westfield Language School. How can I help you?"],[11.1,"Hi. I'd like some information about your evening English classes."],[16.3,"Of course. I'll take a few details first. What's your name?"],[21.3,"Nina Cooper."],[22.8,"Could you spell your surname, please?"],[25.6,"Yes. It's C-O-O-P-E-R."],[30.8,"Thank you. Have you studied English before?"],[34.5,"Yes. I studied it at school for about four years. I can have simple conversations,"],[41.0,"but I still make quite a lot of mistakes."],[44.1,"That's fine. You'll take a short level test before you start."],[48.3,"Now, our evening classes are on Mondays and Wednesdays. Would both days be possible for you?"],[55.0,"Yes. I work during the day, but my evenings are usually free."],[60.2,"Excellent. The class begins at 6 o'clock and finishes at 7.30. There's a short break in the middle."],[67.8,"That sounds good. How many students are there in each class?"],[72.3,"We try to keep the groups small. There are usually about 10 students and the maximum is 12."],[78.9,"Great. I find it difficult to speak when there are too many people."],[83.7,"Then this class should suit you. The teacher spends a lot of time on conversation,"],[88.6,"but you'll also practice reading, writing and listening."],[92.5,"Students often say that speaking is their favourite part of the course."],[96.9,"That's exactly what I need. How much does the course cost?"],[101.7,"It's £90 a month. That includes your lessons, but you need to buy the course book separately."],[108.0,"It costs £18."],[110.3,"OK. And where are the evening classes held?"],[114.5,"Most lessons are upstairs, but your group will be in room 12 on the ground floor."],[120.4,"Perfect. When can I take the level test?"],[124.1,"You can come in tomorrow afternoon, if you like."],[127.0,"Great. I'll do that. Thank you."]],"7":[[0.0,"Unit 7. Jobs and Working Life"],[4.9,"Good morning, Park Hotel. You're calling about the weekend job, right?"],[10.2,"Yes, I saw the advertisement online yesterday and I'd like some more information."],[16.1,"Of course. Before we start, can I take your name?"],[20.2,"It's Jamie Lewis."],[22.4,"And could you spell your surname?"],[25.1,"Yes, it's L-E-W-I-S."],[30.5,"Thanks. The job is in our restaurant. We're looking for someone to help the waiters and clear the tables."],[37.4,"Have you worked in a restaurant before?"],[40.1,"No, but I worked in a cafe last summer. I served drinks and helped prepare sandwiches."],[46.6,"That's useful experience. The restaurant gets quite busy, especially at lunchtime,"],[52.2,"so you need to work quickly."],[54.6,"That's fine. I'm used to working with lots of customers."],[58.6,"Good. At the moment, we need someone on Saturday and Sunday. The Saturday shift starts at 10,"],[65.9,"but on Sunday you start at 1100 because breakfast finishes later."],[71.1,"Okay, and what time would I finish?"],[74.6,"Usually around 4. You'll get a 30-minute lunch break during the afternoon."],[80.3,"Great. What should I wear?"],[83.3,"We provide a shirt, but you need to wear your own black trousers."],[88.0,"Please don't wear jeans."],[90.2,"No problem. And how much does the job pay?"],[94.1,"It's £11 an hour. You also get a free meal during each shift."],[99.6,"That sounds good."],[101.4,"If you're interested, you'll need to come for a short interview."],[105.1,"We're interviewing people on Thursday afternoon."],[108.4,"Thursday's fine. Where should I go when I arrive?"],[112.6,"Come to the main entrance and ask for Mrs Green at reception."],[116.9,"She'll take you to the manager's office."],[119.5,"Perfect. Thanks very much."],[122.0,"You're welcome. See you then."]],"8":[[0.0,"Unit 8. Travel and Transport"],[4.7,"Good morning, City Travel Centre. How can I help you?"],[8.6,"Hi, I'd like some information about buses to Lakeside."],[12.5,"I'm planning to go there this weekend."],[15.0,"Certainly. Are you travelling alone?"],[18.2,"Yes, I'm visiting a friend who lives there."],[22.0,"OK, before we look at the times, can I take your name?"],[26.9,"Sure, it's Alex Morgan."],[29.8,"Could you spell your surname, please?"],[32.7,"Yes, it's M-O-R-G-A-N."],[38.3,"Thanks. Now, which day are you planning to travel?"],[42.9,"Saturday. I thought about going on Friday evening, but I have to work late that day."],[49.3,"No problem. There are several buses on Saturday morning."],[53.1,"The first one leaves at 7.30, but the next bus at 8.15 is usually more convenient."],[60.4,"Yes, 7.30 is a little early. How long does the journey take?"],[66.1,"Normally about an hour and 20 minutes. However, there are some road works this weekend,"],[72.0,"so it may take slightly longer."],[74.8,"That's OK. How much is a return ticket?"],[78.3,"A single is £9. The return ticket is £15,"],[83.3,"so that's better value if you're coming back the same weekend."],[87.2,"Yes, I'm returning on Sunday. Where does the bus leave from?"],[91.9,"From Central Station, but not from the main bus area."],[96.2,"You need to go to Platform 6, which is near the cafe."],[100.2,"OK, can I buy the ticket on the bus?"],[103.5,"You can, but weekend buses are often crowded,"],[107.3,"so I recommend booking your ticket before you travel."],[111.0,"Good idea. Can I take a suitcase?"],[114.3,"Yes. One suitcase can go underneath the bus,"],[118.0,"and you can take a small bag with you to your seat."],[121.4,"Perfect. I'll book the ticket online today."],[125.0,"Great. Have a good trip."]],"9":[[0.0,"Unit 9. Cities, Towns and Neighbourhoods"],[5.5,"Hello, welcome to the new residence centre. Are you new to the area?"],[10.7,"Yes, I moved here last week, so I'm still trying to find out where everything is."],[16.7,"Of course, I can give you some information. Can I take your name first?"],[21.9,"Sure, I'm Laura Dawson."],[25.0,"Could you spell your surname, please?"],[27.7,"Yes, it's D-A-W-S-O-N."],[33.0,"Thank you. And which part of town are you living in?"],[36.7,"I've got a flat in Riverside. It's quite a quiet neighbourhood, near the river."],[42.6,"Oh, that's a nice area. There are several useful places nearby."],[47.5,"There's a supermarket on King Street and a small market every Saturday morning."],[52.9,"Great. I also need somewhere to exercise. Is there a gym near my flat?"],[59.0,"There is, but the sports centre is probably better. It has a gym and a swimming pool."],[65.0,"It opens at six in the morning and closes at nine o'clock in the evening."],[69.5,"That's perfect, because I sometimes exercise after work."],[74.2,"You might also want to join the local library. It moved recently. It used to be next to the"],[79.7,"post office, but now it's opposite the museum."],[83.0,"Good to know. I enjoy reading, so I'll definitely visit it."],[88.1,"There's also a lovely park about ten minutes from Riverside."],[91.9,"It's usually quiet during the week, although it gets quite busy on sunny weekends."],[96.9,"I'd like somewhere to walk in the evenings."],[99.9,"Then you'll enjoy it. There's a small lake and a café there too."],[104.6,"Sounds great. What's the easiest way to get into the town centre?"],[109.8,"Bus number 14 goes directly from Riverside. It runs every 20 minutes during the day."],[116.6,"Excellent. Is there anything else I should know?"],[120.3,"Yes. On Fridays, there's a street market in the main square."],[124.8,"It's a good place to buy fresh fruit and vegetables."],[128.2,"Thanks. This has been really helpful."]],"10":[[0.0,"Unit 10. Technology and Everyday Life"],[5.3,"Good afternoon. Tech Help Centre. How can I help you?"],[9.5,"Hi. I'm having a problem with my new tablet. I bought it from your shop last week."],[15.4,"I'm sorry about that. I'll take a few details first. What's your name?"],[21.3,"It's Ryan Baker. Could you spell your surname, please?"],[25.0,"Sure. It's B-A-K-E-R."],[31.4,"Thank you. Now, what exactly is wrong with the tablet?"],[35.8,"The screen is fine, and I can use most of the apps, but the camera isn't working. When I try"],[41.9,"to take a photo, the screen goes black. I see. Have you tried turning the tablet off and on again?"],[49.9,"Yes. Twice. I also charged it fully last night, but that didn't help."],[55.7,"OK. Which model do you have?"],[58.7,"It's the T20. I nearly bought the T15 because it was cheaper, but I chose the T20 because it has"],[66.0,"more storage. Right. We can check it for you at the shop. When are you free to bring it in?"],[73.0,"I'm busy tomorrow, but I can come on Wednesday afternoon."],[77.2,"That's fine. Our repair desk is open from 10 until 6. If you come before 4,"],[83.4,"we can probably check it the same day. Great. Do I need to bring the box?"],[89.3,"No, but please bring your receipt. We need to check when and where you bought the tablet."],[95.6,"No problem. I still have it."],[98.2,"Good. If it's a simple software problem, the repair should take about 30 minutes."],[104.3,"If there's a problem inside the tablet, we may need to keep it for a few days."],[109.6,"OK. Is there a charge for checking it?"],[113.3,"Normally it costs £20, but because your tablet is new, the check is free."],[119.8,"Excellent. Thanks for your help."],[122.3,"You're welcome. We'll see you on Wednesday."]],"11":[[0.0,"Unit 11. Health, Exercise and Sleep"],[5.7,"Good morning. Active Life Centre. How can I help you?"],[9.8,"Hi. I'd like to join one of your exercise classes."],[13.5,"I want to become more active, but I'm not sure which class is best for me."],[18.4,"No problem. I'll ask you a few questions first. What's your name?"],[23.4,"It's Daniel Price."],[25.5,"Could you spell your surname, please?"],[27.4,"Yes. It's P-R-I-C-E."],[33.7,"Thanks. How much exercise do you do at the moment?"],[38.0,"Not enough, really. I walk to work most days, but that only takes about 15 minutes."],[44.0,"At weekends, I sometimes go cycling, but not regularly."],[48.3,"OK. How are your energy levels during the day?"],[52.5,"I'm usually fine in the morning, but I often feel tired after lunch."],[57.2,"That's one reason I want to exercise more."],[60.3,"Exercise may help. We have a beginner fitness class that could suit you."],[65.0,"It's on Monday and Wednesday evenings."],[68.1,"What time does it start?"],[70.1,"The Monday class starts at 6, but Wednesday's class begins at 6.30."],[75.8,"Wednesday would be easier, because I sometimes work late on Mondays."],[80.5,"Great. Each class lasts 45 minutes."],[84.1,"You'll do some simple exercises, but there's no running."],[88.2,"Good. I'm not a big fan of running."],[91.5,"What about sleep? How many hours do you usually get?"],[96.2,"Only about six hours. I often stay up too late watching videos, even when I have to get up early."],[103.4,"You should try to get a little more sleep."],[106.0,"It's also a good idea to stop using screens before bed."],[110.2,"Yes, I know. I'm trying to leave my phone in the living room at night instead of taking it to bed."],[116.6,"That's a good habit. Now, for the exercise class,"],[120.6,"please bring comfortable clothes and a bottle of water."],[124.7,"Do I need special shoes?"],[127.3,"Just clean sports shoes. You'll also need a small towel,"],[131.2,"because some of the exercises can make you quite warm."],[135.2,"Fine. How much is the class?"],[137.3,"Your first class is free, so you can try it before deciding whether to join."]],"12":[[0.0,"Unit 12. Sports and competitions"],[4.4,"Good afternoon. Westside Sports Club. How can I help?"],[9.7,"Hi. I saw a poster about your summer sports competition and I'd like to take part."],[15.8,"Great. I can register you now. Can I have your name first?"],[21.1,"Yes. It's Oliver Kent. Could you spell your surname, please?"],[26.4,"Of course. It's K-E-N-T."],[31.4,"Thank you. We have competitions in tennis, basketball and badminton. Which one are you interested in?"],[39.4,"I play basketball quite often, but I'm already in a competition at college. I'd like to enter the tennis competition here."],[47.4,"No problem. Have you played tennis for long?"],[50.4,"About three years. I usually play with my brother at weekends. I'm not an excellent player but I really enjoy it."],[58.4,"That's the important thing. The competition is on Saturday the 18th. It was originally planned for Sunday that we had to change the day."],[68.4,"Saturday is fine. What time does it start?"],[72.4,"The first matches begin at 10, but all players must arrive by 9.30. That gives us enough"],[79.3,"time to check everyone's names and explain the rules."],[83.0,"OK, do I need to bring my own equipment?"],[86.7,"We provide tennis balls, but you should bring your own racket. We have a few spare ones,"],[92.5,"but they're mainly for emergencies."],[94.6,"That's fine. How much is it to enter?"],[98.3,"The normal price is £12, but club members pay only £8."],[104.2,"I joined the club last month, so I can pay the lower price, right?"],[108.6,"Exactly! There will also be water and fruit for all the players."],[113.7,"Great! Where should I go when I arrive?"],[117.5,"Go to the main sports hall and ask for Martin. He'll show you which court you're playing"],[122.6,"on."],[123.6,"Perfect! I'm looking forward to it!"],[126.3,"Excellent! Good luck!"]],"13":[[0.0,"Unit 13. Weather and seasonal activities"],[6.0,"Good morning. Green Valley Activity Centre. How can I help?"],[10.6,"Hi. My family is visiting Green Valley next weekend and I'd like some information about"],[16.7,"your outdoor activities. Of course. I can help with that. Could I take your name first?"],[23.8,"Yes, it's Megan Frost. Could you spell your surname, please?"],[29.4,"Sure. It's F-R-O-S-T."],[34.3,"Thank you. What kind of activity are you interested in?"],[38.3,"We wanted to go cycling, but I checked the weather this morning and it looks quite wet."],[43.9,"Is there anything else we could do?"],[46.4,"Yes. The forecast says there will be rain on Saturday morning,"],[50.7,"but the afternoon should be much drier."],[53.5,"That's good. We'd still like to spend some time outside."],[57.7,"In that case, you could join our afternoon forest walk."],[61.2,"It starts at 2.30 and lasts about two hours."],[65.1,"That sounds nice. Is it suitable for children?"],[69.1,"Yes. The route is easy and families often join us."],[73.2,"However, the paths can be wet at this time of year,"],[76.6,"so everyone should wear boots rather than ordinary shoes."],[80.6,"OK. We can bring those. What about Sunday?"],[84.8,"Sunday should be sunny, although it may be a little cold in the morning."],[89.3,"It should reach about 16 degrees in the afternoon."],[92.8,"Great. Maybe we could go cycling then?"],[96.2,"Definitely. We rent bicycles here."],[99.0,"An adult bicycle costs £12 for the day and a child's bicycle costs £8."],[105.4,"Perfect. Do we need to book them?"],[108.4,"At weekends, yes. Spring is a very popular time for cycling here,"],[113.3,"especially when the weather is good."],[115.6,"OK. I'll book them today."],[118.2,"Great. And remember to bring a light jacket,"],[121.1,"because the evenings can still be cool."],[124.3,"We will. Thanks for your help."]],"14":[[0.0,"Unit 14. Animals and Wildlife"],[4.0,"Good morning, Greenhill Wildlife Park"],[7.9,"how can I help? Hi, I'm planning to visit the park with my family this weekend"],[13.6,"and I'd like some information. Of course"],[16.9,"are you interested in any particular animals? My children really want to see"],[22.4,"the monkeys"],[23.3,"but I'd like to see everything if we have enough time."],[27.1,"Certainly. Before we continue could I take your name?"],[30.8,"Yes, I'm Helen Webb. Could you spell your surname please?"],[36.1,"Sure, it's W-E-B-B."],[40.3,"Thank you. Which day are you thinking of visiting?"],[43.9,"We're coming on Sunday. We originally planned to come on Saturday"],[48.5,"but my son has a football match. No problem."],[51.8,"The park opens at nine. If your children like monkeys"],[55.6,"there's a feeding session at 10.30. A member of staff talks about the animals"],[60.2,"while they eat."],[61.0,"They'll love that! Where are the monkeys?"],[64.5,"They're in the forest area just past the lake."],[67.8,"You'll also see several kinds of birds there. Some of them are very colourful"],[73.0,"so it's a popular place for photographs. Great!"],[76.8,"Are there any baby animals at the moment? Yes"],[80.9,"we have two young bears. They were born earlier this year"],[84.9,"and have recently started coming outside with their mother."],[88.4,"Wonderful! My children will be excited about those."],[93.2,"There's also a short wildlife talk in the afternoon."],[96.5,"It starts at two and explains how we care for the animals."],[100.7,"Is there somewhere to eat? Yes."],[103.8,"The cafe is next to the main entrance. You can also bring your own food"],[108.2,"and use the picnic area near the river. Good!"],[111.9,"How much are children's tickets? Adults are 14 pounds"],[116.4,"and a child's ticket is nine pounds. Children under three"],[120.6,"enter free. Perfect! Thanks for all the information."]],"15":[[0.0,"Unit 15. Nature and the Environment"],[3.9,"Hello, Green Town Project. How can I help?"],[9.0,"Hi, I saw your poster about the community clean-up and I'd like to join."],[14.6,"That's great. We're still looking for volunteers. Can I take your name first?"],[20.5,"Yes, I'm Ben Russell. Could you spell your surname, please?"],[26.2,"Sure. It's R-U-S-S-E-L-L."],[32.0,"Thank you. We're cleaning several outdoor areas this month."],[36.2,"The next event is at Lakewood Park. Have you been there before?"],[40.6,"Yes. I sometimes go there for walks. It's a beautiful place."],[45.4,"But I noticed quite a lot of rubbish near the lake last weekend."],[49.7,"That's one of the reasons we chose it. We're meeting this Saturday."],[54.0,"We considered Sunday, but the park is usually much busier then."],[58.6,"Saturday is fine. What time should I arrive?"],[62.0,"We'll start cleaning at ten, but volunteers should arrive by nine forty-five."],[67.4,"That gives us time to explain what everyone needs to do."],[71.0,"Okay. Do I need to bring anything?"],[74.2,"We provide rubbish bags and gloves. Please bring a bottle of water and wear comfortable clothes."],[80.6,"Strong shoes are also a good idea because the ground near the lake can be muddy."],[86.0,"No problem. What kind of rubbish do you usually find?"],[90.3,"Mostly plastic bottles, paper and food packaging."],[94.4,"We separate everything we collect so that as much as possible can be recycled."],[99.8,"That makes sense. How long will the clean-up take?"],[103.6,"About three hours. At one o'clock we'll stop and have lunch together."],[108.4,"We provide sandwiches, but volunteers should bring their own drink."],[112.8,"Great. Can children take part too?"],[116.2,"Yes, but anyone under sixteen needs to come with an adult."],[121.4,"Perfect. I might bring my younger brother."],[124.3,"Excellent. The more people we have, the better."]],"16":[[0.0,"Unit 16. Films, music, books and entertainment"],[6.8,"Good afternoon. Central Arts Centre. How can I help?"],[11.1,"Hi. I saw a poster about your film and music weekend and I'd like some more information."],[18.1,"Of course. Are you interested in booking something?"],[22.0,"Yes, probably. I'm coming with a friend."],[26.0,"Great. Before we start, can I take your name?"],[29.9,"Sure. I'm Amy Stone."],[32.6,"Could you spell your surname, please?"],[35.5,"Yes. It's S-T-O-N-E."],[40.7,"Thank you. The festival starts on Friday evening, but most activities are on Saturday."],[46.6,"There are films, live music and a book event."],[50.3,"Saturday is better for us. What films are you showing?"],[54.3,"There's a comedy in the afternoon and an adventure film in the evening."],[58.6,"The comedy starts at 2, but the adventure film begins at 6.30."],[63.5,"I think we'd prefer the adventure film."],[66.6,"That's been very popular. It's about a group of friends who travel across South America"],[71.8,"looking for a lost village."],[74.0,"Sounds interesting. Is there any live music?"],[77.8,"Yes. After the film, a local band will play in the main hall."],[82.1,"They mostly play pop and rock music."],[85.1,"Great. What about the book event you mentioned?"],[88.8,"A travel writer called James Wood is giving a short talk."],[92.8,"He'll speak about his new book and answer questions from the audience."],[97.3,"I'd like that too. How much are tickets?"],[100.8,"You can buy separate tickets, but the full day ticket is better value."],[105.3,"It used to be £20, but this year it costs £18."],[110.1,"That sounds reasonable. Do we need to book in advance?"],[114.2,"I recommend it. Last year, the evening events were completely full by Friday morning."],[120.4,"Okay. I'll book two tickets online tonight."],[124.1,"Excellent. I hope you both enjoy the festival."]],"17":[[0.0,"Unit 17. Interesting people and their lives"],[4.5,"Welcome back to People in Our Town. Today I'm"],[9.0,"talking to a young photographer who has travelled to many interesting places. Thanks for joining us."],[14.7,"Could you introduce yourself? Sure. My name is Nina Hayes."],[20.0,"And could you spell your surname for our listeners? Of course. It's H-A-Y-E-S."],[27.9,"Thanks Nina. Where did you grow up?"],[31.9,"I was born in London, but my family moved when I was very young. I actually grew up in a small village near Oxford. There were only about 500 people there."],[42.9,"When did you become interested in photography?"],[45.9,"When I was 14, my grandfather gave me his old camera for my birthday. At first I just took pictures of my family and friends."],[54.9,"Did you study photography later?"],[57.9,"Yes. After school, I studied art at college for two years. I wanted to study painting at first, but I decided to choose photography because I enjoyed it more."],[69.9,"And when did you start travelling?"],[71.9,"My first big trip was to Italy. I stayed there for three months and took hundreds of pictures. After that, I visited several other countries."],[82.9,"Which place has been your favourite?"],[84.9,"Probably Japan. I spent six weeks there last year."],[89.9,"I loved the busy cities, but I also visited some beautiful quiet places in the countryside."],[96.9,"What do you photograph most often now?"],[99.9,"I used to take lots of pictures of buildings, but these days I mainly photograph people."],[105.9,"I enjoy meeting someone and learning a little about their life before taking their picture."],[111.9,"Do you have any plans for the future?"],[114.9,"Yes. Next year I want to make a book of my favourite photographs."],[119.9,"That sounds exciting. Good luck with it."]],"18":[[0.0,"Unit 18. Festivals, Celebrations and Traditions"],[5.3,"Good morning, Riverside Festival Office."],[9.0,"How can I help? Hi, my family has just moved to the area"],[13.8,"and we'd like some information about the Summer Festival."],[17.0,"Of course, it's one of our biggest celebrations of the year."],[21.1,"Can I take your name first? Yes,"],[24.6,"I'm Anna Mitchell. Could you spell your surname please?"],[29.4,"Sure, it's M-I-T-C-H-E-L-L."],[36.6,"Thank you. The festival is usually held on the first Saturday in July,"],[41.5,"but this year it will be on Sunday because there's another large event on Saturday."],[46.6,"Great! What time does everything begin?"],[50.2,"The market opens at 10, but the main celebration starts at 11.30 with a parade through the town centre."],[57.7,"My children would enjoy that. What happens after the parade?"],[62.2,"There's live music in Riverside Park. We'll also have traditional dancing,"],[67.0,"games for children and plenty of food."],[70.2,"What kind of traditional food can we try?"],[73.5,"Several things, but our local bread is especially popular."],[77.8,"It's made fresh in the morning and visitors can watch how it's prepared."],[82.2,"That sounds interesting. Do people wear anything special?"],[86.8,"Some of the dancers wear traditional clothes. Visitors can wear whatever they like,"],[92.2,"although many people choose something colourful because it makes the festival feel more cheerful."],[97.7,"Is there anything in the evening? Yes. At seven there's a concert,"],[102.8,"and later there will be fireworks near the river. They begin when it gets dark."],[108.2,"Do we need tickets? Most activities are free."],[112.1,"The evening concert costs £5 for adults, but children can enter free."],[117.4,"Perfect! We'll definitely come."],[120.5,"Wonderful! I hope your family enjoys its first Riverside Festival."]],"19":[[0.0,"Unit 19. Childhood and Memories"],[4.6,"Welcome to Memories of Home. Today we're talking to people"],[9.2,"about their childhood. Could you introduce yourself? Sure. My name's Rachel Perry."],[16.3,"Could you spell your surname for us? Yes, it's P-E-R-R-Y. Thanks, Rachel. Where did you grow up?"],[26.7,"I grew up in a small town near the sea. It wasn't a very busy place,"],[32.1,"but I loved living there because we could walk to the beach."],[35.3,"What was your home like?"],[37.9,"We lived in an old house with a large garden. I shared a bedroom with my younger sister until"],[44.7,"I was 12. We sometimes argued because she was untidy, but we were very close."],[50.2,"What do you remember about school?"],[53.2,"I went to a small primary school about 15 minutes from our house."],[58.2,"I usually walked there with two friends."],[61.2,"My favourite subject was art because I loved drawing and making things."],[66.2,"What did you do after school?"],[69.2,"We spent a lot of time outside."],[71.2,"There weren't many computer games in our house,"],[74.2,"so my friends and I usually played in the garden or rode our bikes around the neighbourhood."],[79.2,"Did your family have any special weekend routines?"],[83.2,"Yes, every Saturday morning my dad took us to the market."],[88.2,"In the afternoon we often visited my grandparents."],[91.2,"My grandmother always made cake for us."],[94.2,"That sounds like a nice memory."],[97.2,"What about holidays?"],[99.2,"Every summer we went camping for a week."],[102.2,"My favourite trip was when I was 14."],[105.2,"We stayed near a lake and I learnt to swim there."],[108.2,"Do you still visit the town where you grew up?"],[111.2,"Yes, usually once or twice a year. It has changed a lot, but it still feels like home."]],"20":[[0.0,"Unit 20. Everyday problems and solutions"],[6.0,"Good morning. West Park Apartments. How can I help you?"],[9.8,"Hi. I live in one of your apartments and I need to report a problem."],[15.4,"Of course. Can I take your name first?"],[18.7,"Yes. I'm Emma Walsh."],[21.6,"Could you spell your surname, please?"],[24.4,"Sure. It's W-A-L-S-H."],[29.3,"Thank you. And which apartment are you in?"],[32.9,"Apartment 24 on the second floor. I moved in about three months ago."],[38.8,"Okay. What seems to be the problem?"],[42.1,"There's something wrong with the shower. The water was fine yesterday morning,"],[46.8,"but last night it suddenly became cold. I tried it again this morning and it's still cold."],[54.2,"I see. Is there hot water anywhere else in the apartment?"],[58.9,"Yes. The kitchen tap is working normally, so I think the problem is only in the bathroom."],[66.1,"All right. We'll need to send someone to look at it. Are you at home today?"],[71.3,"I'm at work until five. I could be home by five thirty, but not before then."],[77.5,"That should be fine. Our repair person can come between five thirty and seven."],[83.2,"Great. Will I need to pay anything?"],[86.4,"No. Bathroom repairs like this are free for residents, unless the problem was caused by damage."],[92.9,"Okay. That's good."],[95.4,"Is there anything else you'd like us to check?"],[98.2,"Actually, yes. The light in the kitchen is also very weak. I changed the bulb,"],[104.5,"but it didn't make any difference."],[107.1,"I'll add that to the repair request. The repair person can check both problems."],[112.5,"Perfect. What should I do if I'm late getting home?"],[117.0,"Call the office on seven three oh four one eight six. Someone will be here until seven."],[123.6,"Great. I'll write that down. Thanks for your help."],[127.4,"You're welcome."]],"21":[[0.0,"Unit 21. Helping people and community life"],[6.2,"Good morning, Brookside Community Centre. How can I help?"],[10.3,"Hi, I saw your notice asking for volunteers and I'd like to help."],[15.9,"That's great. We have several volunteer activities at the moment. Can I take your name first?"],[22.3,"Sure, I'm Alice Young."],[25.0,"Could you spell your surname, please?"],[27.8,"Yes, it's Y-O-U-N-G."],[33.0,"Thank you. What kind of volunteer work are you interested in?"],[37.3,"I enjoy working with older people. I used to visit my grandmother every week and I often"],[43.3,"helped her with shopping and things around the house."],[46.6,"Then our shopping service might suit you. Volunteers help older residents who find it"],[51.7,"difficult to carry heavy bags home."],[54.4,"That sounds like something I could do."],[57.0,"Good. We need volunteers on Tuesday and Thursday afternoons. Tuesday's almost full,"],[62.8,"so Thursday would be more useful for us."],[65.9,"Thursday is fine. I finish work early that day."],[70.0,"Excellent. Volunteers meet here at the community centre at 2.15. We give everyone a shopping"],[76.3,"list and an address before they leave."],[79.8,"How long does it usually take?"],[82.4,"About two hours. Most volunteers help one or two people each afternoon."],[88.2,"Do I need a car?"],[90.2,"No. All the homes are nearby. Most volunteers walk, although some people use bicycles."],[96.9,"Great. Is there anything I should bring?"],[100.1,"We provide shopping bags, but please bring a phone in case you need to contact the centre"],[105.0,"while you're out."],[106.7,"OK. Is there any training before I start?"],[110.6,"Yes. Just a short meeting. The next one is on Monday evening and lasts about 40 minutes."],[117.5,"Perfect. I can come to that."],[120.2,"Wonderful. We really appreciate your help."],[123.4,"The service is very important to people in the neighbourhood."],[127.1,"I'm happy to help."]],"22":[[0.0,"Unit 22. Trying something new"],[5.2,"Good afternoon. Adventure club, how can I help?"],[9.1,"Hi, I saw your advertisement for beginner activities."],[13.3,"I'd like to try something new, but I'm not sure which activity to choose."],[18.9,"No problem. Can I take your name first?"],[22.2,"Yes, I'm Jessica Miles."],[25.2,"Could you spell your surname, please?"],[28.0,"Sure. It's M-I-L-E-S."],[33.1,"Thank you. Have you done any adventure sports before?"],[37.0,"Not really. I go swimming sometimes and I ride my bike at weekends,"],[42.5,"but I've never tried anything very exciting."],[45.8,"Well, we have several activities for beginners."],[48.9,"You could try climbing, kayaking or horse riding."],[53.1,"I'm a little afraid of heights, so climbing probably isn't for me."],[58.1,"I think kayaking sounds the most interesting."],[61.4,"Good choice. Our beginner kayaking sessions take place at Blue Lake."],[66.0,"You don't need any previous experience."],[69.0,"Great. When are the sessions?"],[71.6,"We have them on Saturday and Sunday mornings."],[74.6,"Saturday is nearly full this week, so the other day would be better."],[79.0,"Sunday is fine. What time does it start?"],[82.6,"The activity starts at 10, but everyone needs to arrive by 9.30."],[87.4,"The instructor will explain the safety rules before you go onto the water."],[91.8,"Okay. Do I need to bring any special equipment?"],[95.8,"We provide the kayak, helmet and life jacket."],[99.1,"You should bring a towel and some dry clothes because you may get wet."],[103.6,"I expected that. How long does the session last?"],[107.8,"About two hours. There's a short break halfway through."],[112.2,"And how much does it cost?"],[114.6,"The normal price is £25, but your first beginner session costs £18."],[120.9,"That sounds good. I'd like to book it."],[124.0,"Excellent. One final thing. The water can be quite cold, even in summer,"],[129.8,"so wearing warm clothes is a good idea."],[133.3,"Thanks. I'm a little nervous, but I'm excited to try it."]],"23":[[0.0,"Unit 23. Interesting places and different cultures"],[6.4,"Good morning. World Travel Club. How can I help?"],[10.2,"Hi. I saw your poster about the International Culture Day and I'd like some information."],[16.6,"Of course. Can I take your name first?"],[19.8,"Yes. I'm Lucy Warren."],[22.7,"Could you spell your surname, please?"],[25.4,"Sure. It's W-A-R-R-E-N."],[30.0,"Thank you. Culture Day is a chance to learn about different countries through food, music, clothes and activities."],[38.0,"This year, the main country is Japan."],[41.0,"That's great! I've always wanted to visit there. What activities will you have?"],[47.0,"There are several. In the morning, a traveller will give a talk about Japanese cities and everyday life."],[54.0,"It starts at 10.30 in the main hall."],[57.0,"That sounds interesting. I'd like to hear about what daily life is really like there."],[63.0,"After the talk, there's a short language lesson. You can learn some simple greetings and useful words."],[70.0,"Nice. What happens in the afternoon?"],[73.0,"At one o'clock, there's a cooking demonstration. The chef will show visitors how to prepare a traditional rice dish. Everyone can taste it afterwards."],[83.0,"afterwards."],[84.0,"Excellent! I love trying food from other countries."],[88.0,"There's also a display of traditional clothes. Some visitors can try them on and take photographs."],[95.0,"Do you have any music?"],[97.0,"Yes. A group of musicians will perform at three. They use traditional drums so the performance can be quite loud."],[105.0,"Sounds fun! How much does Culture Day cost?"],[110.0,"Adult tickets are normally £12, but students pay £8 if they bring a student card."],[116.3,"Perfect! I'm a student. Where is the event?"],[120.7,"At the International Centre on Park Street, opposite the Museum."],[124.8,"Great! I'll definitely come."]],"24":[[0.0,"Unit 24. Life in the past and life today"],[6.2,"Welcome to Then and Now. Today we're talking about how everyday life has changed."],[12.2,"Could you introduce yourself? Of course. I'm Margaret Hill."],[17.3,"Could you spell your surname, please? Yes, it's H-I-L-L."],[24.6,"Thank you. Margaret, where did you grow up?"],[27.8,"I grew up in a small village. There were only a few shops and everybody seemed to know each other."],[34.5,"How did you usually get to school?"],[37.1,"I normally walked. The school was about two kilometres from our house."],[42.3,"My brother and I went together, even when the weather was bad."],[46.2,"Did your family have a television?"],[49.1,"Yes, but only one. We got our first television when I was about ten."],[55.0,"It was quite small and there weren't many programs to choose from."],[60.0,"That's very different from today. What did you do for entertainment?"],[65.0,"We spent much more time outside. After school we played games in the street or rode our bikes."],[72.0,"In the evening I often read books or listened to the radio."],[76.0,"What about shopping?"],[78.0,"My mother went to the local shops almost every day because we didn't have a big fridge."],[84.0,"There was no supermarket nearby."],[87.2,"Today I usually go shopping only once a week."],[91.3,"How did people keep in touch with friends and family?"],[94.9,"We wrote letters or used the telephone at home."],[98.7,"Calls were quite expensive so we didn't stay on the phone for very long."],[103.5,"Which do you prefer?"],[105.0,"Life then or life today?"],[108.0,"Some things were nicer in the past because people spent more time together, but everyday"],[113.2,"life is certainly easier today. I can speak to my grandchildren online, buy things from"],[118.8,"home and find information in seconds."],[122.7,"So technology has made a big difference."],[125.8,"Definitely. I wouldn't want to give up the internet now."]]},"w":{}}/*LISTEN:end*/;
-var LS = { book: "s", unit: 1, ready: false };
-(function () {
-  try { var o = JSON.parse(localStorage.getItem("a2.listen") || "null"); if (o) { LS.book = o.book === "w" ? "w" : "s"; LS.unit = Math.min(24, Math.max(1, o.unit || 1)); } } catch (e) {}
-})();
-function lsSave() { try { localStorage.setItem("a2.listen", JSON.stringify({ book: LS.book, unit: LS.unit })); } catch (e) {} }
-function lsSegs() { return (LISTEN[LS.book] || {})[LS.unit] || []; }
-function lsTitle(book, n) {
-  var sg = (LISTEN[book] || {})[n];
-  var t = sg && sg[0] ? sg[0][1] : "";
-  return /^unit\s*\d+/i.test(t) ? t : "Unit " + n;
-}
-function lsFill() {
-  var h = "";
-  for (var n = 1; n <= 24; n++) h += '<option value="' + n + '">' + lsTitle(LS.book, n).replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</option>";
-  $("lsUnit").innerHTML = h;
-  $("lsUnit").value = String(LS.unit);
-}
-function lsLoad() {
-  var a = $("lsAudio"), nn = ("0" + LS.unit).slice(-2);
-  a.pause();
-  a.src = "audio/a2/" + (LS.book === "s" ? "student" : "workbook") + "/unit-" + nn + ".mp3";
-  a.playbackRate = parseFloat($("lsRate").value);
-  $("lsPrev").disabled = LS.unit <= 1;
-  $("lsNext").disabled = LS.unit >= 24;
-  lsRenderText();
-  lsSave();
-}
-function lsRenderText() {
-  var segs = lsSegs(), box = $("lsText"), h = "";
-  segs.forEach(function (sg, i) {
-    var m = Math.floor(sg[0] / 60), sec = Math.floor(sg[0] % 60);
-    var t = String(sg[1]).replace(/&/g, "&amp;").replace(/</g, "&lt;");
-    h += i === 0 && /^unit\s*\d+/i.test(sg[1])
-      ? '<p class="ttl">' + t + "</p>"
-      : '<p data-i="' + i + '"><span class="ts">' + m + ":" + ("0" + sec).slice(-2) + "</span>" + t + "</p>";
-  });
-  box.innerHTML = h || '<p class="ttl">Bu unit uchun matn yoʻq.</p>';
-  $("lsInfo").textContent = segs.length ? "Qatorni bossangiz, audio shu joydan eshitiladi." : "";
-}
-function lsMarkActive() {
-  var a = $("lsAudio"), segs = lsSegs(), cur = -1;
-  for (var i = 0; i < segs.length; i++) if (segs[i][0] <= a.currentTime + 0.15) cur = i;
-  Array.prototype.forEach.call($("lsText").querySelectorAll("p[data-i]"), function (p) {
-    var on = parseInt(p.getAttribute("data-i"), 10) === cur;
-    if (on !== p.classList.contains("on")) {
-      p.classList.toggle("on", on);
-      if (on && !$("lsText").hidden) {
-        var r = p.getBoundingClientRect();
-        if (r.top < 140 || r.bottom > window.innerHeight - 40) p.scrollIntoView({ block: "center", behavior: "smooth" });
-      }
-    }
-  });
-}
-function lsSyncBook() {
-  Array.prototype.forEach.call(document.querySelectorAll("#v-listen .seg button"), function (b) {
-    b.setAttribute("aria-selected", String(b.getAttribute("data-book") === LS.book));
-  });
-}
-function listenOpen() {
-  if (LS.ready) return;
-  LS.ready = true;
-  lsFill();
-  Array.prototype.forEach.call(document.querySelectorAll("#v-listen .seg button"), function (b) {
-    b.addEventListener("click", function () {
-      LS.book = b.getAttribute("data-book");
-      lsSyncBook(); lsFill(); lsLoad();
-    });
-  });
-  $("lsUnit").addEventListener("change", function () { LS.unit = parseInt(this.value, 10); lsLoad(); });
-  $("lsRate").addEventListener("change", function () { $("lsAudio").playbackRate = parseFloat(this.value); });
-  $("lsAudio").addEventListener("loadedmetadata", function () { this.playbackRate = parseFloat($("lsRate").value); });
-  $("lsAudio").addEventListener("timeupdate", lsMarkActive);
-  $("lsAudio").addEventListener("ended", function () { if ($("lsLoop").checked) { this.currentTime = 0; this.play(); } });
-  $("lsBack").addEventListener("click", function () { var a = $("lsAudio"); a.currentTime = Math.max(0, a.currentTime - 10); });
-  $("lsFwd").addEventListener("click", function () { var a = $("lsAudio"); a.currentTime = Math.min(a.duration || 1e9, a.currentTime + 10); });
-  $("lsPrev").addEventListener("click", function () { if (LS.unit > 1) { LS.unit--; $("lsUnit").value = String(LS.unit); lsLoad(); } });
-  $("lsNext").addEventListener("click", function () { if (LS.unit < 24) { LS.unit++; $("lsUnit").value = String(LS.unit); lsLoad(); } });
-  $("lsToggle").addEventListener("click", function () {
-    var open = $("lsText").hidden;
-    $("lsText").hidden = !open;
-    this.textContent = open ? "Matnni yashirish" : "Matnni koʻrsatish";
-    this.setAttribute("aria-expanded", String(open));
-    if (open) lsMarkActive();
-  });
-  $("lsText").addEventListener("click", function (e) {
-    var p = e.target.closest ? e.target.closest("p[data-i]") : null;
-    if (!p) return;
-    var a = $("lsAudio");
-    a.currentTime = lsSegs()[parseInt(p.getAttribute("data-i"), 10)][0];
-    a.play();
-  });
-  window.lsAudioPause = function () { try { $("lsAudio").pause(); } catch (e) {} };
-  lsSyncBook(); lsLoad();
-}
-
+/* listening va speaking darslaridan havola: a2.html#unit-5 */
+var mh = /^#unit-(\d+)$/.exec(location.hash);
+if (mh && UNIT_TITLE[mh[1]]) store.cfg.units = [+mh[1]];
 renderUnitPick();
 updateBrand();
 save();

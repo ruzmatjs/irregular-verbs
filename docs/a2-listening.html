@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f4f4a">
+<meta name="description" content="A2 darajasidagi listening mashqlari: dialoglar, savollar va matni. Oʻzbek tilida.">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A2 Listening">
+<meta property="og:description" content="A2 darajasidagi listening mashqlari: dialoglar, savollar va matni. Oʻzbek tilida.">
+<meta property="og:url" content="https://ruzmatjs.github.io/irregular-verbs/a2-listening.html">
+<meta property="og:image" content="https://ruzmatjs.github.io/irregular-verbs/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  body{margin:0;font:14px system-ui,sans-serif}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>A2 Listening</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<!-- IBM Plex dagi «ʻ» juda keng (so ʻ z boʻlib koʻrinadi) — faqat shu belgi Noto Sans dan olinadi, u --body da birinchi turadi -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&text=%CA%BB%CA%BC&display=swap">
+<link rel="stylesheet" href="ui.css">
+<link rel="stylesheet" href="lessons.css">
+<style>
+/* umumiy koʻrinish — ui.css da, darslarniki — lessons.css da */
+</style>
+</head>
+<body>
+<header class="top" data-section="a2" data-skill="listening">
+  <div class="top-in">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+        <rect width="256" height="256" rx="56" fill="var(--accent)"/>
+        <g fill="none" stroke="var(--surface)" stroke-width="11" stroke-linecap="round">
+          <path d="M62 156 A33 64 0 0 1 128 156"/>
+          <path d="M128 156 A33 38 0 0 1 194 156"/>
+        </g>
+        <circle cx="62" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="128" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="194" cy="156" r="14" fill="var(--gold)"/>
+      </svg>
+      <h1>A2 Listening</h1>
+      <span class="sub" id="brandStat"></span>
+      <nav class="switch" id="secNav" aria-label="Boʻlimlar"></nav>
+    </div>
+    <div class="subnav">
+      <nav class="skills" id="skillNav" aria-label="Koʻnikmalar" hidden></nav>
+    </div>
+  </div>
+</header>
+<script src="ui.js"></script>
+<script src="a2-units.js"></script>
+
+<div class="wrap">
+
+<section id="v-list">
+  <h2>Darslar</h2>
+  <p class="lede">Dialogni tinglang, savollarga javob bering, keyin matnini oching va qatorma-qator qayta tinglang.</p>
+  <div id="lessonList"></div>
+  <div class="soon" id="soonBox">
+    <span class="flabel">Tayyorlanmoqda</span>
+    <ul id="soonList"></ul>
+  </div>
+</section>
+
+<section id="v-lesson" hidden>
+  <div class="lhead">
+    <button class="back" type="button" id="backBtn" aria-label="Darslar roʻyxatiga qaytish">←</button>
+    <div class="t"><h2 id="lTitle"></h2><p class="lede" id="lDesc"></p></div>
+  </div>
+  <div class="lgrid">
+    <form class="card" id="qForm">
+      <div class="stack" id="qBox"></div>
+      <div class="verdict" id="verdict" hidden></div>
+      <p class="err" id="qErr" hidden></p>
+      <div class="actions">
+        <button class="btn" type="submit" id="checkBtn">Tekshirish</button>
+        <button class="btn ghost" type="button" id="retryBtn" hidden>Qayta ishlash</button>
+      </div>
+    </form>
+    <div class="card">
+      <details class="more" id="scriptBox">
+        <summary>Matnni koʻrish <small>avval matnsiz tinglang</small></summary>
+        <div class="opts" style="margin-top:12px"><label class="opt"><input type="checkbox" id="uzOn"><span>Tarjimasi bilan</span></label></div>
+        <ul class="script" id="script"></ul>
+      </details>
+    </div>
+  </div>
+  <div class="player" role="group" aria-label="Pleyer">
+    <button class="pbtn" type="button" id="prevLine" aria-label="Oldingi qator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+    <button class="pbtn main" type="button" id="playBtn" aria-label="Tinglash"></button>
+    <button class="pbtn" type="button" id="nextLine" aria-label="Keyingi qator"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+    <input type="range" id="seek" min="0" max="0" value="0" step="1" aria-label="Joyi">
+    <span class="pos" id="pos"></span>
+    <div class="seg" role="group" aria-label="Tezlik">
+      <button type="button" data-rate="0.75">0.75×</button>
+      <button type="button" data-rate="1">1×</button>
+      <button type="button" data-rate="1.25">1.25×</button>
+    </div>
+    <p class="hint msg" id="pMsg"></p>
+  </div>
+</section>
+
+</div>
+
+<script>
+var KEY = "a2listening.v1";
+/* Dars qoʻshish:
+   { id: "l2-1", u: 2, title: "...", desc: "...",
+     audio: "audio/l2-1.mp3",           — ixtiyoriy; boʻlmasa matnni brauzer ovozi oʻqiydi
+     lines: [["Kim", "English", "Oʻzbekcha", 3.5], ...],   — oxirgisi: shu qator boshlanadigan soniya (faqat audio bilan, ixtiyoriy)
+     q: [{ t: "Savol?", o: ["A", "B", "C"], a: 0, why: "izoh (ixtiyoriy)" }, ...] } */
+var LESSONS = [
+  { id: "sample-1", u: 1, sample: true, title: "A busy morning", desc: "Ikki doʻst ertalabki odatlari haqida gaplashadi",
+    lines: [
+      ["Tom", "Hi, Anna. You look tired. What time do you usually get up?", "Salom, Anna. Charchagan koʻrinasan. Odatda soat nechada turasan?"],
+      ["Anna", "I get up at half past five every day.", "Har kuni besh yarimda turaman."],
+      ["Tom", "That is really early! What do you do before work?", "Juda erta-ku! Ishdan oldin nima qilasan?"],
+      ["Anna", "First I go for a run, then I have a shower and make breakfast.", "Avval yuguraman, keyin dush qabul qilib, nonushta tayyorlayman."],
+      ["Tom", "I never have time for breakfast. I just drink a coffee on the bus.", "Menda nonushtaga hech vaqt boʻlmaydi. Avtobusda shunchaki qahva ichaman."],
+      ["Anna", "That is not a healthy habit, Tom. Try to wake up fifteen minutes earlier.", "Bu sogʻlom odat emas, Tom. Oʻn besh daqiqa ertaroq uygʻonishga harakat qil."],
+      ["Tom", "You are right. I will start on Monday.", "Toʻgʻri aytasan. Dushanbadan boshlayman."]
+    ],
+    q: [
+      { t: "What time does Anna get up?", o: ["5:15", "5:30", "6:30"], a: 1, why: "half past five — besh yarim." },
+      { t: "What does Anna do first?", o: ["She makes breakfast", "She has a shower", "She goes for a run"], a: 2 },
+      { t: "What does Tom have in the morning?", o: ["Only coffee", "A big breakfast", "Tea and bread"], a: 0 },
+      { t: "When will Tom change his habit?", o: ["Tomorrow", "On Monday", "Next month"], a: 1 }
+    ] }
+];
+</script>
+<script src="lessons.js"></script>
+<script>
+function lessonSize(L) { return L.q.length + " ta savol"; }
+var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>';
+var PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+var L = null, line = 0, playing = false, checked = false, rate = store.cfg.rate || 1, audio = null, oneLine = false;
+
+function openLesson(x) {
+  L = x; line = 0; oneLine = false;
+  setPlaying(false);
+  paintHead(L);
+  $("scriptBox").open = false;
+  renderQuestions();
+  renderScript();
+  audio = null;
+  $("pMsg").textContent = "";
+  if (L.audio) {
+    audio = new Audio(L.audio);
+    audio.preload = "metadata";
+    audio.addEventListener("timeupdate", onTime);
+    audio.addEventListener("loadedmetadata", onTime);
+    audio.addEventListener("ended", function () { setPlaying(false); });
+    audio.addEventListener("error", function () { setPlaying(false); $("pMsg").textContent = "Audio fayl ochilmadi — matnni brauzer ovozi oʻqiydi."; audio = null; paintPos(); });
+  } else if (!TTS) $("pMsg").textContent = "Bu brauzerda ovoz yoʻq. Boshqa brauzerda ochib koʻring.";
+  $("playBtn").disabled = !audio && !TTS;
+  paintPos();
+}
+
+/* ---------- savollar ---------- */
+function renderQuestions() {
+  checked = false;
+  $("qBox").innerHTML = L.q.map(function (q, i) {
+    return '<fieldset class="q" data-i="' + i + '"><legend>' + (i + 1) + ". " + esc(q.t) + '</legend><div class="ans">' + q.o.map(function (o, k) {
+      return '<label><input type="radio" name="q' + i + '" value="' + k + '"><span>' + esc(o) + "</span></label>";
+    }).join("") + "</div></fieldset>";
+  }).join("");
+  $("verdict").hidden = true; $("qErr").hidden = true;
+  $("checkBtn").hidden = false; $("retryBtn").hidden = true;
+}
+$("qForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (checked) return;
+  var picks = L.q.map(function (q, i) { var r = document.querySelector("input[name=q" + i + "]:checked"); return r ? +r.value : -1; });
+  var miss = picks.filter(function (p) { return p < 0; }).length;
+  $("qErr").hidden = !miss;
+  if (miss) { $("qErr").textContent = "Yana " + miss + " ta savolga javob bering."; return; }
+  checked = true;
+  var ok = 0;
+  Array.prototype.forEach.call(document.querySelectorAll("#qBox .q"), function (f, i) {
+    var q = L.q[i], labs = f.querySelectorAll("label");
+    labs[q.a].classList.add("good");
+    if (picks[i] === q.a) ok++; else labs[picks[i]].classList.add("wrong");
+    Array.prototype.forEach.call(f.querySelectorAll("input"), function (x) { x.disabled = true; });
+    if (q.why) f.insertAdjacentHTML("beforeend", '<p class="note">' + esc(q.why) + "</p>");
+  });
+  saveResult(L, ok, L.q.length);
+  var v = $("verdict");
+  v.hidden = false;
+  v.className = "verdict " + (ok === L.q.length ? "good" : "bad");
+  v.textContent = ok + " / " + L.q.length + " toʻgʻri. " + (ok === L.q.length ? "Barakalla!" : "Matnni ochib, yana bir bor tinglang.");
+  $("checkBtn").hidden = true; $("retryBtn").hidden = false;
+  $("scriptBox").open = true;
+});
+$("retryBtn").addEventListener("click", function () { renderQuestions(); $("scriptBox").open = false; window.scrollTo(0, 0); });
+
+/* ---------- matn ---------- */
+function speakerNo(n) { var s = []; L.lines.forEach(function (x) { if (s.indexOf(x[0]) < 0) s.push(x[0]); }); return s.indexOf(n); }
+function renderScript() {
+  $("script").innerHTML = L.lines.map(function (x, i) {
+    return '<li data-i="' + i + '"><button type="button"><span class="who">' + esc(x[0]) + "</span>" + esc(x[1]) +
+      '<span class="uz"' + ($("uzOn").checked ? "" : " hidden") + ">" + esc(x[2] || "") + "</span></button></li>";
+  }).join("");
+}
+$("uzOn").addEventListener("change", function () { renderScript(); paintPos(); });
+$("script").addEventListener("click", function (e) {
+  var li = e.target.closest("li");
+  if (!li) return;
+  goLine(+li.getAttribute("data-i"));
+  oneLine = !audio;
+  setPlaying(true);
+});
+
+/* ---------- pleyer: mp3 boʻlsa — vaqt boʻyicha, boʻlmasa — qatorma-qator brauzer ovozi ---------- */
+function lineAt(t) { var k = 0; L.lines.forEach(function (x, i) { if (typeof x[3] === "number" && x[3] <= t) k = i; }); return k; }
+function timed() { return L.lines.some(function (x) { return typeof x[3] === "number"; }); }
+function mmss(s) { s = Math.floor(s || 0); return Math.floor(s / 60) + ":" + ("0" + s % 60).slice(-2); }
+function onTime() { if (!audio) return; if (timed()) line = lineAt(audio.currentTime + .05); paintPos(); }
+function paintPos() {
+  var sk = $("seek");
+  if (audio) {
+    sk.max = audio.duration || 0; sk.step = "0.1"; sk.value = audio.currentTime;
+    $("pos").textContent = mmss(audio.currentTime) + " / " + mmss(audio.duration);
+  } else {
+    sk.max = L.lines.length - 1; sk.step = "1"; sk.value = line;
+    $("pos").textContent = (line + 1) + " / " + L.lines.length;
+  }
+  var mark = playing && (!audio || timed());
+  Array.prototype.forEach.call($("script").children, function (li, i) { li.className = mark && i === line ? "on" : ""; });
+}
+function setPlaying(on) {
+  playing = on;
+  $("playBtn").innerHTML = on ? PAUSE : PLAY;
+  $("playBtn").setAttribute("aria-label", on ? "Toʻxtatib turish" : "Tinglash");
+  if (audio) { if (on) { audio.playbackRate = rate; audio.play().catch(function () { if (playing) setPlaying(false); }); } else audio.pause(); }
+  else if (on) speakLine(); else stopSay();
+  if (L) paintPos();
+}
+function speakLine() {
+  paintPos();
+  say(L.lines[line][1], rate * 0.95, speakerNo(L.lines[line][0]), function () {
+    if (oneLine) { oneLine = false; setPlaying(false); return; }
+    if (line + 1 < L.lines.length) { line++; speakLine(); }
+    else { line = 0; setPlaying(false); }
+  });
+}
+function goLine(i) {
+  line = Math.max(0, Math.min(L.lines.length - 1, i));
+  if (audio && typeof L.lines[line][3] === "number") audio.currentTime = L.lines[line][3];
+}
+function step(d) {
+  oneLine = false;
+  if (audio && !timed()) audio.currentTime = Math.max(0, audio.currentTime + d * 5);
+  else { goLine(line + d); if (playing && !audio) speakLine(); }
+  paintPos();
+}
+$("playBtn").addEventListener("click", function () { oneLine = false; setPlaying(!playing); });
+$("prevLine").addEventListener("click", function () { step(-1); });
+$("nextLine").addEventListener("click", function () { step(1); });
+$("seek").addEventListener("change", function () {
+  if (audio) audio.currentTime = +this.value; else { goLine(+this.value); if (playing) speakLine(); }
+  paintPos();
+});
+function paintRate() {
+  Array.prototype.forEach.call(document.querySelectorAll("[data-rate]"), function (b) { b.setAttribute("aria-pressed", String(+b.getAttribute("data-rate") === rate)); });
+}
+Array.prototype.forEach.call(document.querySelectorAll("[data-rate]"), function (b) {
+  b.addEventListener("click", function () {
+    rate = +b.getAttribute("data-rate"); store.cfg.rate = rate; save(); paintRate();
+    if (audio) audio.playbackRate = rate; else if (playing) speakLine();
+  });
+});
+$("backBtn").addEventListener("click", function () { setPlaying(false); });
+paintRate();
+$("playBtn").innerHTML = PLAY;
+startLessons();
+</script>
+</body>
+</html>
