@@ -1,0 +1,212 @@
+<title>A2 Speaking</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<!-- IBM Plex dagi «ʻ» juda keng (so ʻ z boʻlib koʻrinadi) — faqat shu belgi Noto Sans dan olinadi, u --body da birinchi turadi -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&text=%CA%BB%CA%BC&display=swap">
+<link rel="stylesheet" href="ui.css">
+<link rel="stylesheet" href="lessons.css">
+<style>
+/* umumiy koʻrinish — ui.css da, darslarniki — lessons.css da */
+</style>
+
+<header class="top" data-section="a2" data-skill="speaking">
+  <div class="top-in">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+        <rect width="256" height="256" rx="56" fill="var(--accent)"/>
+        <g fill="none" stroke="var(--surface)" stroke-width="11" stroke-linecap="round">
+          <path d="M62 156 A33 64 0 0 1 128 156"/>
+          <path d="M128 156 A33 38 0 0 1 194 156"/>
+        </g>
+        <circle cx="62" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="128" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="194" cy="156" r="14" fill="var(--gold)"/>
+      </svg>
+      <h1>A2 Speaking</h1>
+      <span class="sub" id="brandStat"></span>
+      <nav class="switch" id="secNav" aria-label="Boʻlimlar"></nav>
+    </div>
+    <div class="subnav">
+      <nav class="skills" id="skillNav" aria-label="Koʻnikmalar" hidden></nav>
+    </div>
+  </div>
+</header>
+<script src="ui.js"></script>
+<script src="a2-units.js"></script>
+
+<div class="wrap">
+
+<section id="v-list">
+  <h2>Darslar</h2>
+  <p class="lede">Savolga ovoz chiqarib javob bering, oʻzingizni yozib eshiting va namuna javob bilan solishtiring.</p>
+  <div id="lessonList"></div>
+  <div class="soon" id="soonBox">
+    <span class="flabel">Tayyorlanmoqda</span>
+    <ul id="soonList"></ul>
+  </div>
+</section>
+
+<section id="v-lesson" hidden>
+  <div class="lhead">
+    <button class="back" type="button" id="backBtn" aria-label="Darslar roʻyxatiga qaytish">←</button>
+    <div class="t"><h2 id="lTitle"></h2><p class="lede" id="lDesc"></p></div>
+  </div>
+  <div id="askBox">
+    <div class="qhead"><span id="qpos"></span><span id="qscore"></span></div>
+    <div class="bar"><i id="qbar" style="width:0%"></i></div>
+    <div class="card">
+      <div class="prompt">
+        <span class="tag">Savol</span>
+        <div class="wordrow"><p class="ask" id="ask"></p></div>
+        <p class="askuz" id="askuz"></p>
+        <button class="btn ghost sm" type="button" id="hearAsk" style="margin-top:12px">🔊 Savolni eshitish</button>
+      </div>
+      <div class="useful" id="useful"></div>
+      <div class="rec">
+        <button class="recbtn" type="button" id="recBtn" aria-label="Yozishni boshlash"></button>
+        <span class="time" id="recTime">0:00</span>
+        <audio id="recAudio" controls hidden></audio>
+        <span class="hint" id="recHint"></span>
+      </div>
+      <div class="model" id="model" hidden>
+        <span class="flabel">Namuna javob</span>
+        <p id="modelEn"></p><p class="uz" id="modelUz"></p>
+        <button class="btn ghost sm" type="button" id="hearModel" style="margin-top:10px">🔊 Eshitish</button>
+      </div>
+      <div class="actions">
+        <button class="btn" type="button" id="showBtn">Namunani koʻrish</button>
+        <button class="btn" type="button" id="goodBtn" hidden>✓ Yaxshi aytdim</button>
+        <button class="btn ghost" type="button" id="hardBtn" hidden>Qiynaldim</button>
+      </div>
+    </div>
+  </div>
+  <div class="card" id="doneBox" hidden>
+    <p class="score" id="rscore"></p>
+    <p class="lede" id="rline" style="margin:6px 0 0"></p>
+    <div class="actions">
+      <button class="btn" type="button" id="againBtn">Yana bir bor</button>
+      <button class="btn ghost" type="button" id="listBtn">Darslar roʻyxati</button>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+var KEY = "a2speaking.v1";
+/* Dars qoʻshish:
+   { id: "s2-1", u: 2, title: "...", desc: "...",
+     q: [{ en: "Question?", uz: "Savol?", use: ["foydali ibora", ...], model: "Model answer.", muz: "Namuna tarjimasi" }, ...] } */
+var LESSONS = [
+  { id: "sample-1", u: 1, sample: true, title: "My daily routine", desc: "Kun tartibingiz haqida gapirib bering",
+    q: [
+      { en: "What time do you usually get up?", uz: "Odatda soat nechada turasiz?", use: ["I usually…", "at half past…", "on weekdays"],
+        model: "I usually get up at half past six on weekdays. At the weekend I get up later.", muz: "Ish kunlari odatda olti yarimda turaman. Dam olish kunlari kechroq turaman." },
+      { en: "What do you do before work or school?", uz: "Ish yoki oʻqishdan oldin nima qilasiz?", use: ["First,…", "then", "after that"],
+        model: "First, I have a shower. Then I make breakfast, and after that I check my phone.", muz: "Avval dush qabul qilaman. Keyin nonushta tayyorlayman, undan soʻng telefonimni tekshiraman." },
+      { en: "Which habit do you want to change? Why?", uz: "Qaysi odatingizni oʻzgartirmoqchisiz? Nega?", use: ["I want to…", "because", "it is not healthy"],
+        model: "I want to go to bed earlier because I often feel tired in the morning.", muz: "Ertaroq uxlashni xohlayman, chunki ertalab koʻpincha charchoq his qilaman." }
+    ] }
+];
+</script>
+<script src="lessons.js"></script>
+<script>
+function lessonSize(L) { return L.q.length + " ta savol"; }
+var MIC = '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICON.speaking + "</svg>";
+var STOP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10H7z"/></svg>';
+var L = null, qi = 0, good = 0, recorder = null, stream = null, recUrl = null, tick = null, recTok = 0;
+var CANREC = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+
+function openLesson(x) {
+  L = x; qi = 0; good = 0;
+  paintHead(L);
+  $("askBox").hidden = false; $("doneBox").hidden = true;
+  renderAsk();
+}
+function renderAsk() {
+  var q = L.q[qi];
+  stopSay(); dropRec();
+  $("qpos").textContent = (qi + 1) + " / " + L.q.length;
+  $("qscore").textContent = "✓ " + good;
+  $("qbar").style.width = (qi / L.q.length * 100) + "%";
+  $("ask").textContent = q.en; $("askuz").textContent = q.uz || "";
+  $("useful").innerHTML = (q.use || []).map(function (u) { return "<span>" + esc(u) + "</span>"; }).join("");
+  $("modelEn").textContent = q.model || ""; $("modelUz").textContent = q.muz || "";
+  $("model").hidden = true;
+  $("showBtn").hidden = !q.model;
+  $("goodBtn").hidden = $("hardBtn").hidden = !!q.model;
+  $("hearAsk").hidden = $("hearModel").hidden = !TTS;
+  window.scrollTo(0, 0);
+}
+$("hearAsk").addEventListener("click", function () { say(L.q[qi].en); });
+$("hearModel").addEventListener("click", function () { say(L.q[qi].model); });
+$("showBtn").addEventListener("click", function () {
+  stopRec();
+  $("model").hidden = false;
+  $("showBtn").hidden = true; $("goodBtn").hidden = $("hardBtn").hidden = false;
+  $("goodBtn").focus();
+});
+function rateMe(ok) {
+  if (ok) good++;
+  qi++;
+  if (qi < L.q.length) { renderAsk(); return; }
+  stopSay(); dropRec();
+  saveResult(L, good, L.q.length);
+  $("askBox").hidden = true; $("doneBox").hidden = false;
+  $("rscore").textContent = good + " / " + L.q.length;
+  $("rline").textContent = good === L.q.length ? "Hamma savolga yaxshi javob berdingiz. Barakalla!" : "Qiynalgan savollarga namunani eshitib, yana javob berib koʻring.";
+}
+$("goodBtn").addEventListener("click", function () { rateMe(true); });
+$("hardBtn").addEventListener("click", function () { rateMe(false); });
+$("againBtn").addEventListener("click", function () { openLesson(L); });
+$("listBtn").addEventListener("click", backToList);
+
+/* ---------- ovoz yozish: yozuv faqat shu sahifa xotirasida turadi, hech qayerga yuborilmaydi va saqlanmaydi ---------- */
+function paintRec(on) {
+  $("recBtn").className = "recbtn" + (on ? " on" : "");
+  $("recBtn").innerHTML = on ? STOP : MIC;
+  $("recBtn").setAttribute("aria-label", on ? "Yozishni toʻxtatish" : "Yozishni boshlash");
+}
+function recHint(t) { $("recHint").textContent = t; }
+function releaseMic() { if (stream) stream.getTracks().forEach(function (t) { t.stop(); }); stream = null; clearInterval(tick); }
+function stopRec() { recTok++; if (recorder && recorder.state !== "inactive") recorder.stop(); else releaseMic(); paintRec(false); }
+function dropRec() {
+  if (recorder) recorder.ondataavailable = recorder.onstop = null;
+  stopRec(); releaseMic();
+  recorder = null;
+  if (recUrl) URL.revokeObjectURL(recUrl);
+  recUrl = null;
+  $("recAudio").pause(); $("recAudio").removeAttribute("src"); $("recAudio").hidden = true;
+  $("recTime").textContent = "0:00";
+  $("recBtn").disabled = !CANREC;
+  recHint(CANREC ? "Javobingizni yozib, oʻzingizni eshiting. Yozuv hech qayerga yuborilmaydi." : "Bu brauzerda ovoz yozib boʻlmaydi — javobni shunchaki ovoz chiqarib ayting.");
+}
+function startRec() {
+  stopSay(); dropRec();
+  var tok = ++recTok;
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(function (s) {
+    if (tok !== recTok) { s.getTracks().forEach(function (t) { t.stop(); }); return; }
+    stream = s;
+    var chunks = [], t0 = Date.now(), r = recorder = new MediaRecorder(s);
+    r.ondataavailable = function (e) { if (e.data.size) chunks.push(e.data); };
+    r.onstop = function () {
+      releaseMic(); paintRec(false);
+      recUrl = URL.createObjectURL(new Blob(chunks, { type: r.mimeType }));
+      $("recAudio").src = recUrl; $("recAudio").hidden = false;
+      recHint("Eshitib koʻring yoki qaytadan yozing.");
+    };
+    r.start();
+    paintRec(true);
+    recHint("Yozilyapti — tugatgach, tugmani yana bosing.");
+    tick = setInterval(function () {
+      var sec = Math.floor((Date.now() - t0) / 1000);
+      $("recTime").textContent = Math.floor(sec / 60) + ":" + ("0" + sec % 60).slice(-2);
+      if (sec >= 180) stopRec();
+    }, 250);
+  }).catch(function () { if (tok === recTok) recHint("Mikrofonga ruxsat berilmadi. Brauzer sozlamalaridan ruxsat bering yoki javobni shunchaki ovoz chiqarib ayting."); });
+}
+$("recBtn").addEventListener("click", function () { if (recorder && recorder.state === "recording") stopRec(); else startRec(); });
+$("backBtn").addEventListener("click", dropRec);
+paintRec(false);
+startLessons();
+</script>

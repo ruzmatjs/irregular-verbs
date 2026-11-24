@@ -1,62 +1,17 @@
 <title>Statistika</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<!-- IBM Plex dagi «ʻ» juda keng (so ʻ z boʻlib koʻrinadi) — faqat shu belgi Noto Sans dan olinadi, u --body da birinchi turadi -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&text=%CA%BB%CA%BC&display=swap">
+<link rel="stylesheet" href="ui.css">
 <style>
 /* Layout: feʻllar, A1 va A2 soʻzlar natijalari bitta sahifada — yuqorida 4 ta asosiy raqam, keyin kunlik faollik grafigi, pastda boʻlim kartalari */
-:root{
-  --bg:#f6f3ec; --surface:#fffdf8; --surface-2:#efe9dc; --line:#ded5c3;
-  --fg:#241f18; --muted:#6f6552; --accent:#1f4f4a; --accent-soft:#d6e4e0;
-  --on-accent:#fffdf8;
-  --ok:#2f6b3a; --ok-soft:#dcebdc; --bad:#9c3324; --bad-soft:#f4ddd8;
-  --gold:#b4792a;
-  --display:"Literata",Georgia,"Times New Roman",serif;
-  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
-  --r:10px;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#15181a; --surface:#1d2124; --surface-2:#262b2e; --line:#363d41;
-  --fg:#ece7dd; --muted:#9aa0a0; --accent:#7fc9bb; --accent-soft:#223431;
-  --on-accent:#10201e;
-  --ok:#8ed49a; --ok-soft:#1f2e22; --bad:#f09e90; --bad-soft:#33211e;
-  --gold:#d9a85a;
-  color-scheme:dark;
-}}
-:root[data-theme="dark"]{
-  --bg:#15181a; --surface:#1d2124; --surface-2:#262b2e; --line:#363d41;
-  --fg:#ece7dd; --muted:#9aa0a0; --accent:#7fc9bb; --accent-soft:#223431;
-  --on-accent:#10201e;
-  --ok:#8ed49a; --ok-soft:#1f2e22; --bad:#f09e90; --bad-soft:#33211e;
-  --gold:#d9a85a;
-  color-scheme:dark;
-}
-*{box-sizing:border-box}
-[hidden]{display:none!important}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--surface)}
-.wrap{max-width:1120px;margin:0 auto;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:0 48px}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
-.top-in{max-width:1120px;margin:0 auto;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:12px}
-.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.brand .mark{width:28px;height:28px;flex:0 0 auto;align-self:center}
-.brand h1{font-family:var(--display);font-size:1.25rem;font-weight:700;margin:0;letter-spacing:-.01em}
-.brand .sub{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
-.switch{display:flex;gap:4px;margin-left:auto;align-self:center;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px;max-width:100%;overflow-x:auto;scrollbar-width:none}
-.switch a{font-size:.8rem;font-weight:500;color:var(--muted);text-decoration:none;padding:4px 11px;border-radius:999px;white-space:nowrap}
-.switch a[aria-current="page"]{background:var(--accent);color:var(--on-accent)}
-.switch a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-@media (max-width:420px){.switch{gap:0}.switch a{padding:4px 8px}}
+.top-in{padding-bottom:12px}
 h2{font-family:var(--display);font-size:1.05rem;margin:0;text-wrap:balance}
 section{padding-block:22px 0}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
 .hint{font-size:.8rem;color:var(--muted)}
-.flabel{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;display:block}
+.flabel{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;display:block;padding:0}
 
 /* asosiy raqamlar */
 .heroes{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
@@ -125,7 +80,7 @@ section{padding-block:22px 0}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 
-<header class="top">
+<header class="top" data-section="stats">
   <div class="top-in">
     <div class="brand">
       <svg class="mark" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
@@ -140,15 +95,11 @@ section{padding-block:22px 0}
       </svg>
       <h1>Statistika</h1>
       <span class="sub" id="brandStat"></span>
-      <nav class="switch" aria-label="Boʻlimlar">
-        <a href="index.html">Irregular verbs</a>
-        <a href="words.html">A1 soʻzlar</a>
-        <a href="a2.html">A2 soʻzlar</a>
-        <a href="stats.html" aria-current="page">Statistika</a>
-      </nav>
+      <nav class="switch" id="secNav" aria-label="Boʻlimlar"></nav>
     </div>
   </div>
 </header>
+<script src="ui.js"></script>
 
 <div class="wrap">
   <section>
@@ -191,8 +142,11 @@ var WSHORT = ["Ya", "Du", "Se", "Ch", "Pa", "Ju", "Sh"];
 var PARTS = [
   { key: "irrverbs.v1", title: "Irregular verbs", href: "index.html", n: 100, unit: "feʻl", short: "feʻl" },
   { key: "a1words.v1", title: "A1 soʻzlar", href: "words.html", n: 1372, unit: "soʻz", short: "A1" },
-  { key: "a2words.v1", title: "A2 soʻzlar", href: "a2.html", n: 1028, unit: "soʻz", short: "A2" }
+  { key: "a2words.v1", title: "A2 soʻzlar", href: "a2.html", n: 1028, unit: "soʻz", short: "A2" },
+  { key: "a2listening.v1", title: "A2 Listening", href: "a2-listening.html", kind: "lesson", note: "savollarga toʻgʻri javob" },
+  { key: "a2speaking.v1", title: "A2 Speaking", href: "a2-speaking.html", kind: "lesson", note: "yaxshi aytilgan javob (oʻz bahoingiz)" }
 ];
+function isLesson(P) { return P.kind === "lesson"; }
 var days = 30;
 try { var sd = parseInt(localStorage.getItem("stats.days"), 10); if (sd === 7 || sd === 30 || sd === 90) days = sd; } catch (e) {}
 
@@ -210,6 +164,7 @@ function read(key) {
 
 /* Boʻlim hisobi: sahifaning oʻzi yozgan tayyor hisob (sum) boʻlsa — shuni, boʻlmasa saqlangan yozuvlardan taxminan */
 function partStats(P, st) {
+  if (isLesson(P)) return { s: (st && st.sum) || { n: 0, done: 0, ok: 0, bad: 0 }, exact: true };
   if (st && st.sum && st.sum.lv) return { s: st.sum, exact: true };
   var lv = [0, 0, 0, 0, 0, 0], seen = 0, mis = 0, ok = 0, bad = 0, any = false;
   if (st && st.p) Object.keys(st.p).forEach(function (k) {
@@ -259,9 +214,15 @@ function render() {
   $("hStreakS").textContent = streak && !active(td) ? "Bugun mashq qilsangiz, zanjir davom etadi" : "Eng uzoq: " + best + " kun";
 
   var learned = 0, total = 0, ok = 0, bad = 0;
-  stats.forEach(function (x) { learned += x.s.lv[MAXLVL]; total += x.s.n; ok += x.s.ok; bad += x.s.bad; });
+  /* yodlangan soʻzlar va aniqlik — faqat soʻz boʻlimlaridan */
+  var words = [];
+  stats.forEach(function (x, i) {
+    if (isLesson(PARTS[i])) return;
+    words.push(PARTS[i].short + ": " + x.s.lv[MAXLVL]);
+    learned += x.s.lv[MAXLVL]; total += x.s.n; ok += x.s.ok; bad += x.s.bad;
+  });
   $("hLearned").innerHTML = num(learned) + " <small>/ " + num(total) + "</small>";
-  $("hLearnedS").textContent = stats.map(function (x, i) { return PARTS[i].short + ": " + x.s.lv[MAXLVL]; }).join(" · ");
+  $("hLearnedS").textContent = words.join(" · ");
   $("hAcc").innerHTML = ok + bad ? Math.round(ok / (ok + bad) * 100) + "<small>%</small>" : "—";
   $("hAccS").textContent = ok + bad ? num(ok + bad) + " ta javobdan " + num(ok) + " tasi toʻgʻri" : "Hali javob berilmagan";
   $("brandStat").textContent = streak ? "🔥 " + streak + " kun ketma-ket" : "";
@@ -341,6 +302,14 @@ function tipText(c, plain) {
 function renderParts(stats) {
   $("parts").innerHTML = stats.map(function (x, i) {
     var P = PARTS[i], s = x.s, sumL = 0;
+    if (isLesson(P)) {
+      var all = s.ok + s.bad;
+      return '<div class="card"><div class="phead"><h2>' + esc(P.title) + '</h2><a class="go" href="' + P.href + '">Mashq qilish →</a></div>' +
+        '<div class="pct"><b>' + (all ? Math.round(s.ok / all * 100) + "%" : "—") + '</b><span class="hint">' + P.note + "</span></div>" +
+        '<div class="big"><i style="width:' + (all ? s.ok / all * 100 : 0) + '%"></i></div>' +
+        '<div class="facts" style="margin-bottom:0"><div><b>' + num(s.done) + (s.n ? " / " + num(s.n) : "") + "</b><span>Dars</span></div>" +
+        "<div><b>" + num(all) + "</b><span>Javob</span></div><div><b>" + num(s.ok) + "</b><span>" + (P.key === "a2speaking.v1" ? "Yaxshi" : "Toʻgʻri") + "</span></div></div></div>";
+    }
     s.lv.forEach(function (c, l) { sumL += c * l; });
     var pct = Math.round(sumL / (s.n * MAXLVL) * 100);
     var lmax = Math.max.apply(null, s.lv) || 1;

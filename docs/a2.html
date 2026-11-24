@@ -26,219 +26,15 @@
 <title>A2 Vocabulary Trainer</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<!-- IBM Plex dagi «ʻ» juda keng (so ʻ z boʻlib koʻrinadi) — faqat shu belgi Noto Sans dan olinadi, u --body da birinchi turadi -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&text=%CA%BB%CA%BC&display=swap">
+<link rel="stylesheet" href="ui.css">
 <style>
-/* Layout: lug'at sahifasi - markazda bitta ustun, ustida yopishqoq sarlavha, pastda karta va jadval bloklari */
-:root{
-  --bg:#f6f3ec; --surface:#fffdf8; --surface-2:#efe9dc; --line:#ded5c3;
-  --fg:#241f18; --muted:#6f6552; --accent:#1f4f4a; --accent-soft:#d6e4e0;
-  --on-accent:#fffdf8;
-  --ok:#2f6b3a; --ok-soft:#dcebdc; --bad:#9c3324; --bad-soft:#f4ddd8;
-  --gold:#b4792a;
-  --display:"Literata",Georgia,"Times New Roman",serif;
-  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
-  --r:10px;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#15181a; --surface:#1d2124; --surface-2:#262b2e; --line:#363d41;
-  --fg:#ece7dd; --muted:#9aa0a0; --accent:#7fc9bb; --accent-soft:#223431;
-  --on-accent:#10201e;
-  --ok:#8ed49a; --ok-soft:#1f2e22; --bad:#f09e90; --bad-soft:#33211e;
-  --gold:#d9a85a;
-  color-scheme:dark;
-}}
-:root[data-theme="dark"]{
-  --bg:#15181a; --surface:#1d2124; --surface-2:#262b2e; --line:#363d41;
-  --fg:#ece7dd; --muted:#9aa0a0; --accent:#7fc9bb; --accent-soft:#223431;
-  --on-accent:#10201e;
-  --ok:#8ed49a; --ok-soft:#1f2e22; --bad:#f09e90; --bad-soft:#33211e;
-  --gold:#d9a85a;
-  color-scheme:dark;
-}
-*{box-sizing:border-box}
-/* hidden xossasi flex/grid elementlarda ham ishlashi uchun */
-[hidden]{display:none!important}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--surface)}
-.wrap{max-width:1120px;margin:0 auto;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:0 48px}
-header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
-.top-in{max-width:1120px;margin:0 auto;
-  padding-left:max(16px,env(safe-area-inset-left,0px));
-  padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:12px 0}
-.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.brand .mark{width:28px;height:28px;flex:0 0 auto;align-self:center}
-.brand h1{font-family:var(--display);font-size:1.25rem;font-weight:700;margin:0;letter-spacing:-.01em}
-.brand .sub{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
-nav.tabs{display:flex;gap:2px;margin-top:10px;overflow-x:auto}
-nav.tabs button{appearance:none;border:0;background:none;font:inherit;font-size:.86rem;font-weight:500;color:var(--muted);
-  padding:8px 12px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
-nav.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
-nav.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-h2{font-family:var(--display);font-size:1.05rem;margin:0 0 4px;text-wrap:balance}
-.lede{color:var(--muted);font-size:.88rem;margin:0 0 18px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px}
-.stack{display:flex;flex-direction:column;gap:18px}
-section{padding-block:22px 0}
-fieldset{border:0;margin:0;padding:0;min-width:0}
-legend,.flabel{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;padding:0 0 8px;display:block}
-.opts{display:flex;flex-wrap:wrap;gap:8px}
-.opt{position:relative}
-.opt input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
-.opt span{display:block;border:1px solid var(--line);background:var(--surface-2);border-radius:999px;
-  padding:7px 14px;font-size:.88rem;cursor:pointer;transition:background .12s,border-color .12s}
-.opt input:checked+span{background:var(--accent-soft);border-color:var(--accent);color:var(--fg);font-weight:500}
-.opt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
-.row{display:flex;gap:14px;flex-wrap:wrap}
-.row>*{min-width:0}
-.col{flex:1 1 220px;min-width:0}
-input[type=number],input[type=text],select{width:100%;font:inherit;background:var(--surface-2);color:var(--fg);
-  border:1px solid var(--line);border-radius:8px;padding:10px 12px}
-input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-.btn{font:inherit;font-weight:600;font-size:.95rem;border:1px solid var(--accent);background:var(--accent);
-  color:var(--on-accent);padding:11px 20px;border-radius:8px;cursor:pointer}
-.btn.ghost{background:none;color:var(--fg);border-color:var(--line);font-weight:500}
-.btn.sm{padding:7px 13px;font-size:.84rem}
-.btn.danger{color:var(--bad);border-color:var(--bad);background:none}
-.hint{font-size:.8rem;color:var(--muted)}
-.kbd{margin:14px 0 0;font-size:.76rem}
-@media (pointer: coarse){.kbd{display:none}}
-.err{font-size:.84rem;color:var(--bad);font-weight:500;margin:10px 0 0}
-.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.8rem;color:var(--muted);
-  font-variant-numeric:tabular-nums;margin-bottom:10px}
-.bar{height:4px;background:var(--surface-2);border-radius:999px;overflow:hidden;margin-bottom:18px}
-.bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
-.prompt{text-align:center;padding-block:10px 20px}
-.prompt .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
-.prompt .word{font-family:var(--display);font-size:clamp(1.9rem,6vw,3.2rem);font-weight:700;line-height:1.15;margin:2px 0 0;overflow-wrap:break-word}
-.prompt .word.uz{font-size:clamp(1.3rem,6vw,1.8rem);font-style:italic;font-weight:400}
-.prompt .extra{font-family:var(--mono);font-size:.9rem;color:var(--muted);margin:6px 0 0}
-.wordrow{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
-.spk{appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);padding:0;
-  width:36px;height:36px;border-radius:50%;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
-.spk svg{width:18px;height:18px}
-.spk:hover{border-color:var(--accent);color:var(--accent)}
-.spk.mini{width:26px;height:26px}
-.spk.mini svg{width:13px;height:13px}
-.spk.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-.star{appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);padding:0;
-  width:36px;height:36px;border-radius:50%;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
-.star svg{width:19px;height:19px}
-.star svg path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round}
-.star:hover{border-color:var(--gold);color:var(--gold)}
-.star[aria-pressed="true"]{color:var(--gold);border-color:var(--gold)}
-.star[aria-pressed="true"] svg path{fill:currentColor}
-.star.mini{width:26px;height:26px}
-.star.mini svg{width:14px;height:14px}
-.btn.learn{background:none;color:var(--ok);border-color:var(--ok)}
-.btn.learn[aria-pressed="true"]{background:var(--ok);color:var(--surface)}
-.mini-learn{appearance:none;font:inherit;font-size:.78rem;font-weight:600;color:var(--ok);background:none;
-  border:1px solid var(--ok);border-radius:999px;padding:2px 9px;cursor:pointer;white-space:nowrap}
-.mini-learn[aria-pressed="true"]{background:var(--ok);color:var(--surface)}
-tr.learned td.v{color:var(--ok)}
-td.v .rd{display:block;font-family:var(--body);font-size:.74rem;color:var(--muted);font-style:italic;margin-top:1px}
-.prompt .reading{font-size:1rem;color:var(--muted);font-style:italic;margin:0}
-.field .fix .rd,.res-list .rd{color:var(--muted);font-family:var(--body);font-style:italic;font-weight:400}
-.spkall .rd{display:block;font-family:var(--body);font-style:italic;font-size:.78rem;color:var(--muted);margin-top:1px}
-.review-note{font-size:.8rem;color:var(--muted);margin:0 0 12px;text-align:center}
-.spkall{display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:.9rem;font-family:var(--mono);
-  color:var(--fg);border:1px solid var(--line);background:var(--surface-2);border-radius:999px;
-  padding:7px 16px 7px 12px;cursor:pointer;margin-top:12px}
-.spkall svg{width:16px;height:16px;flex:0 0 auto;color:var(--accent)}
-.spkall:hover{border-color:var(--accent)}
-.spkall.on{background:var(--accent-soft);border-color:var(--accent)}
-.spkall .now{color:var(--accent);font-weight:700}
-.spkall .sep{color:var(--muted)}
-select:disabled{opacity:.6}
-td.spkcell{padding-left:8px;padding-right:8px}
-.fields{display:flex;flex-direction:column;gap:12px}
-.field label{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:4px}
-.field input{font-family:var(--mono);font-size:1rem}
-.field.uzf input{font-family:var(--body)}
-.field.good input{border-color:var(--ok);background:var(--ok-soft)}
-.field.wrong input{border-color:var(--bad);background:var(--bad-soft)}
-.field .fix{font-size:.82rem;margin:4px 0 0;font-family:var(--mono)}
-.field .fix b{color:var(--ok)}
-.field .fix.no b{color:var(--bad)}
-.verdict{margin:16px 0 0;padding:12px 14px;border-radius:8px;font-size:.92rem;font-weight:500}
-.verdict.good{background:var(--ok-soft);color:var(--ok)}
-.verdict.bad{background:var(--bad-soft);color:var(--bad)}
-.verdict .lvl{display:block;font-weight:400;font-size:.82rem;color:var(--muted);margin-top:4px}
-.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
-.actions .spacer{flex:1 1 auto}
-.pips{display:inline-flex;gap:3px;vertical-align:middle}
-.pips i{width:7px;height:12px;border-radius:2px;background:var(--surface-2);border:1px solid var(--line);display:block}
-.pips i.on{background:var(--gold);border-color:var(--gold)}
-.pips i.full{background:var(--ok);border-color:var(--ok)}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-table{width:100%;border-collapse:collapse;font-size:.9rem}
-.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
-th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
-th{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;
-  position:sticky;top:0;background:var(--surface)}
-tr:last-child td{border-bottom:0}
-td.v{font-family:var(--mono)}
-td.uz{white-space:normal;color:var(--muted);font-size:.86rem;min-width:140px}
-td.num{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.82rem}
-tr.hasmistake td.v:first-of-type{box-shadow:inset 3px 0 0 var(--bad)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
-.stat b{display:block;font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums;line-height:1.1}
-.stat span{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.lvlrow{display:flex;align-items:center;gap:10px;font-size:.86rem;padding:5px 0}
-.lvlrow .nm{flex:0 0 120px;color:var(--muted);min-width:0}
-.lvlrow .trk{flex:1 1 auto;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;min-width:0}
-.lvlrow .trk i{display:block;height:100%;background:var(--accent)}
-.lvlrow .ct{flex:0 0 34px;text-align:right;font-variant-numeric:tabular-nums}
-.empty{text-align:center;color:var(--muted);font-size:.9rem;padding:28px 10px;border:1px dashed var(--line);border-radius:var(--r)}
-.res-list{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
-.res-list li{background:var(--surface-2);border-radius:8px;padding:10px 12px;font-size:.9rem}
-.res-list .w{font-family:var(--mono);font-weight:600}
-.res-list .c{color:var(--muted)}
-.res-list .mine{color:var(--bad);font-family:var(--mono);font-size:.84rem}
-.score{font-family:var(--display);font-size:2.4rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;margin:0}
-@media (prefers-reduced-motion: reduce){*{transition:none!important}}
-
-/* ---------- A2 soʻzlar sahifasi ---------- */
-.switch{display:flex;gap:4px;margin-left:auto;align-self:center;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px;max-width:100%;overflow-x:auto;scrollbar-width:none}
-.switch a{font-size:.8rem;font-weight:500;color:var(--muted);text-decoration:none;padding:4px 11px;border-radius:999px;white-space:nowrap}
-.switch a[aria-current="page"]{background:var(--accent);color:var(--on-accent)}
-.switch a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-@media (max-width:420px){.switch{gap:0}.switch a{padding:4px 8px}}
-.unitgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
-.uopt{position:relative;display:block}
-.uopt input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
-.uopt span{display:block;border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:8px 11px;font-size:.84rem;cursor:pointer;line-height:1.3;height:100%}
-.uopt span b{font-weight:600}
-.uopt small{display:block;color:var(--muted);font-size:.74rem;font-variant-numeric:tabular-nums;margin-top:2px}
-.uopt input:checked+span{background:var(--accent-soft);border-color:var(--accent)}
-.uopt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
-small.ct{color:var(--muted);font-size:.8em}
-.cardans{margin:6px 0 0;padding:16px;border-radius:8px;background:var(--surface-2);text-align:center}
-.cardans .flabel{padding-bottom:4px}
-.cardans b{font-size:1.4rem;font-family:var(--display)}
-.cardans .rd{display:block;font-family:var(--body);font-size:.84rem;color:var(--muted);font-style:italic;margin-top:3px}
-.unit{padding:0;margin-bottom:10px;overflow:hidden}
-.uh{appearance:none;border:0;background:none;font:inherit;color:inherit;width:100%;text-align:left;cursor:pointer;
-  display:flex;align-items:center;gap:14px;padding:14px 16px;flex-wrap:wrap}
-.uh:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
-.uh-t{flex:1 1 240px;min-width:0}
-.uh-t small{display:block;color:var(--muted);font-size:.8rem}
-.uh-p{flex:0 1 220px;display:flex;align-items:center;gap:10px;min-width:0}
-.uh-p .trk{flex:1 1 auto;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden}
-.uh-p .trk i{display:block;height:100%;background:var(--ok)}
-.uh-p .ct{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.uh::after{content:"▾";color:var(--muted);transition:transform .15s}
-.uh[aria-expanded="true"]::after{transform:rotate(180deg)}
-.ub{padding:0 16px 16px}
-td.v{white-space:normal;min-width:120px}
+/* umumiy koʻrinish — ui.css da */
 </style>
 </head>
 <body>
-<header class="top">
+<header class="top" data-section="a2" data-skill="words">
   <div class="top-in">
     <div class="brand">
       <svg class="mark" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
@@ -253,28 +49,28 @@ td.v{white-space:normal;min-width:120px}
       </svg>
       <h1>A2 Vocabulary</h1>
       <span class="sub" id="brandStat"></span>
-      <nav class="switch" aria-label="Boʻlimlar">
-        <a href="index.html">Irregular verbs</a>
-        <a href="words.html">A1 soʻzlar</a>
-        <a href="a2.html" aria-current="page">A2 soʻzlar</a>
-        <a href="stats.html">Statistika</a>
+      <nav class="switch" id="secNav" aria-label="Boʻlimlar"></nav>
+    </div>
+    <div class="subnav">
+      <nav class="skills" id="skillNav" aria-label="Koʻnikmalar" hidden></nav>
+      <nav class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-view="train">Mashq</button>
+        <button role="tab" aria-selected="false" data-view="units">Unitlar</button>
+        <button role="tab" aria-selected="false" data-view="mistakes">Xatolar <span id="mcount"></span></button>
+        <button role="tab" aria-selected="false" data-view="starred">★ Belgilangan <span id="scount"></span></button>
+        <button role="tab" aria-selected="false" data-view="stats">Natijalar</button>
       </nav>
     </div>
-    <nav class="tabs" role="tablist">
-      <button role="tab" aria-selected="true" data-view="train">Mashq</button>
-      <button role="tab" aria-selected="false" data-view="units">Unitlar</button>
-      <button role="tab" aria-selected="false" data-view="mistakes">Xatolar <span id="mcount"></span></button>
-      <button role="tab" aria-selected="false" data-view="starred">★ Belgilangan <span id="scount"></span></button>
-      <button role="tab" aria-selected="false" data-view="stats">Natijalar</button>
-    </nav>
   </div>
 </header>
+<script src="ui.js"></script>
+<script src="a2-units.js"></script>
 
 <div class="wrap">
 
 <section id="v-setup">
   <h2>A2 soʻzlarini yodlash</h2>
-  <p class="lede">A2 kursining 24 ta unitidagi 1028 ta soʻz — inglizcha va oʻzbekcha. Unitlarni, yoʻnalishni va mashq usulini tanlang. Koʻp soʻz bir necha unitda uchraydi, lekin mashqda bir marta soʻraladi va natijasi umumiy. Inglizcha soʻz koʻrsatilganda uning oʻqilishi ham yozib qoʻyiladi.</p>
+  <p class="lede">24 unit, 1028 ta soʻz. Unitlarni va mashq usulini tanlang. Bir necha unitda uchraydigan soʻz mashqda bir marta soʻraladi.</p>
   <div class="card stack">
     <fieldset>
       <legend>Unitlar</legend>
@@ -283,17 +79,6 @@ td.v{white-space:normal;min-width:120px}
         <button class="btn ghost sm" type="button" id="uAll">Hammasini belgilash</button>
         <button class="btn ghost sm" type="button" id="uNone">Tozalash</button>
         <span class="hint" id="uInfo"></span>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Soʻz turkumi</legend>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="grp" value="all" checked><span>Hammasi</span></label>
-        <label class="opt"><input type="radio" name="grp" value="n"><span>Otlar</span></label>
-        <label class="opt"><input type="radio" name="grp" value="v"><span>Feʻllar</span></label>
-        <label class="opt"><input type="radio" name="grp" value="a"><span>Sifatlar</span></label>
-        <label class="opt"><input type="radio" name="grp" value="o"><span>Ravish va boshqalar</span></label>
       </div>
     </fieldset>
 
@@ -334,15 +119,9 @@ td.v{white-space:normal;min-width:120px}
       </div>
     </fieldset>
 
-    <fieldset>
-      <legend>Tartib</legend>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="ord" value="seq"><span>Ketma-ket</span></label>
-        <label class="opt"><input type="radio" name="ord" value="rnd" checked><span>Aralash</span></label>
-        <label class="opt"><input type="radio" name="ord" value="weak"><span>Eng zaiflari avval</span></label>
-      </div>
-    </fieldset>
-
+    <details class="more" id="moreSet">
+      <summary>Qoʻshimcha sozlamalar <small id="moreInfo"></small></summary>
+      <div class="stack">
     <fieldset>
       <legend>Qaysi soʻzlardan</legend>
       <div class="opts">
@@ -351,6 +130,26 @@ td.v{white-space:normal;min-width:120px}
         <label class="opt"><input type="radio" name="pool" value="mistakes"><span>Faqat xatolar</span></label>
         <label class="opt"><input type="radio" name="pool" value="unlearned"><span>Yodlanmaganlar</span></label>
         <label class="opt"><input type="radio" name="pool" value="starred"><span>★ Belgilanganlar</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Soʻz turkumi</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="grp" value="all" checked><span>Hammasi</span></label>
+        <label class="opt"><input type="radio" name="grp" value="n"><span>Otlar</span></label>
+        <label class="opt"><input type="radio" name="grp" value="v"><span>Feʻllar</span></label>
+        <label class="opt"><input type="radio" name="grp" value="a"><span>Sifatlar</span></label>
+        <label class="opt"><input type="radio" name="grp" value="o"><span>Ravish va boshqalar</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Tartib</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="ord" value="seq"><span>Ketma-ket</span></label>
+        <label class="opt"><input type="radio" name="ord" value="rnd" checked><span>Aralash</span></label>
+        <label class="opt"><input type="radio" name="ord" value="weak"><span>Eng zaiflari avval</span></label>
       </div>
     </fieldset>
 
@@ -375,9 +174,12 @@ td.v{white-space:normal;min-width:120px}
       </div>
       <p class="hint" style="margin-top:10px" id="audioHint"></p>
     </fieldset>
+      </div>
+    </details>
 
-    <div>
+    <div class="startbar">
       <button class="btn" id="startBtn">Mashqni boshlash</button>
+      <span class="hint" id="startInfo"></span>
       <p class="err" id="setupErr" hidden></p>
     </div>
   </div>
@@ -478,7 +280,6 @@ td.v{white-space:normal;min-width:120px}
 </div>
 
 <script>
-var UNITS = [[1, "Daily Routines and Habits", "Kundalik tartib va odatlar"], [2, "Family, Friends and Relationships", "Oila, doʻstlar va munosabatlar"], [3, "Hobbies and Free Time", "Qiziqishlar va boʻsh vaqt"], [4, "Food, Cooking and Eating", "Ovqat, pishirish va ovqatlanish"], [5, "Shopping and Money", "Xarid va pul"], [6, "School, Learning and Study", "Maktab, oʻrganish va oʻqish"], [7, "Jobs and Working Life", "Kasblar va ish hayoti"], [8, "Travel and Transport", "Sayohat va transport"], [9, "Cities, Towns and Neighbourhoods", "Shaharlar va mahallalar"], [10, "Technology and Everyday Life", "Texnologiya va kundalik hayot"], [11, "Health, Exercise and Sleep", "Sogʻliq, jismoniy mashq va uyqu"], [12, "Sports and Competitions", "Sport va musobaqalar"], [13, "Weather and Seasonal Activities", "Ob-havo va mavsumiy mashgʻulotlar"], [14, "Animals and Wildlife", "Hayvonlar va yovvoyi tabiat"], [15, "Nature and the Environment", "Tabiat va atrof-muhit"], [16, "Films, Music, Books and Entertainment", "Filmlar, musiqa, kitoblar va koʻngilochar"], [17, "Interesting People and Their Lives", "Qiziqarli odamlar va ularning hayoti"], [18, "Festivals, Celebrations and Traditions", "Festivallar, bayramlar va anʼanalar"], [19, "Childhood and Memories", "Bolalik va xotiralar"], [20, "Everyday Problems and Solutions", "Kundalik muammolar va yechimlar"], [21, "Helping People and Community Life", "Odamlarga yordam va jamiyat hayoti"], [22, "Trying Something New", "Yangi narsani sinab koʻrish"], [23, "Interesting Places and Different Cultures", "Qiziqarli joylar va turli madaniyatlar"], [24, "Life in the Past and Life Today", "Oʻtmishdagi va bugungi hayot"]];
 var CATS = [["Otlar", "n"], ["Feʻllar", "v"], ["Frazali feʻllar", "v"], ["Olmoshlar", "o"], ["Sifatlar", "a"], ["Ravishlar", "o"], ["Iboralar", "o"]];
 /* [inglizcha, oʻzbekcha, unit, turkum] */
 var W = [
@@ -3896,15 +3697,32 @@ function updUnitInfo() {
   var us = selUnits();
   var n = uniq(WORDS.filter(function (w) { return us.indexOf(w.u) > -1; })).length;
   $("uInfo").textContent = us.length ? us.length + " ta unit · " + n + " ta soʻz" : "Unit tanlanmagan";
+  updStart();
 }
-$("unitPick").addEventListener("change", updUnitInfo);
+/* boshlash tugmasi yonidagi qisqa xulosa va yigʻilgan sozlamalardagi oʻzgarishlar */
+function updStart() {
+  var c = readCfg();
+  var n = poolOf(c).length;
+  if (c.count !== "all") n = Math.min(n, c.count);
+  $("startInfo").textContent = !c.units.length ? "Unit tanlanmagan" : n ? n + " ta soʻz" : "Bu sozlamalar boʻyicha soʻz yoʻq";
+  var on = [["pool", "all"], ["grp", "all"], ["ord", "rnd"]].filter(function (x) { return radio(x[0]) !== x[1]; }).map(function (x) {
+    var s = document.querySelector("input[name=" + x[0] + "]:checked").parentNode.querySelector("span");
+    return s.firstChild.textContent.trim();
+  });
+  $("moreInfo").textContent = on.length ? on.join(" · ") : "filtr, turkum, tartib, talaffuz";
+}
+$("v-setup").addEventListener("change", updStart);
+$("customCount").addEventListener("input", updStart);
+/* tanlov darrov saqlanadi — boshqa tabga oʻtib qaytganda yoʻqolmaydi */
+function pickChanged() { store.cfg.units = selUnits(); save(); updUnitInfo(); }
+$("unitPick").addEventListener("change", pickChanged);
 $("uAll").addEventListener("click", function () {
   Array.prototype.forEach.call(document.querySelectorAll("#unitPick input"), function (c) { c.checked = true; });
-  updUnitInfo();
+  pickChanged();
 });
 $("uNone").addEventListener("click", function () {
   Array.prototype.forEach.call(document.querySelectorAll("#unitPick input"), function (c) { c.checked = false; });
-  updUnitInfo();
+  pickChanged();
 });
 Array.prototype.forEach.call(document.querySelectorAll("input[name=cnt]"), function (r) {
   r.addEventListener("change", function () { $("customBox").hidden = radio("cnt") !== "custom"; });
@@ -3927,10 +3745,13 @@ function shuffle(a) {
 
 /* ---------- mashq ---------- */
 var quiz = null, cfg = null;
-function buildQuiz(conf, list) {
-  var pool = list ? list.slice() : pickPool(conf.pool, uniq(WORDS.filter(function (w) {
+function poolOf(conf) {
+  return pickPool(conf.pool, uniq(WORDS.filter(function (w) {
     return conf.units.indexOf(w.u) > -1 && (conf.grp === "all" || w.g === conf.grp);
   })));
+}
+function buildQuiz(conf, list) {
+  var pool = list ? list.slice() : poolOf(conf);
   if (!pool.length) return null;
   if (!list) {
     if (conf.order === "rnd") shuffle(pool);
@@ -4284,14 +4105,14 @@ function learnBtn(w) {
 function rowsHtml(list) {
   return list.map(function (w) {
     var p = peek(w);
-    return '<tr class="' + (p.mis ? "hasmistake" : "") + (p.lvl >= MAXLVL ? " learned" : "") + '"><td class="spkcell">' + starBtn(w) + "</td>" +
-      (TTS ? '<td class="spkcell">' + spkBtn(w) + "</td>" : "") +
+    return '<tr class="' + (p.mis ? "hasmistake" : "") + (p.lvl >= MAXLVL ? " learned" : "") + '"><td class="spkcell st">' + starBtn(w) + "</td>" +
+      (TTS ? '<td class="spkcell sp">' + spkBtn(w) + "</td>" : "") +
       '<td class="v">' + esc(w.en) + rdSpan(w.en) + '</td><td class="uz">' + esc(w.uz) + '</td><td class="num">' + esc(CATS[w.c][0]) +
-      "</td><td>" + pips(p.lvl) + "</td><td>" + learnBtn(w) + "</td></tr>";
+      '</td><td class="lv">' + pips(p.lvl) + '</td><td class="ln">' + learnBtn(w) + "</td></tr>";
   }).join("");
 }
 function tableHtml(list) {
-  return '<div class="tablewrap"><table><thead><tr><th class="spkcell">★</th>' + (TTS ? '<th class="spkcell">Ovoz</th>' : "") +
+  return '<div class="tablewrap"><table class="wt"><thead><tr><th class="spkcell">★</th>' + (TTS ? '<th class="spkcell">Ovoz</th>' : "") +
     "<th>Inglizcha</th><th>Oʻzbekcha</th><th>Turkum</th><th>Level</th><th></th></tr></thead><tbody>" + rowsHtml(list) + "</tbody></table></div>";
 }
 /* jadvaldagi tugmalar: bitta umumiy tinglovchi */
@@ -4454,6 +4275,9 @@ if (TTS) {
   $("audioSet").hidden = true;
 }
 
+/* listening va speaking darslaridan havola: a2.html#unit-5 */
+var mh = /^#unit-(\d+)$/.exec(location.hash);
+if (mh && UNIT_TITLE[mh[1]]) store.cfg.units = [+mh[1]];
 renderUnitPick();
 updateBrand();
 save();
