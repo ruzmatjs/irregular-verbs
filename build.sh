@@ -9,8 +9,9 @@ set -e
 cd "$(dirname "$0")"
 mkdir -p docs
 cp assets/* docs/
-cp ui.css ui.js lessons.css lessons.js a2-units.js docs/
-if [ -d audio ]; then mkdir -p docs/audio && cp audio/* docs/audio/; fi
+cp ui.css ui.js lessons.css lessons.js a2-units.js a2-listening-data.js docs/
+# audio/ ichida ichki papkalar ham bor (audio/a2/student, audio/a2/workbook), shuning uchun -r
+if [ -d audio ]; then rm -rf docs/audio && mkdir -p docs/audio && cp -r audio/. docs/audio/; fi
 
 SITE="https://ruzmatjs.github.io/irregular-verbs/"
 
