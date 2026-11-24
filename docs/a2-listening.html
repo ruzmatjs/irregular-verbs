@@ -54,6 +54,7 @@
     </div>
     <div class="subnav">
       <nav class="skills" id="skillNav" aria-label="Koʻnikmalar" hidden></nav>
+      <nav class="tabs" role="tablist" id="bookTabs" aria-label="Kitob"></nav>
     </div>
   </div>
 </header>
@@ -65,7 +66,7 @@
 
 <section id="v-list">
   <h2>Darslar</h2>
-  <p class="lede">Dialogni tinglang, savollarga javob bering, keyin matnini oching va qatorma-qator qayta tinglang.</p>
+  <p class="lede">Audioni tinglang, keyin matnini ochib, qatorma-qator qayta eshiting.</p>
   <div id="lessonList"></div>
   <div class="soon" id="soonBox">
     <span class="flabel">Tayyorlanmoqda</span>
@@ -115,34 +116,35 @@
 
 <script>
 var KEY = "a2listening.v1";
-/* Dars qoʻshish:
-   { id: "l2-1", u: 2, title: "...", desc: "...",
-     audio: "audio/l2-1.mp3",           — ixtiyoriy; boʻlmasa matnni brauzer ovozi oʻqiydi
-     lines: [["Kim", "English", "Oʻzbekcha", 3.5], ...],   — oxirgisi: shu qator boshlanadigan soniya (faqat audio bilan, ixtiyoriy)
-     q: [{ t: "Savol?", o: ["A", "B", "C"], a: 0, why: "izoh (ixtiyoriy)" }, ...] } */
-var LESSONS = [
-  { id: "sample-1", u: 1, sample: true, title: "A busy morning", desc: "Ikki doʻst ertalabki odatlari haqida gaplashadi",
-    lines: [
-      ["Tom", "Hi, Anna. You look tired. What time do you usually get up?", "Salom, Anna. Charchagan koʻrinasan. Odatda soat nechada turasan?"],
-      ["Anna", "I get up at half past five every day.", "Har kuni besh yarimda turaman."],
-      ["Tom", "That is really early! What do you do before work?", "Juda erta-ku! Ishdan oldin nima qilasan?"],
-      ["Anna", "First I go for a run, then I have a shower and make breakfast.", "Avval yuguraman, keyin dush qabul qilib, nonushta tayyorlayman."],
-      ["Tom", "I never have time for breakfast. I just drink a coffee on the bus.", "Menda nonushtaga hech vaqt boʻlmaydi. Avtobusda shunchaki qahva ichaman."],
-      ["Anna", "That is not a healthy habit, Tom. Try to wake up fifteen minutes earlier.", "Bu sogʻlom odat emas, Tom. Oʻn besh daqiqa ertaroq uygʻonishga harakat qil."],
-      ["Tom", "You are right. I will start on Monday.", "Toʻgʻri aytasan. Dushanbadan boshlayman."]
-    ],
-    q: [
-      { t: "What time does Anna get up?", o: ["5:15", "5:30", "6:30"], a: 1, why: "half past five — besh yarim." },
-      { t: "What does Anna do first?", o: ["She makes breakfast", "She has a shower", "She goes for a run"], a: 2 },
-      { t: "What does Tom have in the morning?", o: ["Only coffee", "A big breakfast", "Tea and bread"], a: 0 },
-      { t: "When will Tom change his habit?", o: ["Tomorrow", "On Monday", "Next month"], a: 1 }
-    ] }
-];
+/* Darslar a2-listening-data.js da. Har biri:
+   { id: "sb-01", u: 1, book: "Student's Book", title: "...", dur: 131 (soniya),
+     audio: "audio/a2/student/unit-01.mp3",   — ixtiyoriy; boʻlmasa matnni brauzer ovozi oʻqiydi
+     lines: [["Kim", "English", "Oʻzbekcha", 3.5], ...],   — oxirgisi: shu qator boshlanadigan soniya (faqat audio bilan)
+     q: [{ t: "Savol?", o: ["A", "B", "C"], a: 0, why: "izoh (ixtiyoriy)" }, ...] }   — ixtiyoriy */
+var LESSONS = AUDIO_LESSONS;
 </script>
 <script src="lessons.js"></script>
 <script>
-/* Student's Book va Workbook audiolari (a2-listening-data.js): ular namuna darsdan keyin roʻyxatga qoʻshiladi */
-AUDIO_LESSONS.forEach(function (l) { l.desc = l.book + " · " + unitName(l.u); LESSONS.push(l); });
+/* Kitoblar tabi: roʻyxatda faqat tanlangan kitob darslari koʻrinadi (tanlov eslab qolinadi) */
+var BOOKS = [];
+LESSONS.forEach(function (l) { if (BOOKS.indexOf(l.book) < 0) BOOKS.push(l.book); });
+var book = BOOKS.indexOf(store.cfg.book) > -1 ? store.cfg.book : BOOKS[0];
+function inList(l) { return l.book === book; }
+function paintBooks() {
+  $("bookTabs").innerHTML = BOOKS.map(function (b, i) {
+    return '<button role="tab" type="button" data-b="' + i + '" aria-selected="' + (b === book) + '">' + esc(b) + "</button>";
+  }).join("");
+}
+$("bookTabs").addEventListener("click", function (e) {
+  var b = e.target.closest("button");
+  if (!b) return;
+  book = store.cfg.book = BOOKS[+b.getAttribute("data-b")];
+  save();
+  Array.prototype.forEach.call($("bookTabs").children, function (x) { x.setAttribute("aria-selected", String(x === b)); });
+  setPlaying(false);
+  backToList();
+});
+paintBooks();
 function lessonSize(L) { return L.q ? L.q.length + " ta savol" : "Audio · " + Math.floor(L.dur / 60) + ":" + ("0" + L.dur % 60).slice(-2); }
 var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>';
 var PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';

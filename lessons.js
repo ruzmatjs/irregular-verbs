@@ -1,5 +1,6 @@
 /* Listening va Speaking sahifalari uchun umumiy qism.
-   Sahifa quyidagilarni eʼlon qiladi: LESSONS (darslar), KEY (saqlash kaliti), openLesson(dars).
+   Sahifa quyidagilarni eʼlon qiladi: LESSONS (darslar), KEY (saqlash kaliti), openLesson(dars);
+   ixtiyoriy: inList(dars) — roʻyxatda koʻrinadimi (listening da kitob tablari uchun).
    Dars: { id, u: unit raqami, title, desc, sample: true (ixtiyoriy — «Namuna» belgisi), ... }
    Saqlanadi: store.p[dars.id] = { best, n, ok, bad } — eng yaxshi natija, savollar soni, jami javoblar */
 function $(id) { return document.getElementById(id); }
@@ -34,7 +35,9 @@ function saveResult(L, ok, n) {
 }
 function updateBrand() {
   var done = LESSONS.filter(function (L) { return peek(L).n; }).length;
-  $("brandStat").textContent = done + " / " + LESSONS.length + " dars";
+  /* savolli dars boʻlmasa, bajarilganini sanab boʻlmaydi — faqat soni */
+  var graded = LESSONS.some(function (L) { return L.q; });
+  $("brandStat").textContent = (graded ? done + " / " : "") + LESSONS.length + " dars";
 }
 
 /* ---------- ovoz: soʻzlar sahifasida tanlangan ovoz ishlatiladi ---------- */
@@ -76,14 +79,15 @@ function show(name) {
 function unitName(n) { return UNIT_TITLE[n] ? UNIT_TITLE[n][2] : ""; }
 function renderLessons() {
   var box = $("lessonList");
-  box.innerHTML = LESSONS.length ? '<div class="lessons">' + LESSONS.map(function (L, i) {
+  var list = typeof inList === "function" ? LESSONS.filter(inList) : LESSONS;
+  box.innerHTML = list.length ? '<div class="lessons">' + list.map(function (L) {
     var r = peek(L);
-    return '<button class="lesson" type="button" data-i="' + i + '"><span class="un">Unit ' + L.u + (L.sample ? ' <span class="chip">Namuna</span>' : "") +
+    return '<button class="lesson" type="button" data-i="' + LESSONS.indexOf(L) + '"><span class="un">Unit ' + L.u + (L.sample ? ' <span class="chip">Namuna</span>' : "") +
       "</span><b>" + esc(L.title) + '</b><span class="d">' + esc(L.desc || unitName(L.u)) + '</span><span class="foot">' +
       (r.n ? '<span class="trk"><i style="width:' + (r.best / r.n * 100) + '%"></i></span><span>' + r.best + " / " + r.n + "</span>"
         : "<span>" + lessonSize(L) + "</span>") + "</span></button>";
   }).join("") + "</div>" : '<p class="empty">Hali dars qoʻshilmagan.</p>';
-  var rest = UNITS.filter(function (u) { return !LESSONS.some(function (L) { return L.u === u[0] && !L.sample; }); });
+  var rest = UNITS.filter(function (u) { return !list.some(function (L) { return L.u === u[0] && !L.sample; }); });
   $("soonBox").hidden = !rest.length;
   $("soonList").innerHTML = rest.map(function (u) {
     return "<li><b>Unit " + u[0] + "</b><span>" + esc(u[2]) + '</span><a href="a2.html#unit-' + u[0] + '">Soʻzlari →</a></li>';
@@ -100,5 +104,5 @@ function startLessons() {
 }
 function paintHead(L) {
   $("lTitle").textContent = L.title;
-  $("lDesc").textContent = "Unit " + L.u + " · " + unitName(L.u);
+  $("lDesc").textContent = (L.book ? L.book + " · " : "") + "Unit " + L.u + " · " + unitName(L.u);
 }
