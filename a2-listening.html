@@ -33,6 +33,7 @@
 </header>
 <script src="ui.js"></script>
 <script src="a2-units.js"></script>
+<script src="a2-listening-data.js"></script>
 
 <div class="wrap">
 
@@ -114,7 +115,9 @@ var LESSONS = [
 </script>
 <script src="lessons.js"></script>
 <script>
-function lessonSize(L) { return L.q.length + " ta savol"; }
+/* Student's Book va Workbook audiolari (a2-listening-data.js): ular namuna darsdan keyin roʻyxatga qoʻshiladi */
+AUDIO_LESSONS.forEach(function (l) { l.desc = l.book + " · " + unitName(l.u); LESSONS.push(l); });
+function lessonSize(L) { return L.q ? L.q.length + " ta savol" : "Audio · " + Math.floor(L.dur / 60) + ":" + ("0" + L.dur % 60).slice(-2); }
 var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>';
 var PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
 var L = null, line = 0, playing = false, checked = false, rate = store.cfg.rate || 1, audio = null, oneLine = false;
@@ -143,6 +146,12 @@ function openLesson(x) {
 /* ---------- savollar ---------- */
 function renderQuestions() {
   checked = false;
+  if (!L.q) {
+    $("qBox").innerHTML = '<p class="lede" style="margin:0">Bu darsda hali savollar yoʻq. Audioni tinglang, soʻng matnni ochib qatorma-qator qayta eshiting.</p>';
+    $("verdict").hidden = true; $("qErr").hidden = true;
+    $("checkBtn").hidden = true; $("retryBtn").hidden = true;
+    return;
+  }
   $("qBox").innerHTML = L.q.map(function (q, i) {
     return '<fieldset class="q" data-i="' + i + '"><legend>' + (i + 1) + ". " + esc(q.t) + '</legend><div class="ans">' + q.o.map(function (o, k) {
       return '<label><input type="radio" name="q' + i + '" value="' + k + '"><span>' + esc(o) + "</span></label>";
@@ -153,7 +162,7 @@ function renderQuestions() {
 }
 $("qForm").addEventListener("submit", function (e) {
   e.preventDefault();
-  if (checked) return;
+  if (checked || !L.q) return;
   var picks = L.q.map(function (q, i) { var r = document.querySelector("input[name=q" + i + "]:checked"); return r ? +r.value : -1; });
   var miss = picks.filter(function (p) { return p < 0; }).length;
   $("qErr").hidden = !miss;
