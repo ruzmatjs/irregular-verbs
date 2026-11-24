@@ -9,6 +9,9 @@ set -e
 cd "$(dirname "$0")"
 mkdir -p docs
 cp assets/* docs/
+# A2 Listening audiolari (audio/a2/student, audio/a2/workbook) sayt bilan birga chiqishi kerak
+rm -rf docs/audio
+cp -r audio docs/audio
 
 SITE="https://ruzmatjs.github.io/irregular-verbs/"
 
