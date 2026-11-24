@@ -40,6 +40,10 @@
 <section id="v-list">
   <h2>Darslar</h2>
   <p class="lede">Dialogni tinglang, savollarga javob bering, keyin matnini oching va qatorma-qator qayta tinglang.</p>
+  <div class="books" id="bookSeg" role="tablist" aria-label="Kitob">
+    <button type="button" role="tab" data-book="Student's Book">Student's Book <small id="nSb"></small></button>
+    <button type="button" role="tab" data-book="Workbook">Workbook <small id="nWb"></small></button>
+  </div>
   <div id="lessonList"></div>
   <div class="soon" id="soonBox">
     <span class="flabel">Tayyorlanmoqda</span>
@@ -116,7 +120,23 @@ var LESSONS = [
 <script src="lessons.js"></script>
 <script>
 /* Student's Book va Workbook audiolari (a2-listening-data.js): ular namuna darsdan keyin roʻyxatga qoʻshiladi */
-AUDIO_LESSONS.forEach(function (l) { l.desc = l.book + " · " + unitName(l.u); LESSONS.push(l); });
+AUDIO_LESSONS.forEach(function (l) { l.desc = unitName(l.u); LESSONS.push(l); });
+/* Kitob almashtirgichi: roʻyxatda faqat tanlangan kitob darslari koʻrinadi (namuna dars — Student's Book bilan) */
+var BOOK = store.cfg.book === "Workbook" ? "Workbook" : "Student's Book";
+function lessonVisible(L) { return (L.book || "Student's Book") === BOOK; }
+function paintBooks() {
+  Array.prototype.forEach.call(document.querySelectorAll("#bookSeg button"), function (b) {
+    b.setAttribute("aria-selected", String(b.getAttribute("data-book") === BOOK));
+  });
+  $("nSb").textContent = LESSONS.filter(function (L) { return (L.book || "Student's Book") === "Student's Book"; }).length;
+  $("nWb").textContent = LESSONS.filter(function (L) { return L.book === "Workbook"; }).length;
+}
+Array.prototype.forEach.call(document.querySelectorAll("#bookSeg button"), function (b) {
+  b.addEventListener("click", function () {
+    BOOK = b.getAttribute("data-book"); store.cfg.book = BOOK; save(); paintBooks(); renderLessons();
+  });
+});
+paintBooks();
 function lessonSize(L) { return L.q ? L.q.length + " ta savol" : "Audio · " + Math.floor(L.dur / 60) + ":" + ("0" + L.dur % 60).slice(-2); }
 var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>';
 var PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
