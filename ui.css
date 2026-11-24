@@ -44,10 +44,11 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;backgroun
 .brand .mark{width:28px;height:28px;flex:0 0 auto;align-self:center}
 .brand h1{font-family:var(--display);font-size:1.25rem;font-weight:700;margin:0;letter-spacing:-.01em}
 .brand .sub{font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
-nav.tabs{display:flex;gap:2px;margin-top:10px;overflow-x:auto}
-nav.tabs button{appearance:none;border:0;background:none;font:inherit;font-size:.86rem;font-weight:500;color:var(--muted);
-  padding:8px 12px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
-nav.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+nav.tabs{display:flex;gap:4px;overflow-x:auto}
+nav.tabs button{appearance:none;font:inherit;font-size:.84rem;font-weight:600;color:var(--muted);background:none;
+  padding:6px 13px;border:1px solid var(--line);border-radius:8px;cursor:pointer;white-space:nowrap;flex:0 0 auto}
+nav.tabs button:hover{color:var(--fg);border-color:var(--muted)}
+nav.tabs button[aria-selected="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--fg)}
 nav.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 h2{font-family:var(--display);font-size:1.05rem;margin:0 0 4px;text-wrap:balance}
 .lede{color:var(--muted);font-size:.88rem;margin:0 0 18px}
@@ -209,11 +210,11 @@ td.v{white-space:normal;min-width:120px}
 .switch a:hover{color:var(--fg)}
 .switch a[aria-current]{background:var(--accent);color:var(--on-accent)}
 .switch a:focus-visible,.skills a:focus-visible,.botnav a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-.subnav{display:flex;align-items:flex-end;gap:4px 18px;margin-top:10px;min-width:0}
-.subnav nav.tabs{margin-top:0;min-width:0;flex:1 1 auto}
+.subnav{display:flex;flex-direction:column;gap:8px;margin-top:10px;padding-bottom:10px;min-width:0}
+.subnav nav.tabs{min-width:0}
 nav.tabs{scrollbar-width:none}
 nav.tabs::-webkit-scrollbar{display:none}
-.skills{display:flex;gap:4px;margin-bottom:8px;flex:0 0 auto}
+.skills{display:flex;gap:4px}
 .skills a{display:inline-flex;align-items:center;gap:7px;font-size:.84rem;font-weight:600;color:var(--muted);text-decoration:none;
   padding:6px 13px 6px 10px;border:1px solid var(--line);border-radius:8px;white-space:nowrap}
 .skills a svg,.botnav a svg{width:17px;height:17px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -234,12 +235,12 @@ nav.tabs::-webkit-scrollbar{display:none}
   .brand h1{white-space:nowrap}
   .brand .sub{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-left:auto}
   .brand .mark{width:24px;height:24px}
-  .subnav{flex-direction:column;align-items:stretch}
-  .skills{margin-bottom:4px}
   .skills a{flex:1 1 0;justify-content:center;padding:8px 6px;min-width:0}
   /* mashq paytida pastki menyu ekran joyini olmaydi */
   :root:has(:is(#v-quiz,#v-lesson):not([hidden])){--bn:env(safe-area-inset-bottom,0px)}
   body:has(:is(#v-quiz,#v-lesson):not([hidden])) :is(.botnav,.skills){display:none}
+  body:has(#v-lesson:not([hidden])) .subnav{display:none}
+  body:has(#v-lesson:not([hidden])) .top-in{padding-bottom:12px}
 }
 
 /* ---------- mashq sozlamalari ---------- */
@@ -258,7 +259,7 @@ details.more>.stack{padding-top:14px}
 
 @media (pointer:coarse){
   .opt span{padding:9px 15px}
-  nav.tabs button{padding:10px 12px}
+  nav.tabs button{padding:8px 12px}
   .spk.mini,.star.mini{width:34px;height:34px}
   .mini-learn{padding:6px 11px}
 }
