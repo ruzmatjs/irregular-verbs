@@ -42,89 +42,86 @@
 <div class="wrap">
 
 <section id="v-setup">
-  <h2>Mashqni sozlang</h2>
-  <p class="lede">Nechta soʻz, qaysi tartibda va nimani soʻrashni oʻzingiz tanlaysiz.</p>
+  <h2>Feʻllarni yodlash</h2>
+  <p class="lede">Ikkita savolga javob bering va mashqni boshlang.</p>
   <div class="card stack">
     <fieldset>
-      <legend>Nechta soʻz</legend>
-      <div class="row">
-        <div class="col">
-          <div class="opts">
-            <label class="opt"><input type="radio" name="cnt" id="cnt5" value="5"><span>5</span></label>
-            <label class="opt"><input type="radio" name="cnt" id="cnt10" value="10" checked><span>10</span></label>
-            <label class="opt"><input type="radio" name="cnt" id="cnt20" value="20"><span>20</span></label>
-            <label class="opt"><input type="radio" name="cnt" id="cnt50" value="50"><span>50</span></label>
-            <label class="opt"><input type="radio" name="cnt" id="cntAll" value="all"><span>Hammasi</span></label>
-            <label class="opt"><input type="radio" name="cnt" id="cntCustom" value="custom"><span>Boshqa…</span></label>
-          </div>
-        </div>
-        <div class="col" id="customBox" hidden>
-          <label class="flabel" for="customCount">Soʻz soni</label>
-          <input type="number" id="customCount" min="1" max="100" value="15">
-        </div>
+      <legend class="step">1. Nimani yozasiz?</legend>
+      <div class="opts">
+        <label class="opt"><input type="checkbox" name="fld" id="fldV1" value="v1"><span>V1 — Base Form</span></label>
+        <label class="opt"><input type="checkbox" name="fld" id="fldV2" value="v2" checked><span>V2 — Past Simple</span></label>
+        <label class="opt"><input type="checkbox" name="fld" id="fldV3" value="v3" checked><span>V3 — Past Participle</span></label>
+        <label class="opt"><input type="checkbox" name="fld" id="fldUz" value="uz" checked><span>Tarjima</span></label>
       </div>
+      <p class="hint" style="margin:8px 0 0">Belgilanganini yozasiz, belgilanmagani savol boʻlib chiqadi.</p>
     </fieldset>
 
     <fieldset>
-      <legend>Tartib</legend>
+      <legend class="step">2. Nechta soʻz?</legend>
       <div class="opts">
-        <label class="opt"><input type="radio" name="ord" id="ordSeq" value="seq" checked><span>Ketma-ket (1 → 100)</span></label>
-        <label class="opt"><input type="radio" name="ord" id="ordRnd" value="rnd"><span>Aralash</span></label>
-        <label class="opt"><input type="radio" name="ord" id="ordWeak" value="weak"><span>Eng zaiflari avval</span></label>
+        <label class="opt"><input type="radio" name="cnt" value="5"><span>5</span></label>
+        <label class="opt"><input type="radio" name="cnt" value="10" checked><span>10</span></label>
+        <label class="opt"><input type="radio" name="cnt" value="20"><span>20</span></label>
+        <label class="opt"><input type="radio" name="cnt" value="50"><span>50</span></label>
+        <label class="opt"><input type="radio" name="cnt" value="all"><span>Hammasi</span></label>
+        <label class="opt"><input type="radio" name="cnt" value="custom"><span>Boshqa…</span></label>
       </div>
-      <div class="row" style="margin-top:12px" id="startFromBox">
-        <div class="col">
+      <div class="custom" id="customBox" hidden>
+        <label class="flabel" for="customCount">Soʻz soni</label>
+        <input type="number" id="customCount" min="1" max="100" value="15">
+      </div>
+    </fieldset>
+
+    <details class="more" id="moreSet">
+      <summary>Qoʻshimcha sozlamalar <small>shart emas</small></summary>
+      <div class="sets">
+        <div class="set">
+          <label class="flabel" for="poolSel">Qaysi soʻzlar</label>
+          <select name="pool" id="poolSel">
+          <option value="all" selected>Hamma soʻzlar</option>
+          <option value="unseen">Yangi soʻzlar</option>
+          <option value="mistakes">Xato qilganlarim</option>
+          <option value="unlearned">Hali yodlanmaganlar</option>
+          <option value="starred">★ Belgilanganlarim</option>
+          </select>
+        </div>
+        <div class="set">
+          <label class="flabel" for="ordSel">Tartib</label>
+          <select name="ord" id="ordSel">
+          <option value="seq" selected>Ketma-ket (1 → 100)</option>
+          <option value="rnd">Aralash</option>
+          <option value="weak">Eng zaiflari avval</option>
+          </select>
+        </div>
+        <div class="set" id="startFromBox">
           <label class="flabel" for="startFrom">Qaysi soʻzdan boshlanadi</label>
           <input type="number" id="startFrom" min="1" max="100" value="1">
         </div>
       </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Qaysi shakllarni yozasiz</legend>
-      <div class="opts">
-        <label class="opt"><input type="checkbox" name="fld" id="fldV2" value="v2" checked><span>V2 — Past Simple</span></label>
-        <label class="opt"><input type="checkbox" name="fld" id="fldV3" value="v3" checked><span>V3 — Past Participle</span></label>
-        <label class="opt"><input type="checkbox" name="fld" id="fldUz" value="uz" checked><span>Tarjima</span></label>
-        <label class="opt"><input type="checkbox" name="fld" id="fldV1" value="v1"><span>V1 — Base Form</span></label>
-      </div>
-      <p class="hint" style="margin-top:8px">Belgilanmagan shakllar savol sifatida koʻrsatiladi. Masalan faqat <b>V1</b> ni belgilasangiz — tarjima beriladi, siz feʻlni yozasiz.</p>
-    </fieldset>
-
-    <fieldset id="audioSet">
-      <legend>Talaffuz ovozi</legend>
-      <div class="opts">
-        <label class="opt"><input type="checkbox" id="autoQ"><span>Soʻz chiqqanda oʻqib bersin</span></label>
-        <label class="opt"><input type="checkbox" id="autoA" checked><span>Javobdan keyin 3 shaklni oʻqisin</span></label>
-      </div>
-      <div class="row" style="margin-top:14px">
-        <div class="col">
-          <label class="flabel" for="voiceSel">Ovoz</label>
-          <select id="voiceSel"></select>
-        </div>
-        <div class="col">
-          <span class="flabel">Tezlik</span>
-          <div class="opts">
-            <label class="opt"><input type="radio" name="rate" id="rateSlow" value="0.7"><span>Sekin</span></label>
-            <label class="opt"><input type="radio" name="rate" id="rateMid" value="0.9" checked><span>Oddiy</span></label>
-            <label class="opt"><input type="radio" name="rate" id="rateFast" value="1.1"><span>Tez</span></label>
+      <fieldset id="audioSet">
+        <legend class="step">Talaffuz</legend>
+        <label class="check"><input type="checkbox" id="autoQ"> Soʻz chiqqanda oʻqib bersin</label>
+        <label class="check"><input type="checkbox" id="autoA" checked> Javobdan keyin 3 shaklni oʻqisin</label>
+        <div class="sets">
+          <div class="set">
+            <label class="flabel" for="voiceSel">Ovoz</label>
+            <select id="voiceSel"></select>
           </div>
+        <div class="set">
+          <label class="flabel" for="rateSel">Tezlik</label>
+          <select name="rate" id="rateSel">
+          <option value="0.7">Sekin</option>
+          <option value="0.9" selected>Oddiy</option>
+          <option value="1.1">Tez</option>
+          </select>
         </div>
-      </div>
-      <button class="spkall" type="button" id="voiceTest"></button>
-      <p class="hint" style="margin-top:10px" id="audioHint">Ovoz qurilmangizdagi talaffuzdan olinadi — roʻyxatda eng sifatlisi birinchi turadi. Istalgan paytda dinamik tugmasini bosib eshitishingiz mumkin.</p>
-    </fieldset>
+        </div>
+        <button class="spkall" type="button" id="voiceTest"></button>
+        <p class="hint" style="margin:10px 0 0" id="audioHint"></p>
+      </fieldset>
+    </details>
 
-    <fieldset>
-      <legend>Qaysi soʻzlardan</legend>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="pool" id="poolAll" value="all" checked><span>Barcha 100 ta</span></label>
-        <label class="opt"><input type="radio" name="pool" id="poolMis" value="mistakes"><span>Faqat xato soʻzlar</span></label>
-        <label class="opt"><input type="radio" name="pool" id="poolNew" value="unseen"><span>Hali koʻrilmaganlar <small id="newCount" style="color:var(--muted);font-size:.8em"></small></span></label>
-        <label class="opt"><input type="radio" name="pool" id="poolUnl" value="unlearned"><span>Yodlanmaganlar</span></label>
-        <label class="opt"><input type="radio" name="pool" id="poolStar" value="starred"><span>★ Belgilanganlar</span></label>
-      </div>
-    </fieldset>
+    <div class="filters" id="onFilters" hidden></div>
 
     <div class="startbar">
       <button class="btn" id="startBtn">Mashqni boshlash</button>
@@ -729,14 +726,21 @@ function pips(lvl) {
 /* ---------- sozlamalar ---------- */
 Array.prototype.forEach.call(document.querySelectorAll("input[name=cnt]"), function (r) {
   r.addEventListener("change", function () {
-    $("customBox").hidden = document.querySelector("input[name=cnt]:checked").value !== "custom";
+    $("customBox").hidden = radio("cnt") !== "custom";
   });
 });
-Array.prototype.forEach.call(document.querySelectorAll("input[name=ord]"), function (r) {
-  r.addEventListener("change", function () {
-    $("startFromBox").hidden = document.querySelector("input[name=ord]:checked").value !== "seq";
-  });
-});
+/* boshlash tugmasi yonidagi qisqa xulosa; yoqilgan filtr yigʻilgan sozlamalardan tashqarida ham koʻrinadi */
+function updStart() {
+  var c = readCfg(), n = pickPool(c.pool).length;
+  if (c.count !== "all") n = Math.min(n, c.count);
+  $("startInfo").textContent = n ? n + " ta soʻz" : "Bu filtr boʻyicha soʻz yoʻq";
+  $("startFromBox").hidden = c.order !== "seq";
+  countOptions("pool", function (v) { return pickPool(v).length; });
+  paintFilters($("onFilters"), [["pool", "all"]]);
+}
+$("v-setup").addEventListener("change", function () { if (!fieldErr()) updStart(); });
+$("customCount").addEventListener("input", updStart);
+$("onFilters").addEventListener("click", function (e) { if (dropFilter(e) && !fieldErr()) updStart(); });
 function fieldSel() {
   return Array.prototype.map.call(document.querySelectorAll("input[name=fld]:checked"), function (c) { return c.value; });
 }
@@ -748,9 +752,6 @@ function fieldErr() {
   err.hidden = true;
   return false;
 }
-Array.prototype.forEach.call(document.querySelectorAll("input[name=fld]"), function (c) {
-  c.addEventListener("change", fieldErr);
-});
 
 function pickPool(kind) {
   if (kind === "mistakes") return VERBS.filter(function (v) { return rec(v).mis; });
@@ -796,7 +797,7 @@ function startQuiz(conf, listOverride) {
   if (!q) {
     var err = $("setupErr");
     err.hidden = false;
-    err.textContent = "Bu toifada soʻz yoʻq. Boshqa variantni tanlang.";
+    err.textContent = "Bu filtr boʻyicha soʻz yoʻq. Filtrni oʻchiring.";
     show("setup");
     return;
   }
@@ -1181,20 +1182,20 @@ function finish(early) {
   updateBrand();
 }
 
-$("startBtn").addEventListener("click", function () {
-  if (fieldErr()) return;
-  var cntVal = document.querySelector("input[name=cnt]:checked").value;
+function readCfg() {
+  var cntVal = radio("cnt");
   var count = cntVal;
   if (cntVal === "custom") count = Math.max(1, Math.min(100, parseInt($("customCount").value, 10) || 10));
   else if (cntVal !== "all") count = parseInt(cntVal, 10);
-  startQuiz({
+  return {
     count: count,
-    order: document.querySelector("input[name=ord]:checked").value,
+    order: radio("ord"),
     startFrom: parseInt($("startFrom").value, 10) || 1,
     fields: fieldSel(),
-    pool: document.querySelector("input[name=pool]:checked").value
-  });
-});
+    pool: radio("pool")
+  };
+}
+$("startBtn").addEventListener("click", function () { if (!fieldErr()) startQuiz(readCfg()); });
 $("againBtn").addEventListener("click", function () { startQuiz(cfg); });
 $("backSetupBtn").addEventListener("click", function () { show("setup"); });
 
@@ -1343,7 +1344,7 @@ function updateBrand() {
   $("mcount").textContent = t.mis ? "(" + t.mis + ")" : "";
   var st = VERBS.filter(function (v) { return rec(v).star; }).length;
   $("scount").textContent = st ? "(" + st + ")" : "";
-  $("newCount").textContent = "(" + VERBS.filter(unseen).length + ")";
+  updStart();
 }
 
 if (TTS) {
@@ -1355,15 +1356,11 @@ if (TTS) {
   spkDelegate($("listBody"));
   spkDelegate($("rwrong"));
 
-  var rateVal = String(speechRate());
-  var rateInput = document.querySelector('input[name=rate][value="' + rateVal + '"]') || $("rateMid");
-  rateInput.checked = true;
-  Array.prototype.forEach.call(document.querySelectorAll("input[name=rate]"), function (r) {
-    r.addEventListener("change", function () {
-      store.cfg.rate = parseFloat(this.value);
-      save();
-      sayTest();
-    });
+  setRadio("rate", String(speechRate()));
+  $("rateSel").addEventListener("change", function () {
+    store.cfg.rate = parseFloat(this.value);
+    save();
+    sayTest();
   });
 
   var test = $("voiceTest");

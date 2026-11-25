@@ -46,3 +46,53 @@ var SECTIONS = [
   }).join("");
   document.body.appendChild(bn);
 })();
+
+/* ---------- mashq sozlamalari (feʻllar, A1, A2) ---------- */
+/* tanlangan qiymat: radio yoki select */
+function radio(name) {
+  var r = document.querySelector("select[name=" + name + "],input[name=" + name + "]:checked");
+  return r ? r.value : null;
+}
+function setRadio(name, val) {
+  var r = document.querySelector("input[name=" + name + "][value=\"" + val + "\"]");
+  if (r) { r.checked = true; return; }
+  var o = document.querySelector("select[name=" + name + "] option[value=\"" + val + "\"]");
+  if (o) o.selected = true;
+}
+function optLabel(o) {
+  if (!o.hasAttribute("data-t")) o.setAttribute("data-t", o.textContent);
+  return o.getAttribute("data-t");
+}
+/* select variantlari yonida nechta soʻz borligi */
+function countOptions(name, count) {
+  Array.prototype.forEach.call(document.querySelectorAll("select[name=" + name + "] option"), function (o) {
+    o.textContent = optLabel(o) + " (" + count(o.value) + ")";
+  });
+}
+/* yoqilgan filtrlar: bosilsa, oʻchadi. defs — [[nomi, odatdagi qiymati], ...] */
+function paintFilters(box, defs) {
+  box.textContent = "";
+  defs.forEach(function (d) {
+    if (radio(d[0]) === d[1]) return;
+    var sel = document.querySelector("select[name=" + d[0] + "]"), b = document.createElement("button");
+    b.type = "button";
+    b.className = "fchip";
+    b.setAttribute("data-f", d[0]);
+    b.setAttribute("data-off", d[1]);
+    b.textContent = optLabel(sel.options[sel.selectedIndex]) + " ✕";
+    b.setAttribute("aria-label", optLabel(sel.options[sel.selectedIndex]) + " — filtrni oʻchirish");
+    box.appendChild(b);
+  });
+  box.hidden = !box.firstChild;
+  if (box.firstChild) {
+    var t = document.createElement("span");
+    t.className = "hint";
+    t.textContent = "Filtr yoqilgan:";
+    box.insertBefore(t, box.firstChild);
+  }
+}
+function dropFilter(e) {
+  var b = e.target.closest("[data-f]");
+  if (b) setRadio(b.getAttribute("data-f"), b.getAttribute("data-off"));
+  return !!b;
+}

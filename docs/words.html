@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <!-- IBM Plex dagi «ʻ» juda keng (so ʻ z boʻlib koʻrinadi) — faqat shu belgi Noto Sans dan olinadi, u --body da birinchi turadi -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&text=%CA%BB%CA%BC&display=swap">
-<link rel="stylesheet" href="ui.css?v=3034693262">
+<link rel="stylesheet" href="ui.css?v=2503839183">
 <style>
 /* umumiy koʻrinish — ui.css da */
 </style>
@@ -63,118 +63,116 @@
     </div>
   </div>
 </header>
-<script src="ui.js?v=1652432850"></script>
+<script src="ui.js?v=1466396212"></script>
 
 <div class="wrap">
 
 <section id="v-setup">
   <h2>A1 soʻzlarini yodlash</h2>
-  <p class="lede">24 unit, 1372 ta soʻz. Unitlarni va mashq usulini tanlang.</p>
+  <p class="lede">24 unit, 1372 ta soʻz. Uchta savolga javob bering va mashqni boshlang.</p>
   <div class="card stack">
     <fieldset>
-      <legend>Unitlar</legend>
-      <div class="unitgrid" id="unitPick"></div>
-      <div class="actions" style="margin-top:10px">
-        <button class="btn ghost sm" type="button" id="uAll">Hammasini belgilash</button>
-        <button class="btn ghost sm" type="button" id="uNone">Tozalash</button>
-        <span class="hint" id="uInfo"></span>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Yoʻnalish</legend>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="dir" value="en" checked><span>Inglizcha → oʻzbekcha</span></label>
-        <label class="opt"><input type="radio" name="dir" value="uz"><span>Oʻzbekcha → inglizcha</span></label>
-        <label class="opt"><input type="radio" name="dir" value="mix"><span>Aralash</span></label>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Mashq usuli</legend>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="mode" value="type" checked><span>Yozib javob berish</span></label>
-        <label class="opt"><input type="radio" name="mode" value="card"><span>Kartochka</span></label>
-      </div>
-      <p class="hint" style="margin-top:8px">Kartochkada javobni yozmaysiz: soʻzni koʻrib eslaysiz, javobni ochib, oʻzingiz «Bildim» yoki «Bilmadim» deysiz.</p>
-    </fieldset>
-
-    <fieldset>
-      <legend>Nechta soʻz</legend>
-      <div class="row">
-        <div class="col">
-          <div class="opts">
-            <label class="opt"><input type="radio" name="cnt" value="10"><span>10</span></label>
-            <label class="opt"><input type="radio" name="cnt" value="20" checked><span>20</span></label>
-            <label class="opt"><input type="radio" name="cnt" value="50"><span>50</span></label>
-            <label class="opt"><input type="radio" name="cnt" value="all"><span>Hammasi</span></label>
-            <label class="opt"><input type="radio" name="cnt" value="custom"><span>Boshqa…</span></label>
+      <legend class="step">1. Qaysi unit?</legend>
+      <details class="pick" id="unitBox">
+        <summary><span class="pk"><b id="uName"></b><small id="uInfo"></small></span><span class="chg"></span></summary>
+        <div class="pickb">
+          <div class="actions">
+            <button class="btn ghost sm" type="button" id="uAll">Hammasini belgilash</button>
+            <button class="btn ghost sm" type="button" id="uNone">Tozalash</button>
+            <span class="hint">Bir nechta unitni tanlash mumkin</span>
           </div>
+          <div class="unitgrid" id="unitPick"></div>
         </div>
-        <div class="col" id="customBox" hidden>
-          <label class="flabel" for="customCount">Soʻz soni</label>
-          <input type="number" id="customCount" min="1" max="1372" value="30">
-        </div>
+      </details>
+    </fieldset>
+
+    <fieldset>
+      <legend class="step">2. Qanday mashq qilasiz?</legend>
+      <div class="kinds">
+        <label class="uopt"><input type="radio" name="kind" value="en" checked><span><b>Tarjimasini yozaman</b><small>Inglizcha soʻz chiqadi</small></span></label>
+        <label class="uopt"><input type="radio" name="kind" value="uz"><span><b>Inglizchasini yozaman</b><small>Oʻzbekcha soʻz chiqadi</small></span></label>
+        <label class="uopt"><input type="radio" name="kind" value="mix"><span><b>Aralash yozaman</b><small>Goh inglizcha, goh oʻzbekcha chiqadi</small></span></label>
+        <label class="uopt"><input type="radio" name="kind" value="card"><span><b>Kartochka</b><small>Yozmaysiz: eslaysiz va javobni ochasiz</small></span></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend class="step">3. Nechta soʻz?</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="cnt" value="10"><span>10</span></label>
+        <label class="opt"><input type="radio" name="cnt" value="20" checked><span>20</span></label>
+        <label class="opt"><input type="radio" name="cnt" value="50"><span>50</span></label>
+        <label class="opt"><input type="radio" name="cnt" value="all"><span>Hammasi</span></label>
+        <label class="opt"><input type="radio" name="cnt" value="custom"><span>Boshqa…</span></label>
+      </div>
+      <div class="custom" id="customBox" hidden>
+        <label class="flabel" for="customCount">Soʻz soni</label>
+        <input type="number" id="customCount" min="1" max="1372" value="30">
       </div>
     </fieldset>
 
     <details class="more" id="moreSet">
-      <summary>Qoʻshimcha sozlamalar <small id="moreInfo"></small></summary>
-      <div class="stack">
-    <fieldset>
-      <legend>Qaysi soʻzlardan</legend>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="pool" value="all" checked><span>Hammasi</span></label>
-        <label class="opt"><input type="radio" name="pool" value="unseen"><span>Hali koʻrilmaganlar <small id="newCount" class="ct"></small></span></label>
-        <label class="opt"><input type="radio" name="pool" value="mistakes"><span>Faqat xatolar</span></label>
-        <label class="opt"><input type="radio" name="pool" value="unlearned"><span>Yodlanmaganlar</span></label>
-        <label class="opt"><input type="radio" name="pool" value="starred"><span>★ Belgilanganlar</span></label>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Soʻz turkumi</legend>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="grp" value="all" checked><span>Hammasi</span></label>
-        <label class="opt"><input type="radio" name="grp" value="n"><span>Otlar</span></label>
-        <label class="opt"><input type="radio" name="grp" value="v"><span>Feʻllar</span></label>
-        <label class="opt"><input type="radio" name="grp" value="a"><span>Sifatlar</span></label>
-        <label class="opt"><input type="radio" name="grp" value="o"><span>Ravish va boshqalar</span></label>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Tartib</legend>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="ord" value="seq"><span>Ketma-ket</span></label>
-        <label class="opt"><input type="radio" name="ord" value="rnd" checked><span>Aralash</span></label>
-        <label class="opt"><input type="radio" name="ord" value="weak"><span>Eng zaiflari avval</span></label>
-      </div>
-    </fieldset>
-
-    <fieldset id="audioSet">
-      <legend>Talaffuz</legend>
-      <div class="opts">
-        <label class="opt"><input type="checkbox" id="autoSay" checked><span>Inglizcha soʻzni oʻqib bersin</span></label>
-      </div>
-      <div class="row" style="margin-top:14px">
-        <div class="col">
-          <label class="flabel" for="voiceSel">Ovoz</label>
-          <select id="voiceSel"></select>
+      <summary>Qoʻshimcha sozlamalar <small>shart emas</small></summary>
+      <div class="sets">
+        <div class="set" id="dirSet" hidden>
+          <label class="flabel" for="dirSel">Kartochkada nima chiqadi</label>
+          <select name="dir" id="dirSel">
+          <option value="en" selected>Inglizcha soʻz</option>
+          <option value="uz">Oʻzbekcha soʻz</option>
+          <option value="mix">Aralash</option>
+          </select>
         </div>
-        <div class="col">
-          <span class="flabel">Tezlik</span>
-          <div class="opts">
-            <label class="opt"><input type="radio" name="rate" value="0.7"><span>Sekin</span></label>
-            <label class="opt"><input type="radio" name="rate" value="0.9" checked><span>Oddiy</span></label>
-            <label class="opt"><input type="radio" name="rate" value="1.1"><span>Tez</span></label>
+        <div class="set">
+          <label class="flabel" for="poolSel">Qaysi soʻzlar</label>
+          <select name="pool" id="poolSel">
+          <option value="all" selected>Hamma soʻzlar</option>
+          <option value="unseen">Yangi soʻzlar</option>
+          <option value="mistakes">Xato qilganlarim</option>
+          <option value="unlearned">Hali yodlanmaganlar</option>
+          <option value="starred">★ Belgilanganlarim</option>
+          </select>
+        </div>
+        <div class="set">
+          <label class="flabel" for="grpSel">Soʻz turkumi</label>
+          <select name="grp" id="grpSel">
+          <option value="all" selected>Hammasi</option>
+          <option value="n">Otlar</option>
+          <option value="v">Feʻllar</option>
+          <option value="a">Sifatlar</option>
+          <option value="o">Ravish va boshqalar</option>
+          </select>
+        </div>
+        <div class="set">
+          <label class="flabel" for="ordSel">Tartib</label>
+          <select name="ord" id="ordSel">
+          <option value="rnd" selected>Aralash</option>
+          <option value="seq">Ketma-ket</option>
+          <option value="weak">Eng zaiflari avval</option>
+          </select>
+        </div>
+      </div>
+      <fieldset id="audioSet">
+        <legend class="step">Talaffuz</legend>
+        <label class="check"><input type="checkbox" id="autoSay" checked> Inglizcha soʻzni oʻqib bersin</label>
+        <div class="sets">
+          <div class="set">
+            <label class="flabel" for="voiceSel">Ovoz</label>
+            <select id="voiceSel"></select>
           </div>
+        <div class="set">
+          <label class="flabel" for="rateSel">Tezlik</label>
+          <select name="rate" id="rateSel">
+          <option value="0.7">Sekin</option>
+          <option value="0.9" selected>Oddiy</option>
+          <option value="1.1">Tez</option>
+          </select>
         </div>
-      </div>
-      <p class="hint" style="margin-top:10px" id="audioHint"></p>
-    </fieldset>
-      </div>
+        </div>
+        <p class="hint" style="margin:10px 0 0" id="audioHint"></p>
+      </fieldset>
     </details>
+
+    <div class="filters" id="onFilters" hidden></div>
 
     <div class="startbar">
       <button class="btn" id="startBtn">Mashqni boshlash</button>
@@ -2051,11 +2049,6 @@ function unitWords(n) { return WORDS.filter(function (w) { return w.u === n; });
 function learnedIn(list) { return list.filter(function (w) { return peek(w).lvl >= MAXLVL; }).length; }
 
 /* ---------- sozlamalar ---------- */
-function radio(name) { var r = document.querySelector("input[name=" + name + "]:checked"); return r ? r.value : null; }
-function setRadio(name, val) {
-  var r = document.querySelector("input[name=" + name + "][value=\"" + val + "\"]");
-  if (r) r.checked = true;
-}
 function selUnits() {
   return Array.prototype.map.call(document.querySelectorAll("#unitPick input:checked"), function (c) { return parseInt(c.value, 10); });
 }
@@ -2068,25 +2061,27 @@ function renderUnitPick() {
   }).join("");
   updUnitInfo();
 }
+function unitTitleOf(n) { return UNITS.filter(function (u) { return u[0] === n; })[0][2]; }
 function updUnitInfo() {
   var us = selUnits();
   var n = WORDS.filter(function (w) { return us.indexOf(w.u) > -1; }).length;
-  $("uInfo").textContent = us.length ? us.length + " ta unit · " + n + " ta soʻz" : "Unit tanlanmagan";
+  $("uName").textContent = !us.length ? "Unit tanlanmagan" : us.length === 1 ? "Unit " + us[0] + " · " + unitTitleOf(us[0])
+    : us.length === UNITS.length ? "Hamma unitlar" : us.length < 6 ? "Unit " + us.join(", ") : us.length + " ta unit";
+  $("uInfo").textContent = us.length ? n + " ta soʻz" : "Kamida bittasini belgilang";
   updStart();
 }
-/* boshlash tugmasi yonidagi qisqa xulosa va yigʻilgan sozlamalardagi oʻzgarishlar */
+/* boshlash tugmasi yonidagi qisqa xulosa; yoqilgan filtrlar yigʻilgan sozlamalardan tashqarida ham koʻrinadi */
 function updStart() {
   var c = readCfg();
   var n = poolOf(c).length;
   if (c.count !== "all") n = Math.min(n, c.count);
-  $("startInfo").textContent = !c.units.length ? "Unit tanlanmagan" : n ? n + " ta soʻz" : "Bu sozlamalar boʻyicha soʻz yoʻq";
-  var on = [["pool", "all"], ["grp", "all"], ["ord", "rnd"]].filter(function (x) { return radio(x[0]) !== x[1]; }).map(function (x) {
-    var s = document.querySelector("input[name=" + x[0] + "]:checked").parentNode.querySelector("span");
-    return s.firstChild.textContent.trim();
-  });
-  $("moreInfo").textContent = on.length ? on.join(" · ") : "filtr, turkum, tartib, talaffuz";
+  $("startInfo").textContent = !c.units.length ? "Unit tanlanmagan" : n ? n + " ta soʻz" : "Bu filtr boʻyicha soʻz yoʻq";
+  $("dirSet").hidden = c.mode !== "card";
+  countOptions("pool", function (v) { return poolOf({ units: c.units, grp: c.grp, pool: v }).length; });
+  paintFilters($("onFilters"), [["pool", "all"], ["grp", "all"]]);
 }
-$("v-setup").addEventListener("change", updStart);
+$("onFilters").addEventListener("click", function (e) { if (dropFilter(e)) { $("setupErr").hidden = true; updStart(); } });
+$("v-setup").addEventListener("change", function () { $("setupErr").hidden = true; updStart(); });
 $("customCount").addEventListener("input", updStart);
 /* tanlov darrov saqlanadi — boshqa tabga oʻtib qaytganda yoʻqolmaydi */
 function pickChanged() { store.cfg.units = selUnits(); save(); updUnitInfo(); }
@@ -2102,7 +2097,8 @@ $("uNone").addEventListener("click", function () {
 Array.prototype.forEach.call(document.querySelectorAll("input[name=cnt]"), function (r) {
   r.addEventListener("change", function () { $("customBox").hidden = radio("cnt") !== "custom"; });
 });
-["grp", "dir", "mode", "cnt", "ord", "pool"].forEach(function (n) { if (store.cfg[n]) setRadio(n, store.cfg[n]); });
+["grp", "dir", "cnt", "ord", "pool"].forEach(function (n) { if (store.cfg[n]) setRadio(n, store.cfg[n]); });
+setRadio("kind", store.cfg.mode === "card" ? "card" : store.cfg.dir || "en");
 $("customBox").hidden = radio("cnt") !== "custom";
 if (store.cfg.custom) $("customCount").value = store.cfg.custom;
 
@@ -2143,7 +2139,7 @@ function startQuiz(conf, list) {
   var q = buildQuiz(conf, list);
   if (!q) {
     $("setupErr").hidden = false;
-    $("setupErr").textContent = "Tanlangan sozlamalar boʻyicha soʻz topilmadi. Boshqa unit yoki variantni tanlang.";
+    $("setupErr").textContent = "Tanlangan filtr boʻyicha soʻz topilmadi. Filtrni oʻchiring yoki boshqa unitni tanlang.";
     setTab("train");
     return;
   }
@@ -2443,16 +2439,17 @@ $("againBtn").addEventListener("click", function () { startQuiz(cfg); });
 $("backSetupBtn").addEventListener("click", function () { setTab("train"); });
 
 function readCfg() {
-  var cnt = radio("cnt"), count = cnt;
+  var kind = radio("kind"), cnt = radio("cnt"), count = cnt;
   if (cnt === "custom") count = Math.max(1, Math.min(WORDS.length, parseInt($("customCount").value, 10) || 20));
   else if (cnt !== "all") count = parseInt(cnt, 10);
-  return { units: selUnits(), grp: radio("grp"), dir: radio("dir"), mode: radio("mode"), count: count, order: radio("ord"), pool: radio("pool") };
+  return { units: selUnits(), grp: radio("grp"), dir: kind === "card" ? radio("dir") : kind, mode: kind === "card" ? "card" : "type", count: count, order: radio("ord"), pool: radio("pool") };
 }
 $("startBtn").addEventListener("click", function () {
   var c = readCfg();
-  if (!c.units.length) { $("setupErr").hidden = false; $("setupErr").textContent = "Kamida bitta unitni belgilang."; return; }
+  if (!c.units.length) { $("unitBox").open = true; $("setupErr").hidden = false; $("setupErr").textContent = "Kamida bitta unitni belgilang."; return; }
   store.cfg.units = c.units;
-  ["grp", "dir", "mode", "cnt", "ord", "pool"].forEach(function (n) { store.cfg[n] = radio(n); });
+  ["grp", "cnt", "ord", "pool"].forEach(function (n) { store.cfg[n] = radio(n); });
+  store.cfg.dir = c.dir; store.cfg.mode = c.mode;
   store.cfg.custom = $("customCount").value;
   save();
   startQuiz(c);
@@ -2627,7 +2624,6 @@ function updateBrand() {
   $("mcount").textContent = t.mis ? "(" + t.mis + ")" : "";
   var st = uniq(WORDS.filter(function (w) { return peek(w).star; })).length;
   $("scount").textContent = st ? "(" + st + ")" : "";
-  $("newCount").textContent = "(" + (WORDS.length - t.seen) + ")";
 }
 
 if (TTS) {
@@ -2635,9 +2631,7 @@ if (TTS) {
   $("autoSay").checked = store.cfg.autoSay !== false;
   $("autoSay").addEventListener("change", function () { store.cfg.autoSay = this.checked; save(); });
   if (store.cfg.rate) setRadio("rate", String(store.cfg.rate));
-  Array.prototype.forEach.call(document.querySelectorAll("input[name=rate]"), function (r) {
-    r.addEventListener("change", function () { store.cfg.rate = parseFloat(this.value); save(); say("Hello, how are you?"); });
-  });
+  $("rateSel").addEventListener("change", function () { store.cfg.rate = parseFloat(this.value); save(); say("Hello, how are you?"); });
   $("voiceSel").addEventListener("change", function () {
     var pick = this.value;
     voice = pick ? (voices.filter(function (v) { return (v.voiceURI || v.name) === pick; })[0] || null) : null;
