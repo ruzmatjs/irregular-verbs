@@ -52,6 +52,11 @@
     <button class="back" type="button" id="backBtn" aria-label="Mavzular roʻyxatiga qaytish">←</button>
     <div class="t"><h2 id="lTitle"></h2><p class="lede" id="lDesc"></p></div>
   </div>
+  <div class="seg modes" role="group" aria-label="Koʻrinish" id="modes">
+    <button type="button" data-mode="all">Hamma savollar</button>
+    <button type="button" data-mode="one">Bittalab mashq</button>
+  </div>
+  <div class="allq" id="allBox" hidden></div>
   <div id="askBox">
     <div class="qhead"><span id="qpos"></span><span id="qscore"></span></div>
     <div class="bar"><i id="qbar" style="width:0%"></i></div>
@@ -122,9 +127,83 @@ var CANREC = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia &&
 function openLesson(x) {
   L = x; qi = 0; good = 0;
   paintHead(L);
-  $("askBox").hidden = false; $("doneBox").hidden = true;
-  renderAsk();
+  setMode(store.cfg.mode === "one" ? "one" : "all");
 }
+/* «all» — mavzuning hamma savol va javoblari bitta sahifada; «one» — bittalab, ovoz yozib mashq. Tanlov eslab qolinadi */
+function setMode(m) {
+  stopSay(); dropRec();
+  var one = m === "one", over = qi >= L.q.length;
+  $("allBox").hidden = one;
+  $("askBox").hidden = !one || over;
+  $("doneBox").hidden = !one || !over;
+  $("modes").querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-mode") === m)); });
+  if (!one) renderAll(); else if (!over) renderAsk();
+  window.scrollTo(0, 0);
+}
+$("modes").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-mode]");
+  if (!b) return;
+  store.cfg.mode = b.getAttribute("data-mode"); save();
+  setMode(store.cfg.mode);
+});
+function modelsHtml(q) {
+  return (q.models || []).map(function (m, i) {
+    return '<div class="model"><span class="flabel">Version ' + "ABCD".charAt(i) + "</span><p>" + esc(m) + "</p>" +
+      '<div class="mrow">' + (TTS ? '<button class="btn ghost sm" type="button" data-hear="' + i + '">🔊 Eshitish</button>' : "") +
+      '<button class="btn ghost sm" type="button" data-copy="' + i + '">✎ Oʻzimga moslash</button></div></div>';
+  }).join("");
+}
+function usefulHtml(q) { return (q.use || []).map(function (u) { return "<span>" + esc(u) + "</span>"; }).join(""); }
+
+/* ---------- hamma savollar ---------- */
+function renderAll() {
+  $("allBox").innerHTML = L.q.map(function (q, i) {
+    return '<article class="card qa" data-q="' + i + '"><div class="qahead"><span class="num">' + (i + 1) + '</span><div class="t"><h3>' + esc(q.en) + "</h3>" +
+      (q.uz ? '<p class="askuz">' + esc(q.uz) + "</p>" : "") + "</div>" +
+      (TTS ? '<button class="btn ghost sm" type="button" data-ask aria-label="Savolni eshitish">🔊</button>' : "") + "</div>" +
+      ((q.use || []).length ? '<div class="useful">' + usefulHtml(q) + "</div>" : "") +
+      '<div class="models">' + modelsHtml(q) + "</div>" +
+      '<div class="mine"><label class="flabel" for="mine' + i + '">Mening javobim</label>' +
+      '<textarea id="mine' + i + '" rows="2" lang="en" spellcheck="true" placeholder="Oʻz javobingizni inglizcha yozing">' + esc(mineOf(q)) + "</textarea>" +
+      '<div class="mrow">' + (TTS ? '<button class="btn ghost sm" type="button" data-mine>🔊 Eshitish</button>' : "") +
+      '<button class="btn ghost sm" type="button" data-undo hidden>↶ Qaytarish</button><span class="hint" role="status"></span></div></div></article>';
+  }).join("");
+  $("allBox").querySelectorAll(".qa").forEach(function (c) { paintQa(c, "", null); });
+}
+/* undo — qaytariladigan eski matn (null — yoʻq) */
+function paintQa(c, hint, undo) {
+  var hear = c.querySelector("[data-mine]"), back = c.querySelector("[data-undo]");
+  if (hear) hear.hidden = !c.querySelector("textarea").value.trim();
+  back._old = undo; back.hidden = undo === null;
+  c.querySelector(".hint").textContent = hint;
+}
+$("allBox").addEventListener("input", function (e) {
+  var c = e.target.closest(".qa");
+  keepMine(e.target.value, L.q[+c.getAttribute("data-q")]);
+  paintQa(c, "Saqlandi", null);
+});
+$("allBox").addEventListener("click", function (e) {
+  var b = e.target.closest("button");
+  if (!b) return;
+  var c = b.closest(".qa"), q = L.q[+c.getAttribute("data-q")], ta = c.querySelector("textarea"), old = ta.value;
+  if (b.hasAttribute("data-ask")) say(q.en);
+  else if (b.hasAttribute("data-hear")) say(q.models[+b.getAttribute("data-hear")]);
+  else if (b.hasAttribute("data-mine")) say(old);
+  else if (b.hasAttribute("data-copy")) {
+    ta.value = q.models[+b.getAttribute("data-copy")];
+    keepMine(ta.value, q);
+    paintQa(c, "Namuna nusxalandi — endi oʻzingizga moslab oʻzgartiring.", old.trim() && old !== ta.value ? old : null);
+    ta.focus({ preventScroll: true });
+    ta.scrollIntoView({ block: "center" });
+  } else if (b.hasAttribute("data-undo")) {
+    ta.value = b._old;
+    keepMine(ta.value, q);
+    paintQa(c, "Qaytarildi", null);
+    ta.focus();
+  }
+});
+
+/* ---------- bittalab mashq ---------- */
 function renderAsk() {
   var q = L.q[qi];
   stopSay(); dropRec();
@@ -132,13 +211,9 @@ function renderAsk() {
   $("qscore").textContent = "✓ " + good;
   $("qbar").style.width = (qi / L.q.length * 100) + "%";
   $("ask").textContent = q.en; $("askuz").textContent = q.uz || ""; $("askuz").hidden = !q.uz;
-  $("useful").innerHTML = (q.use || []).map(function (u) { return "<span>" + esc(u) + "</span>"; }).join("");
+  $("useful").innerHTML = usefulHtml(q);
   $("useful").hidden = !(q.use || []).length;
-  $("model").innerHTML = (q.models || []).map(function (m, i) {
-    return '<div class="model"><span class="flabel">Version ' + "ABCD".charAt(i) + "</span><p>" + esc(m) + "</p>" +
-      '<div class="mrow">' + (TTS ? '<button class="btn ghost sm" type="button" data-hear="' + i + '">🔊 Eshitish</button>' : "") +
-      '<button class="btn ghost sm" type="button" data-copy="' + i + '">✎ Oʻzimga moslash</button></div></div>';
-  }).join("");
+  $("model").innerHTML = modelsHtml(q);
   $("answers").hidden = true;
   $("mine").value = myText();
   $("answers").classList.toggle("has", !!myText());   /* yozilgan javob namunalardan oldin turadi */
@@ -164,11 +239,14 @@ $("model").addEventListener("click", function (e) {
 
 /* ---------- oʻz javobi: har savol uchun shu brauzerda saqlanadi (store.mine) ---------- */
 var undoText = null;
-function myKey() { return L.id + "|" + L.q[qi].en; }
-function myText() { return (store.mine && store.mine[myKey()]) || ""; }
-function keepMine(v) {
+function mineKey(q) { return L.id + "|" + q.en; }
+function mineOf(q) { return (store.mine && store.mine[mineKey(q)]) || ""; }
+function myText() { return mineOf(L.q[qi]); }
+/* q berilmasa — mashqdagi joriy savol */
+function keepMine(v, q) {
+  var k = mineKey(q || L.q[qi]);
   if (!store.mine) store.mine = {};
-  if (v.trim()) store.mine[myKey()] = v; else delete store.mine[myKey()];
+  if (v.trim()) store.mine[k] = v; else delete store.mine[k];
   save();
 }
 function paintMine(hint) {
@@ -208,7 +286,7 @@ function rateMe(ok) {
 }
 $("goodBtn").addEventListener("click", function () { rateMe(true); });
 $("hardBtn").addEventListener("click", function () { rateMe(false); });
-$("againBtn").addEventListener("click", function () { openLesson(L); });
+$("againBtn").addEventListener("click", function () { qi = 0; good = 0; setMode("one"); });
 $("listBtn").addEventListener("click", backToList);
 
 /* ---------- ovoz yozish: yozuv faqat shu sahifa xotirasida turadi, hech qayerga yuborilmaydi va saqlanmaydi ---------- */
