@@ -2356,6 +2356,7 @@ $("ans").addEventListener("input", function () {
   if (inp.value.indexOf("*") > -1) { inp.value = inp.value.replace(/\*/g, ""); $("starBtn").click(); }
 });
 document.addEventListener("keydown", function (e) {
+  if (e.defaultPrevented) return;   /* maydonning oʻz ishlovchisi bajarib boʻlgan — bir bosish ikki marta ishlamasin */
   if (!quiz || $("v-quiz").hidden || e.ctrlKey || e.altKey || e.metaKey) return;
   var k = e.key, t = e.target, tag = ((t && t.tagName) || "").toLowerCase();
   var typing = (tag === "input" && !t.readOnly) || tag === "select" || tag === "textarea";
