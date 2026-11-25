@@ -130,8 +130,12 @@ td.spkcell{padding-left:8px;padding-right:8px}
 .field label{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600;margin-bottom:4px}
 .field input{font-family:var(--mono);font-size:1rem}
 .field.uzf input{font-family:var(--body)}
+/* fokusda chegara va outline bitta rangda, oraliqsiz — ikki qavat boʻlib koʻrinmasin */
+.field input:focus-visible{border-color:var(--accent);outline:1px solid var(--accent);outline-offset:0}
 .field.good input{border-color:var(--ok);background:var(--ok-soft)}
 .field.wrong input{border-color:var(--bad);background:var(--bad-soft)}
+.field.good input:focus-visible{border-color:var(--ok);outline-color:var(--ok)}
+.field.wrong input:focus-visible{border-color:var(--bad);outline-color:var(--bad)}
 .field .fix{font-size:.88rem;margin:4px 0 0}
 .field .fix b{color:var(--ok)}
 .field .fix.no b{color:var(--bad)}
