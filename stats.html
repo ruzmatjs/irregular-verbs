@@ -140,7 +140,7 @@ var WDAYS = ["yakshanba", "dushanba", "seshanba", "chorshanba", "payshanba", "ju
 var WSHORT = ["Ya", "Du", "Se", "Ch", "Pa", "Ju", "Sh"];
 /* Har bir boʻlim oʻz natijalarini oʻz kalitida saqlaydi; bu sahifa ularni faqat oʻqiydi */
 var PARTS = [
-  { key: "irrverbs.v1", title: "Irregular verbs", href: "index.html", n: 100, unit: "feʻl", short: "feʻl" },
+  { key: "irrverbs.v1", title: "Irregular verbs", href: "verbs.html", n: 100, unit: "feʻl", short: "feʻl" },
   { key: "a1words.v1", title: "A1 soʻzlar", href: "words.html", n: 1372, unit: "soʻz", short: "A1" },
   { key: "a2words.v1", title: "A2 soʻzlar", href: "a2.html", n: 1028, unit: "soʻz", short: "A2" },
   /* oʻzim qoʻshgan soʻzlar: soni oʻzgaradi (sum.n), lugʻat boʻsh boʻlsa koʻrsatilmaydi. Kunlik tarixida takrorlash javoblari ham bor */
@@ -186,9 +186,9 @@ function render() {
   var live = PARTS.filter(function (P, i) { return !P.opt || (stores[i] && stores[i].sum && stores[i].sum.n > 0); });
   var stats = live.map(function (P) { return partStats(P, stores[PARTS.indexOf(P)]); });
 
-  /* barcha boʻlimlarning kunlik tarixi qoʻshiladi */
+  /* barcha boʻlimlarning kunlik tarixi qoʻshiladi (oʻyinlardagi javoblar ham — ularning alohida kartasi yoʻq) */
   var day = {};
-  stores.forEach(function (st) {
+  stores.concat([read("games.v1")]).forEach(function (st) {
     if (!st || !st.d) return;
     Object.keys(st.d).forEach(function (k) {
       var e = st.d[k] || [], t = day[k] || (day[k] = [0, 0, 0]);
@@ -246,7 +246,7 @@ function renderChart(at) {
     (lrn ? " · <b>" + lrn + "</b> ta soʻz yodlandi" : "") + (act ? " · kuniga oʻrtacha <b>" + Math.round(sum / act) + "</b>" : "");
   if (!sum) {
     $("chartBox").innerHTML = '<div class="empty">Bu davrda mashq qilinmagan. Kunlik tarix yangi versiyadan boshlab yoziladi —<br>' +
-      '<a href="index.html">feʻllar</a>, <a href="words.html">A1</a> yoki <a href="a2.html">A2 soʻzlar</a> boʻyicha mashq qiling, natija shu yerda chiqadi.</div>';
+      '<a href="verbs.html">feʻllar</a>, <a href="words.html">A1</a> yoki <a href="a2.html">A2 soʻzlar</a> boʻyicha mashq qiling, natija shu yerda chiqadi.</div>';
     return;
   }
   /* yuqori chiziq — chiroyli yaxlit son */

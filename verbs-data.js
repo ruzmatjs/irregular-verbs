@@ -1,4 +1,4 @@
-/* 100 ta notoʻgʻri feʻl: V1|V2|V3|tarjima — index.html (mashq) va my.html (qidiruv, kundalik takrorlash) uchun umumiy */
+/* 100 ta notoʻgʻri feʻl: V1|V2|V3|tarjima — verbs.html (mashq) va my.html (qidiruv, kundalik takrorlash) uchun umumiy */
 var VERBS_RAW = [
 "be|was/were|been|boʻlmoq",
 "become|became|become|boʻlmoq, …ga aylanmoq",

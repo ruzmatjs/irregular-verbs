@@ -210,7 +210,21 @@ td.v{white-space:normal;min-width:120px}
 /* ---------- navigatsiya: boʻlim → koʻnikma → sahifa ichidagi tablar (ui.js chizadi) ---------- */
 :root{--bn:0px}
 .switch{display:flex;gap:4px;margin-left:auto;align-self:center;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px}
-.switch a{font-size:.82rem;font-weight:500;color:var(--muted);text-decoration:none;padding:5px 13px;border-radius:999px;white-space:nowrap}
+.switch a{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:500;color:var(--muted);text-decoration:none;padding:5px 13px 5px 10px;border-radius:999px;white-space:nowrap}
+.switch a svg{width:15px;height:15px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+/* logo + sarlavha = bosh sahifaga havola */
+.brandlink{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;border-radius:8px;min-width:0}
+.brandlink:hover h1{color:var(--accent)}
+.brandlink:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.brandlink .back{font-size:1.5rem;line-height:1;color:var(--muted);margin-right:-4px;font-weight:400}
+.brandlink:hover .back{color:var(--accent)}
+.confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+/* javob tekshirilganda natija «sakrab» chiqadi */
+@keyframes pop{0%{transform:scale(.96);opacity:0}60%{transform:scale(1.015);opacity:1}100%{transform:none}}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.verdict:not([hidden]){animation:pop .28s ease-out}
+.field.wrong input{animation:shake .25s ease-in-out}
+@media (prefers-reduced-motion: reduce){.verdict:not([hidden]),.field.wrong input{animation:none}}
 .switch a:hover{color:var(--fg)}
 .switch a[aria-current]{background:var(--accent);color:var(--on-accent)}
 .switch a:focus-visible,.skills a:focus-visible,.botnav a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}

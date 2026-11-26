@@ -4,6 +4,22 @@ Ingliz tilidagi 100 ta notoʻgʻri feʻlni yodlash uchun mashq sayti. Oʻzbek ti
 
 **Sayt:** https://ruzmatjs.github.io/irregular-verbs/
 
+## Bosh sahifa
+
+Sayt ochilganda bosh sahifa chiqadi (`index.html`) — kerakli joyga bir bosishda:
+
+- Salomlashuv, bugungi maqsad halqasi (kuniga 20/30/50/100 javob, bosib oʻzgartiriladi), ketma-ket kunlar 🔥 va bugungi natija
+- Soʻz qidirish qatori — «Lugʻat»da qidiradi
+- «Bugungi takrorlash» (nechta soʻz kutyapti) va «Davom ettirish» (oxirgi ochilgan kurs)
+- Rangli kurs kartalari: yodlash foizi, «▶ Mashq» — oxirgi sozlamalar bilan mashq darhol boshlanadi, «Xatolar · N» — xatolar roʻyxati
+- Asosiy menyu hamma sahifada bir xil, 4 ta: Bosh sahifa, Lugʻat, Takrorlash, Statistika (telefonda pastda). Logo bosilsa — bosh sahifaga
+- Kurs sahifasiga tez kirish manzillari: `verbs.html#mashq`, `a2.html#xatolar` va h.k.
+- Mashq 80% va undan yaxshi natija bilan tugasa — konfetti 🎉 (harakatni kamaytirish yoqilgan boʻlsa — yoʻq)
+
+## Irregular verbs
+
+Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/verbs.html
+
 ## Imkoniyatlari
 
 - Soʻzlarni bittalab soʻraydi: V2, V3 va tarjimani yozasiz
@@ -63,6 +79,19 @@ Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/my.html
 - Feʻllar takrorlashda V2 va V3 bilan soʻraladi (oʻzbekchasi chiqsa — uchala shakli)
 - Natijalar `my.v1` kalitida saqlanadi; boshqa boʻlimlarning natijalari faqat oʻqiladi. Soʻz roʻyxatlari `verbs-data.js`, `a1-data.js`, `a2-data.js` da — mashq sahifalari va «Lugʻatim» uchun umumiy
 
+## Oʻyinlar
+
+Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/games.html
+
+- **⚡ 60 soniya** — soʻz chiqadi, 4 ta variantdan toʻgʻrisini tanlaysiz (1–4 tugmalari ham ishlaydi). Ketma-ket toʻgʻri javob ballni ×2…×5 qiladi, toʻgʻri javob +1 soniya, xato −3 soniya. Feʻllarda V2/V3 ham soʻraladi
+- **🃏 Juftlar** — 12 ta yopiq kartochka: inglizcha soʻzni tarjimasi bilan juftlaysiz. Tez va kam urinishda topsangiz — bonus va 3 yulduz
+- **🔤 Harflar** — tarjimaga qarab aralashgan harflardan soʻzni yigʻasiz (klaviatura ham ishlaydi), «💡 Yordam» bitta harfni qoʻyadi
+- **❤️ Soʻzni top** — soʻz harfma-harf topiladi, birinchi harfi tekin, 6 ta yurak
+- Soʻzlar: aralash, feʻllar, A1, A2, mening soʻzlarim yoki «Xatolarim» (boshqa boʻlimlarda xato qilinganlar)
+- Ball = XP: darajalar (Yangi boshlovchi → Afsona), har oʻyinning rekordi, yangi rekord va yangi darajada konfetti. Ovoz effektlari va talaffuzni oʻchirib qoʻyish mumkin
+- Oʻyin oxirida xato qilingan soʻzlar chiqadi — bir bosishda «Mening soʻzlarim»ga qoʻshiladi va kundalik takrorlashga tushadi
+- Oʻyindagi javoblar bugungi maqsad, ketma-ket kunlar va statistikadagi kunlik faollikka qoʻshiladi. Natijalar `games.v1` kalitida. Toʻgʻridan-toʻgʻri oʻyinga: `games.html#speed`, `#match`, `#anagram`, `#guess`
+
 ## Statistika
 
 Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/stats.html
@@ -79,4 +108,4 @@ Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/stats.html
 
 ## Ishlatish
 
-Server kerak emas: `index.html` (feʻllar), `words.html` (A1 soʻzlar), `a2.html` (A2 soʻzlar), `a2-listening.html`, `a2-speaking.html`, `my.html` (lugʻatim) yoki `stats.html` (statistika) ni brauzerda ochsangiz kifoya. GitHub Pages uchun `sh build.sh` ularning hammasidan `docs/` ichida toʻliq sahifa yasaydi.
+Server kerak emas: `index.html` (bosh sahifa), `verbs.html` (feʻllar), `words.html` (A1 soʻzlar), `a2.html` (A2 soʻzlar), `a2-listening.html`, `a2-speaking.html`, `my.html` (lugʻatim) yoki `stats.html` (statistika) ni brauzerda ochsangiz kifoya. GitHub Pages uchun `sh build.sh` ularning hammasidan `docs/` ichida toʻliq sahifa yasaydi.

@@ -1,0 +1,796 @@
+<title>Oʻyinlar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<!-- IBM Plex dagi «ʻ» juda keng (so ʻ z boʻlib koʻrinadi) — faqat shu belgi Noto Sans dan olinadi, u --body da birinchi turadi -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&text=%CA%BB%CA%BC&display=swap">
+<link rel="stylesheet" href="ui.css">
+<style>
+:root{
+  --g1:#b4581c; --g1s:#f7e2d2;   /* 60 soniya */
+  --g2:#2b5a8a; --g2s:#dbe6f2;   /* juftlar */
+  --g3:#6b4a8f; --g3s:#e7def1;   /* harflar */
+  --g4:#9c3d5a; --g4s:#f4dce4;   /* soʻzni top */
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --g1:#f0a36d; --g1s:#3a281c; --g2:#8fb8e8; --g2s:#1f2b3a; --g3:#c2a3e6; --g3s:#2c2438; --g4:#ef9ab4; --g4s:#3a2229;
+}}
+:root[data-theme="dark"]{
+  --g1:#f0a36d; --g1s:#3a281c; --g2:#8fb8e8; --g2s:#1f2b3a; --g3:#c2a3e6; --g3s:#2c2438; --g4:#ef9ab4; --g4s:#3a2229;
+}
+/* daraja */
+.g-lvl{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.g-badge{width:64px;height:64px;border-radius:18px;flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--gold);color:var(--surface);font-family:var(--display);font-weight:700;font-size:1.6rem;line-height:1}
+.g-badge small{font-family:var(--body);font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-top:3px}
+.g-lvl .t{flex:1 1 200px;min-width:0}
+.g-lvl .t b{display:block;font-size:1.1rem}
+.g-lvl .t span{font-size:.84rem;color:var(--muted)}
+.g-xp{height:10px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin-top:8px}
+.g-xp i{display:block;height:100%;background:var(--gold);border-radius:inherit;transition:width .6s ease-out}
+.g-tools{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.g-tog{appearance:none;font:inherit;font-size:.84rem;font-weight:600;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);cursor:pointer}
+.g-tog[aria-pressed="false"]{opacity:.55}
+.g-tog:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* soʻz manbasi */
+.g-src{display:flex;flex-wrap:wrap;gap:8px}
+.g-src small{font-weight:400;color:var(--muted);margin-left:4px}
+/* oʻyin kartalari */
+.g-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:12px}
+.g-card{--c:var(--g1);--cs:var(--g1s);appearance:none;font:inherit;color:var(--fg);text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:6px;
+  padding:18px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);border-bottom:4px solid var(--c);transition:transform .15s,box-shadow .15s}
+.g-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px -12px rgba(0,0,0,.4)}
+.g-card:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+.g-card:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.g-card .em{width:54px;height:54px;border-radius:14px;background:var(--cs);display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:6px}
+/* telefonda karta ixcham: belgi chapda, matn oʻngda */
+@media (max-width:560px){
+  .g-card{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:2px;padding:14px;align-items:start}
+  .g-card .em{grid-row:1 / span 3;margin:0;width:50px;height:50px}
+  .g-card b{font-size:1.1rem}
+  .g-card span:not(.em){font-size:.82rem}
+  .g-card .rec{padding-top:4px}
+}
+.g-card b{font-family:var(--display);font-size:1.2rem}
+.g-card span{font-size:.86rem;color:var(--muted)}
+.g-card .rec{margin-top:auto;padding-top:8px;font-size:.8rem;font-weight:600;color:var(--c)}
+.g-card.g1{--c:var(--g1);--cs:var(--g1s)} .g-card.g2{--c:var(--g2);--cs:var(--g2s)}
+.g-card.g3{--c:var(--g3);--cs:var(--g3s)} .g-card.g4{--c:var(--g4);--cs:var(--g4s)}
+/* oʻyin maydoni */
+.g-top{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.g-top h2{margin:0;font-size:1.2rem;flex:1 1 auto}
+.g-num{font-family:var(--display);font-size:1.4rem;font-weight:700;font-variant-numeric:tabular-nums}
+.g-num small{font-family:var(--body);font-size:.72rem;font-weight:500;color:var(--muted);margin-left:3px}
+.g-x{appearance:none;font:inherit;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem}
+.g-meter{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin-bottom:16px}
+.g-meter i{display:block;height:100%;background:var(--g1);border-radius:inherit;transition:width .1s linear}
+.g-meter.low i{background:var(--bad)}
+.g-stage{min-height:300px}
+.g-prompt{text-align:center;padding:14px 0 18px}
+.g-prompt .k{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.g-prompt .w{font-family:var(--display);font-size:clamp(1.8rem,7vw,2.8rem);font-weight:700;line-height:1.15;margin:4px 0 0;overflow-wrap:anywhere}
+.g-prompt .w.uz{font-style:italic;font-weight:400;font-size:clamp(1.4rem,6vw,2rem)}
+.g-combo{display:inline-block;margin-top:8px;font-size:.84rem;font-weight:700;color:var(--g1);min-height:1.3em}
+/* 60 soniya: variantlar */
+.g-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.g-opt{appearance:none;font:inherit;font-size:1rem;font-weight:500;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:16px 12px;min-height:64px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;overflow-wrap:anywhere;transition:transform .08s}
+.g-opt:active{transform:scale(.97)}
+.g-opt kbd{font-family:var(--mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 6px;flex:0 0 auto}
+.g-opt.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.g-opt.no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+@media (pointer:coarse){.g-opt kbd{display:none}}
+@media (max-width:420px){.g-opts{grid-template-columns:1fr}}
+/* juftlar */
+.g-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;perspective:800px}
+@media (max-width:560px){.g-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}}
+.g-tile{appearance:none;font:inherit;border:0;padding:0;background:none;cursor:pointer;aspect-ratio:4/3;position:relative;transform-style:preserve-3d;transition:transform .35s}
+.g-tile.open,.g-tile.done{transform:rotateY(180deg)}
+.g-tile .f,.g-tile .b{position:absolute;inset:0;border-radius:12px;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;padding:8px;text-align:center}
+.g-tile .f{background:var(--g2);color:var(--surface);font-size:1.6rem;font-family:var(--display);font-weight:700}
+.g-tile .b{transform:rotateY(180deg);background:var(--surface);border:2px solid var(--g2);color:var(--fg);font-size:.95rem;font-weight:600;overflow-wrap:anywhere;line-height:1.25}
+.g-tile .b.en{font-family:var(--mono)}
+.g-tile .b.uz{font-style:italic;font-weight:500}
+.g-tile.done .b{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
+.g-tile.miss .b{border-color:var(--bad);background:var(--bad-soft)}
+.g-tile:focus-visible{outline:2px solid var(--g2);outline-offset:3px;border-radius:12px}
+/* harflar va soʻzni top */
+.g-slots{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:6px 0 18px}
+.g-slot{appearance:none;font:inherit;width:42px;height:50px;border-radius:10px;border:2px dashed var(--line);background:var(--surface-2);
+  font-family:var(--mono);font-size:1.4rem;font-weight:600;color:var(--fg);display:flex;align-items:center;justify-content:center;cursor:pointer;text-transform:uppercase}
+.g-slot.full{border-style:solid;border-color:var(--g3);background:var(--surface)}
+.g-slot.hint{border-color:var(--gold);color:var(--gold)}
+.g-slots.ok .g-slot{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
+.g-slots.no{animation:shake .3s}
+.g-tiles{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.g-letter{appearance:none;font:inherit;width:48px;height:52px;border-radius:12px;border:0;background:var(--g3);color:var(--surface);
+  font-family:var(--mono);font-size:1.4rem;font-weight:700;cursor:pointer;text-transform:uppercase;box-shadow:0 3px 0 rgba(0,0,0,.25);transition:transform .08s}
+.g-letter:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.g-letter.used{visibility:hidden}
+.g-acts{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:18px}
+@media (max-width:420px){.g-slot{width:34px;height:44px;font-size:1.15rem}.g-letter{width:42px;height:48px}}
+.g-hearts{font-size:1.25rem;letter-spacing:2px;text-align:center;min-height:1.6em}
+.g-hearts .lost{filter:grayscale(1);opacity:.3}
+.g-kb{display:flex;flex-direction:column;gap:6px;align-items:center;margin-top:8px}
+.g-kb div{display:flex;gap:5px;justify-content:center;width:100%}
+.g-key{appearance:none;font:inherit;flex:0 1 38px;height:46px;min-width:0;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);
+  font-family:var(--mono);font-weight:600;font-size:1rem;cursor:pointer;text-transform:uppercase}
+.g-key.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.g-key.no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);opacity:.6}
+.g-key:disabled{cursor:default}
+.g-reveal{text-align:center;font-size:.95rem;min-height:1.5em;margin:0}
+.g-reveal b{font-family:var(--mono)}
+/* natija */
+.g-end{text-align:center}
+.g-end .big{font-family:var(--display);font-size:3.2rem;font-weight:700;line-height:1;margin:6px 0 0}
+.g-end .stars{font-size:2rem;letter-spacing:4px;margin-top:6px}
+.g-end .new{display:inline-block;margin-top:10px;padding:4px 12px;border-radius:999px;background:var(--gold);color:var(--surface);font-weight:700;font-size:.86rem}
+.g-end .line{color:var(--muted);margin:10px 0 0}
+.g-miss{list-style:none;margin:16px 0 0;padding:0;text-align:left;display:flex;flex-direction:column;gap:6px}
+.g-miss li{display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:8px;padding:8px 10px;font-size:.92rem}
+.g-miss li span{flex:1 1 auto;min-width:0}
+.g-miss li b{font-family:var(--mono)}
+.g-end .startbar{justify-content:center}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+.bump{animation:bump .3s ease-out}
+@media (prefers-reduced-motion: reduce){.g-tile{transition:none}.bump,.g-slots.no{animation:none}.g-card{transition:none}}
+</style>
+
+<header class="top" data-section="games">
+  <div class="top-in">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+        <rect width="256" height="256" rx="56" fill="var(--accent)"/>
+        <g fill="none" stroke="var(--surface)" stroke-width="11" stroke-linecap="round">
+          <path d="M62 156 A33 64 0 0 1 128 156"/>
+          <path d="M128 156 A33 38 0 0 1 194 156"/>
+        </g>
+        <circle cx="62" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="128" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="194" cy="156" r="14" fill="var(--gold)"/>
+      </svg>
+      <h1>Oʻyinlar</h1>
+      <span class="sub" id="brandStat"></span>
+      <nav class="switch" id="secNav" aria-label="Asosiy menyu"></nav>
+    </div>
+    <div style="height:12px"></div>
+  </div>
+</header>
+<script src="ui.js"></script>
+<script src="verbs-data.js"></script>
+<script src="a1-data.js"></script>
+<script src="a2-data.js"></script>
+
+<div class="wrap">
+
+<section id="v-hub">
+  <div class="stack">
+    <div class="card g-lvl">
+      <div class="g-badge" id="lvlN">1<small>daraja</small></div>
+      <div class="t">
+        <b id="lvlName">Yangi boshlovchi</b>
+        <span id="lvlTxt">0 XP</span>
+        <div class="g-xp"><i id="lvlBar" style="width:0%"></i></div>
+      </div>
+      <div class="g-tools">
+        <button class="g-tog" type="button" id="sndBtn" aria-pressed="true">🔊 Ovoz</button>
+        <button class="g-tog" type="button" id="sayBtn" aria-pressed="true">🗣 Talaffuz</button>
+      </div>
+    </div>
+    <fieldset>
+      <legend>Qaysi soʻzlar bilan oʻynaymiz?</legend>
+      <div class="g-src opts" id="srcBox"></div>
+    </fieldset>
+    <div class="g-list" id="gameList"></div>
+  </div>
+</section>
+
+<section id="v-quiz" hidden>
+  <div class="g-top">
+    <h2 id="gTitle"></h2>
+    <span class="g-num" id="gInfo"></span>
+    <span class="g-num" id="gScore">0<small>ball</small></span>
+    <button class="g-x" type="button" id="gQuit" aria-label="Oʻyinni toʻxtatish" title="Toʻxtatish (Esc)">✕</button>
+  </div>
+  <div class="g-meter" id="gMeter"><i id="gMeterI" style="width:100%"></i></div>
+  <div class="card g-stage" id="stage"></div>
+</section>
+
+<section id="v-end" hidden>
+  <div class="card g-end" id="endBox"></div>
+</section>
+
+</div>
+
+<script>
+(function () {
+var KEY = "games.v1";
+var GAMES = [
+  { id: "speed", cls: "g1", em: "⚡", title: "60 soniya", desc: "Toʻgʻri tarjimani tez tanlang. Ketma-ket topsangiz — ball ikki, uch barobar!" },
+  { id: "match", cls: "g2", em: "🃏", title: "Juftlar", desc: "Kartochkalarni ochib, inglizcha soʻzni tarjimasi bilan juftlang. Xotirani charxlaydi." },
+  { id: "anagram", cls: "g3", em: "🔤", title: "Harflar", desc: "Aralashib ketgan harflardan inglizcha soʻzni yigʻing. Imloni mustahkamlaydi." },
+  { id: "guess", cls: "g4", em: "❤️", title: "Soʻzni top", desc: "Tarjimaga qarab soʻzni harfma-harf toping. 6 ta yurak — ehtiyot boʻling!" }
+];
+var SRCS = [
+  { id: "mix", label: "Aralash" }, { id: "v", label: "Feʻllar" }, { id: "a1", label: "A1" }, { id: "a2", label: "A2" },
+  { id: "my", label: "Mening soʻzlarim" }, { id: "mis", label: "Xatolarim" }
+];
+var LVLNAMES = ["Yangi boshlovchi", "Qiziquvchan", "Harakatchan", "Bilimdon", "Usta", "Chempion", "Ustoz", "Afsona"];
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function p2(n) { return (n < 10 ? "0" : "") + n; }
+function today() { var d = new Date(); return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()); }
+function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+function read(key) { try { var o = JSON.parse(localStorage.getItem(key) || "null"); if (o && typeof o === "object") return o; } catch (e) {} return null; }
+
+/* ---------- saqlash: rekordlar, XP, kunlik tarix (bosh sahifa va statistika uchun) ---------- */
+var st = read(KEY) || {};
+if (!st.best) st.best = {};
+if (!st.cfg) st.cfg = {};
+if (!st.xp) st.xp = 0;
+if (SRCS.map(function (s) { return s.id; }).indexOf(st.cfg.src) < 0) st.cfg.src = "mix";
+if (st.cfg.sound === undefined) st.cfg.sound = true;
+if (st.cfg.say === undefined) st.cfg.say = true;
+function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+function logDay(i) {
+  if (!st.d) st.d = {};
+  var k = today(), e = st.d[k] || (st.d[k] = [0, 0, 0]);
+  e[i] = (e[i] || 0) + 1;
+}
+
+/* ---------- soʻzlar: feʻllar, A1, A2, mening soʻzlarim ---------- */
+function norm(s) { return (s || "").toLowerCase().replace(/[ʻʼ‘’`´']/g, "'").replace(/\s+/g, " ").trim(); }
+/* koʻrsatish uchun qisqa tarjima: birinchi maʼnosi */
+function shortUz(s) {
+  s = String(s).split(/\s*;\s*/)[0];
+  if (s.length > 24) s = s.split(/\s*,\s*/)[0];
+  if (s.length > 24) s = s.replace(/\s*\([^)]*\)/g, "");
+  return s;
+}
+/* harf oʻyinlari uchun: faqat lotin harflaridan iborat 3–10 harfli soʻz */
+function spell(en) { var b = norm(en).replace(/^to /, ""); return /^[a-z]{3,10}$/.test(b) ? b : ""; }
+var WORDS = [], HAVE = {};
+function add(src, en, uz, key, extra) {
+  var k = norm(en) + "|" + norm(uz);
+  if (HAVE[k]) return;
+  HAVE[k] = 1;
+  var it = { src: src, key: key, en: en, uz: shortUz(uz), uzFull: uz, sp: spell(en) };
+  if (extra) for (var x in extra) it[x] = extra[x];
+  WORDS.push(it);
+}
+VERBS_RAW.forEach(function (line) { var p = line.split("|"); add("v", p[0], p[3], p[0], { v1: p[0], v2: p[1], v3: p[2] }); });
+A1_W.forEach(function (w) { add("a1", w[0], w[1], (w[0] + "|" + w[1]).toLowerCase()); });
+A2_W.forEach(function (w) { add("a2", w[0], w[1], (w[0] + "|" + w[1]).toLowerCase()); });
+var VERBS = WORDS.filter(function (w) { return w.v1; });
+function myWords() {
+  var my = read("my.v1");
+  return my && Array.isArray(my.w) ? my.w : [];
+}
+var MYITEMS = [];
+function loadMine() {
+  MYITEMS = myWords().filter(function (m) { return m && m.en && m.uz; }).map(function (m) {
+    var verb = /\s[–—-]\s/.test(m.en) ? m.en.split(/\s[–—-]\s/) : null;
+    return { src: "my", key: "my:" + m.id, en: verb ? verb[0] : m.en, uz: shortUz(m.uz), uzFull: m.uz, sp: spell(verb ? verb[0] : m.en),
+      v1: verb && verb[0], v2: verb && verb[1], v3: verb && verb[2] };
+  });
+}
+loadMine();
+/* «Xatolarim»: boshqa boʻlimlarda xato qilingan, hali yodlanmagan soʻzlar */
+function mistakes() {
+  var S = { v: read("irrverbs.v1"), a1: read("a1words.v1"), a2: read("a2words.v1") }, my = read("my.v1"), out = [];
+  WORDS.forEach(function (it) {
+    var s = S[it.src], p = s && s.p && s.p[it.key];
+    if (p && (((p.bad | 0) > 0 && (p.lvl | 0) < 5) || p.mis)) out.push(it);
+  });
+  MYITEMS.forEach(function (it) {
+    var r = my && my.r && my.r[it.key];
+    if (r && (r.bad | 0) > 0 && (r.b | 0) < 5) out.push(it);
+  });
+  return out;
+}
+function pool(src) {
+  if (src === "mis") return mistakes();
+  if (src === "my") return MYITEMS.slice();
+  if (src === "mix") return WORDS.slice();
+  return WORDS.filter(function (it) { return it.src === src; });
+}
+/* oʻyin uchun kerakli eng kam soʻz soni */
+function enough(game, list) {
+  if (game === "anagram" || game === "guess") return list.filter(function (it) { return it.sp; }).length >= 3;
+  if (game === "match") return list.length >= 4;
+  return list.length >= 4;
+}
+
+/* ---------- ovoz va talaffuz ---------- */
+var AC = null;
+function beep(kind) {
+  if (!st.cfg.sound) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    var notes = kind === "ok" ? [660, 880] : kind === "win" ? [523, 659, 784, 1047] : kind === "flip" ? [440] : [220, 180];
+    notes.forEach(function (f, i) {
+      var o = AC.createOscillator(), g = AC.createGain(), t = AC.currentTime + i * 0.09;
+      o.type = kind === "bad" ? "square" : "triangle";
+      o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(kind === "bad" ? 0.05 : 0.12, t + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + (kind === "flip" ? 0.06 : 0.16));
+      o.connect(g); g.connect(AC.destination);
+      o.start(t); o.stop(t + 0.2);
+    });
+  } catch (e) {}
+}
+var TTS = typeof window.speechSynthesis !== "undefined" && typeof window.SpeechSynthesisUtterance !== "undefined";
+var voice = null;
+function loadVoice() {
+  if (!TTS) return;
+  try {
+    var en = (speechSynthesis.getVoices() || []).filter(function (v) { return /^en([-_]|$)/i.test(v.lang || ""); });
+    voice = en.filter(function (v) { return /natural|neural|google|online/i.test(v.name); })[0] || en[0] || null;
+  } catch (e) {}
+}
+if (TTS) { loadVoice(); try { speechSynthesis.addEventListener("voiceschanged", loadVoice); } catch (e) {} }
+function say(text) {
+  if (!TTS || !st.cfg.say || !text) return;
+  try {
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(String(text).replace(/\(.*?\)/g, "").replace(/\//g, " or "));
+    if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = "en-US";
+    u.rate = 0.9;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+
+/* ---------- daraja ---------- */
+function lvlOf(xp) { var n = 1; while (xp >= 50 * n * (n + 1)) n++; return n; }
+function lvlFrom(n) { return 50 * (n - 1) * n; }
+function paintLevel() {
+  var n = lvlOf(st.xp), a = lvlFrom(n), b = lvlFrom(n + 1);
+  $("lvlN").innerHTML = n + "<small>daraja</small>";
+  $("lvlName").textContent = LVLNAMES[Math.min(n - 1, LVLNAMES.length - 1)];
+  $("lvlTxt").textContent = st.xp + " XP · keyingi darajagacha " + (b - st.xp) + " XP";
+  $("lvlBar").style.width = ((st.xp - a) / (b - a) * 100) + "%";
+  $("brandStat").textContent = "⭐ " + n + "-daraja";
+}
+
+/* ---------- bosh qism: manba va oʻyinlar ---------- */
+function show(v) { ["hub", "quiz", "end"].forEach(function (x) { $("v-" + x).hidden = x !== v; }); window.scrollTo(0, 0); }
+function renderHub() {
+  loadMine();
+  paintLevel();
+  $("sndBtn").setAttribute("aria-pressed", String(!!st.cfg.sound));
+  $("sayBtn").setAttribute("aria-pressed", String(!!st.cfg.say));
+  $("sayBtn").hidden = !TTS;
+  $("srcBox").innerHTML = SRCS.map(function (s) {
+    var n = pool(s.id).length;
+    return '<label class="opt"><input type="radio" name="src" value="' + s.id + '"' + (st.cfg.src === s.id ? " checked" : "") + "><span>" + s.label + "<small>" + n + "</small></span></label>";
+  }).join("");
+  var list = pool(st.cfg.src);
+  $("gameList").innerHTML = GAMES.map(function (g) {
+    var ok = enough(g.id, list), b = st.best[g.id];
+    return '<button class="g-card ' + g.cls + '" type="button" data-game="' + g.id + '"' + (ok ? "" : " disabled") + ">" +
+      '<span class="em" aria-hidden="true">' + g.em + "</span><b>" + g.title + "</b><span>" + g.desc + "</span>" +
+      '<span class="rec">' + (ok ? (b ? "🏆 Rekord: " + b + " ball" : "Hali oʻynalmagan — birinchi boʻling!") : "Bu oʻyin uchun soʻz yetarli emas — boshqa soʻzlarni tanlang") + "</span></button>";
+  }).join("");
+}
+$("srcBox").addEventListener("change", function (e) { st.cfg.src = e.target.value; save(); renderHub(); });
+$("sndBtn").addEventListener("click", function () { st.cfg.sound = !st.cfg.sound; save(); renderHub(); beep("ok"); });
+$("sayBtn").addEventListener("click", function () { st.cfg.say = !st.cfg.say; save(); renderHub(); say("Hello!"); });
+$("gameList").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-game]");
+  if (b && !b.disabled) start(b.getAttribute("data-game"));
+});
+
+/* ---------- umumiy oʻyin holati ---------- */
+var G = null;
+function start(id) {
+  var list = pool(st.cfg.src);
+  if (!enough(id, list)) return;
+  stopTimer();
+  G = { id: id, score: 0, ok: 0, bad: 0, miss: [], list: list, busy: false };
+  var meta = GAMES.filter(function (g) { return g.id === id; })[0];
+  $("gTitle").textContent = meta.em + " " + meta.title;
+  $("gMeter").hidden = true;
+  $("gMeter").classList.remove("low");
+  setScore(0);
+  show("quiz");
+  ({ speed: speedStart, match: matchStart, anagram: anaStart, guess: guessStart })[id]();
+}
+function setScore(add) {
+  G.score += add;
+  var el = $("gScore");
+  el.innerHTML = G.score + "<small>ball</small>";
+  if (add > 0) { el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); }
+}
+function info(t) { $("gInfo").innerHTML = t; }
+function right(it) { G.ok++; logDay(0); }
+function wrong(it) { G.bad++; logDay(1); if (it && G.miss.indexOf(it) < 0) G.miss.push(it); }
+var timer = null;
+function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+$("gQuit").addEventListener("click", function () { if (G) end(true); });
+document.addEventListener("keydown", function (e) {
+  if (!G || $("v-quiz").hidden || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === "Escape") { e.preventDefault(); end(true); return; }
+  if (G.onKey) G.onKey(e);
+});
+/* boshqa soʻzlardan chalgʻituvchi variantlar */
+function distract(it, n, field) {
+  var out = [], used = {};
+  used[norm(it[field])] = 1;
+  var src = field === "v2" || field === "v3" ? VERBS : G.list.length >= 12 ? G.list : WORDS;
+  for (var tries = 0; out.length < n && tries < 400; tries++) {
+    var x = pick(src);
+    var v = x[field];
+    if (!v || used[norm(v)] || norm(x.en) === norm(it.en) || norm(x.uz) === norm(it.uz)) continue;
+    used[norm(v)] = 1;
+    out.push(v);
+  }
+  return out;
+}
+
+/* ---------- 1. 60 soniya ---------- */
+function speedStart() {
+  G.t = 60; G.combo = 0; G.recent = [];
+  $("gMeter").hidden = false;
+  info("⏱ 60");
+  speedNext();
+  var last = Date.now();
+  timer = setInterval(function () {
+    var now = Date.now();
+    G.t -= (now - last) / 1000; last = now;
+    if (G.t <= 0) { G.t = 0; paintTime(); stopTimer(); end(false); return; }
+    paintTime();
+  }, 100);
+}
+function paintTime() {
+  $("gMeterI").style.width = (Math.min(60, G.t) / 60 * 100) + "%";
+  $("gMeter").classList.toggle("low", G.t < 10);
+  info("⏱ " + Math.ceil(G.t));
+}
+function speedNext() {
+  var it, guard = 0;
+  do { it = pick(G.list); guard++; } while (G.recent.indexOf(it) > -1 && guard < 20);
+  G.recent.push(it); if (G.recent.length > 8) G.recent.shift();
+  var q = { it: it };
+  if (it.v1 && it.v2 && Math.random() < 0.4) {
+    var f = Math.random() < 0.5 ? "v2" : "v3";
+    q.k = it.v1 + " → " + (f === "v2" ? "V2 · Past Simple" : "V3 · Past Participle");
+    q.w = it.v1; q.uzW = false; q.ans = it[f]; q.opts = shuffle([it[f]].concat(distract(it, 3, f)));
+  } else if (Math.random() < 0.5) {
+    q.k = "Tarjimasi qaysi?"; q.w = it.en; q.uzW = false; q.ans = it.uz; q.opts = shuffle([it.uz].concat(distract(it, 3, "uz")));
+  } else {
+    q.k = "Inglizchasi qaysi?"; q.w = it.uz; q.uzW = true; q.ans = it.en; q.opts = shuffle([it.en].concat(distract(it, 3, "en")));
+  }
+  G.q = q;
+  G.busy = false;
+  var mult = 1 + Math.min(4, Math.floor(G.combo / 3));
+  $("stage").innerHTML = '<div class="g-prompt"><div class="k">' + esc(q.k) + '</div><p class="w' + (q.uzW ? " uz" : "") + '">' + esc(q.w) + "</p>" +
+    '<span class="g-combo">' + (G.combo >= 3 ? "🔥 " + G.combo + " ketma-ket · ×" + mult : "") + "</span></div>" +
+    '<div class="g-opts">' + q.opts.map(function (o, i) {
+      return '<button class="g-opt" type="button" data-i="' + i + '"><kbd>' + (i + 1) + "</kbd><span>" + esc(o) + "</span></button>";
+    }).join("") + "</div>";
+  G.onKey = function (e) { var n = parseInt(e.key, 10); if (n >= 1 && n <= 4) { e.preventDefault(); speedPick(n - 1); } };
+}
+$("stage").addEventListener("click", function (e) {
+  if (!G) return;
+  var o = e.target.closest(".g-opt");
+  if (o && G.id === "speed") speedPick(+o.getAttribute("data-i"));
+});
+function speedPick(i) {
+  if (G.busy || !G.q) return;
+  G.busy = true;
+  var q = G.q, btns = $("stage").querySelectorAll(".g-opt"), good = q.opts[i] === q.ans;
+  Array.prototype.forEach.call(btns, function (b, k) { if (q.opts[k] === q.ans) b.classList.add("ok"); else if (k === i) b.classList.add("no"); });
+  if (good) {
+    G.combo++;
+    var mult = 1 + Math.min(4, Math.floor((G.combo - 1) / 3));
+    setScore(10 * mult);
+    G.t = Math.min(60, G.t + 1);
+    right(q.it); beep("ok");
+    if (!q.uzW) say(q.it.en);
+    setTimeout(function () { if (G && G.id === "speed" && timer) speedNext(); }, 350);
+  } else {
+    G.combo = 0;
+    G.t -= 3;
+    wrong(q.it); beep("bad");
+    setTimeout(function () { if (G && G.id === "speed" && timer) speedNext(); }, 900);
+  }
+}
+
+/* ---------- 2. Juftlar ---------- */
+function matchStart() {
+  var n = Math.min(6, G.list.length), chosen = [], usedEn = {}, usedUz = {};
+  shuffle(G.list.slice()).some(function (it) {
+    if (usedEn[norm(it.en)] || usedUz[norm(it.uz)] || it.en.length > 22) return false;
+    usedEn[norm(it.en)] = usedUz[norm(it.uz)] = 1;
+    chosen.push(it);
+    return chosen.length >= n;
+  });
+  G.pairs = chosen.length; G.found = 0; G.moves = 0; G.open = []; G.t0 = Date.now();
+  var cards = [];
+  chosen.forEach(function (it, k) { cards.push({ k: k, side: "en", text: it.en, it: it }); cards.push({ k: k, side: "uz", text: it.uz, it: it }); });
+  G.cards = shuffle(cards);
+  $("stage").innerHTML = '<p class="hint" style="text-align:center;margin:0 0 12px">Inglizcha soʻzni tarjimasi bilan juftlang</p><div class="g-grid">' +
+    G.cards.map(function (c, i) {
+      return '<button class="g-tile" type="button" data-c="' + i + '" aria-label="Yopiq kartochka"><span class="f" aria-hidden="true">?</span><span class="b ' + c.side + '">' + esc(c.text) + "</span></button>";
+    }).join("") + "</div>";
+  info("0 / " + G.pairs);
+  timer = setInterval(function () { info("⏱ " + Math.floor((Date.now() - G.t0) / 1000) + "s · " + G.found + " / " + G.pairs); }, 500);
+  G.onKey = null;
+}
+$("stage").addEventListener("click", function (e) {
+  if (!G || G.id !== "match") return;
+  var t = e.target.closest(".g-tile");
+  if (!t || G.busy) return;
+  var i = +t.getAttribute("data-c"), c = G.cards[i];
+  if (c.done || G.open.indexOf(i) > -1) return;
+  t.classList.add("open");
+  t.setAttribute("aria-label", c.text);
+  beep("flip");
+  if (c.side === "en") say(c.text);
+  G.open.push(i);
+  if (G.open.length < 2) return;
+  G.moves++;
+  var a = G.cards[G.open[0]], b = G.cards[G.open[1]], ta = $("stage").querySelector('[data-c="' + G.open[0] + '"]'), tb = t;
+  if (a.k === b.k && a.side !== b.side) {
+    a.done = b.done = true;
+    ta.classList.add("done"); tb.classList.add("done");
+    G.found++; setScore(20); right(a.it); beep("ok");
+    G.open = [];
+    if (G.found === G.pairs) { stopTimer(); setTimeout(function () { end(false); }, 600); }
+  } else {
+    G.busy = true;
+    ta.classList.add("miss"); tb.classList.add("miss");
+    setTimeout(function () {
+      [ta, tb].forEach(function (x) { x.classList.remove("open", "miss"); x.setAttribute("aria-label", "Yopiq kartochka"); });
+      G.open = []; G.busy = false;
+    }, 850);
+  }
+  info("⏱ " + Math.floor((Date.now() - G.t0) / 1000) + "s · " + G.found + " / " + G.pairs);
+});
+
+/* ---------- 3. Harflar ---------- */
+function spellList(n) { return shuffle(G.list.filter(function (it) { return it.sp; })).slice(0, n); }
+function anaStart() {
+  G.rounds = spellList(10); G.r = -1;
+  anaNext();
+  G.onKey = function (e) {
+    if (G.busy) return;
+    if (e.key === "Backspace") { e.preventDefault(); anaUndo(); return; }
+    var k = (e.key || "").toLowerCase();
+    if (/^[a-z]$/.test(k)) {
+      e.preventDefault();
+      var i = G.tiles.findIndex(function (x, j) { return x === k && !G.used[j]; });
+      if (i > -1) anaPut(i);
+    }
+  };
+}
+function anaNext() {
+  G.r++;
+  if (G.r >= G.rounds.length) { end(false); return; }
+  var it = G.rounds[G.r], w = it.sp, tiles;
+  do { tiles = shuffle(w.split("")); } while (tiles.join("") === w && new Set(w).size > 1);
+  G.it = it; G.tiles = tiles; G.used = tiles.map(function () { return false; }); G.put = []; G.hints = 0; G.busy = false;
+  info((G.r + 1) + " / " + G.rounds.length);
+  $("stage").innerHTML = '<div class="g-prompt"><div class="k">Inglizchasini yigʻing</div><p class="w uz">' + esc(it.uz) + "</p></div>" +
+    '<div class="g-slots" id="slots"></div><div class="g-tiles" id="tiles"></div>' +
+    '<div class="g-acts"><button class="btn ghost sm" type="button" id="anaHint">💡 Yordam</button><button class="btn ghost sm" type="button" id="anaSkip">Oʻtkazib yuborish</button></div>';
+  $("tiles").innerHTML = tiles.map(function (ch, i) { return '<button class="g-letter" type="button" data-t="' + i + '">' + ch + "</button>"; }).join("");
+  anaPaint();
+  $("tiles").onclick = function (e) { var b = e.target.closest("[data-t]"); if (b && !G.busy) anaPut(+b.getAttribute("data-t")); };
+  $("slots").onclick = function (e) { var b = e.target.closest("[data-s]"); if (b && !G.busy) anaRemove(+b.getAttribute("data-s")); };
+  $("anaHint").onclick = anaHint;
+  $("anaSkip").onclick = function () {
+    if (G.busy) return;
+    G.busy = true; wrong(G.it); beep("bad");
+    $("slots").innerHTML = G.it.sp.split("").map(function (ch) { return '<span class="g-slot hint">' + ch + "</span>"; }).join("");
+    say(G.it.en);
+    setTimeout(anaNext, 1300);
+  };
+}
+function anaPaint() {
+  var w = G.it.sp;
+  $("slots").innerHTML = w.split("").map(function (_, i) {
+    var p = G.put[i];
+    return '<button class="g-slot' + (p ? " full" + (p.h ? " hint" : "") : "") + '" type="button" data-s="' + i + '" aria-label="' + (p ? p.ch : "boʻsh") + '">' + (p ? p.ch : "") + "</button>";
+  }).join("");
+  Array.prototype.forEach.call($("tiles").children, function (b, i) { b.classList.toggle("used", G.used[i]); });
+}
+function anaPut(i) {
+  if (G.used[i]) return;
+  var at = G.put.findIndex(function (p) { return !p; });
+  if (at < 0) at = G.put.length;
+  if (at >= G.it.sp.length) return;
+  G.used[i] = true; G.put[at] = { ch: G.tiles[i], t: i };
+  beep("flip");
+  anaPaint();
+  anaCheck();
+}
+function anaRemove(s) {
+  var p = G.put[s];
+  if (!p || p.h) return;
+  G.used[p.t] = false; G.put[s] = null;
+  anaPaint();
+}
+function anaUndo() {
+  for (var s = G.put.length - 1; s >= 0; s--) if (G.put[s] && !G.put[s].h) { anaRemove(s); return; }
+}
+function anaHint() {
+  if (G.busy) return;
+  var w = G.it.sp;
+  /* birinchi notoʻgʻri yoki boʻsh joyga toʻgʻri harf qoʻyiladi */
+  for (var s = 0; s < w.length; s++) {
+    var p = G.put[s];
+    if (p && p.ch === w[s]) continue;
+    for (var k = s; k < w.length; k++) if (G.put[k] && !G.put[k].h) { G.used[G.put[k].t] = false; G.put[k] = null; }
+    var i = G.tiles.findIndex(function (x, j) { return x === w[s] && !G.used[j]; });
+    if (i < 0) return;
+    G.used[i] = true; G.put[s] = { ch: w[s], t: i, h: true }; G.hints++;
+    anaPaint(); anaCheck();
+    return;
+  }
+}
+function anaCheck() {
+  var w = G.it.sp;
+  for (var s = 0; s < w.length; s++) if (!G.put[s]) return;
+  var got = G.put.map(function (p) { return p.ch; }).join("");
+  if (got === w) {
+    G.busy = true;
+    $("slots").classList.add("ok");
+    setScore(Math.max(5, 10 + w.length * 2 - G.hints * 5));
+    right(G.it); beep("ok"); say(G.it.en);
+    setTimeout(anaNext, 900);
+  } else {
+    beep("bad");
+    var sl = $("slots");
+    sl.classList.remove("no"); void sl.offsetWidth; sl.classList.add("no");
+    if (G.miss.indexOf(G.it) < 0) { G.bad++; logDay(1); G.miss.push(G.it); }
+    G.busy = true;
+    setTimeout(function () {
+      G.put = G.put.map(function (p) { if (p && !p.h) { G.used[p.t] = false; return null; } return p; });
+      G.busy = false; anaPaint();
+    }, 500);
+  }
+}
+
+/* ---------- 4. Soʻzni top ---------- */
+var KB = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+function guessStart() {
+  G.rounds = spellList(6); G.r = -1;
+  guessNext();
+  G.onKey = function (e) { var k = (e.key || "").toLowerCase(); if (/^[a-z]$/.test(k)) { e.preventDefault(); guessLetter(k); } };
+}
+function guessNext() {
+  G.r++;
+  if (G.r >= G.rounds.length) { end(false); return; }
+  var it = G.rounds[G.r];
+  G.it = it; G.hearts = 6; G.tried = {}; G.busy = false;
+  G.tried[it.sp[0]] = 1;   /* birinchi harf — tekin */
+  info((G.r + 1) + " / " + G.rounds.length);
+  $("stage").innerHTML = '<div class="g-prompt"><div class="k">Bu qaysi soʻz?</div><p class="w uz">' + esc(it.uz) + "</p></div>" +
+    '<div class="g-hearts" id="hearts"></div><div class="g-slots" id="slots"></div><p class="g-reveal" id="reveal"></p>' +
+    '<div class="g-kb" id="kb">' + KB.map(function (row) {
+      return "<div>" + row.split("").map(function (ch) { return '<button class="g-key" type="button" data-k="' + ch + '">' + ch + "</button>"; }).join("") + "</div>";
+    }).join("") + "</div>";
+  $("kb").onclick = function (e) { var b = e.target.closest("[data-k]"); if (b) guessLetter(b.getAttribute("data-k")); };
+  guessPaint();
+}
+function guessPaint() {
+  var w = G.it.sp;
+  $("hearts").innerHTML = [0, 1, 2, 3, 4, 5].map(function (i) { return '<span class="' + (i < G.hearts ? "" : "lost") + '">❤️</span>'; }).join("");
+  $("hearts").setAttribute("aria-label", G.hearts + " ta yurak qoldi");
+  $("slots").innerHTML = w.split("").map(function (ch) { return '<span class="g-slot' + (G.tried[ch] ? " full" : "") + '">' + (G.tried[ch] ? ch : "") + "</span>"; }).join("");
+  Array.prototype.forEach.call($("kb").querySelectorAll("[data-k]"), function (b) {
+    var k = b.getAttribute("data-k");
+    b.className = "g-key" + (G.tried[k] ? (w.indexOf(k) > -1 ? " ok" : " no") : "");
+    b.disabled = !!G.tried[k] || G.busy;
+  });
+}
+function guessLetter(k) {
+  if (G.busy || G.tried[k]) return;
+  G.tried[k] = 1;
+  var w = G.it.sp;
+  if (w.indexOf(k) > -1) {
+    beep("flip");
+    var done = w.split("").every(function (ch) { return G.tried[ch]; });
+    if (done) {
+      G.busy = true;
+      guessPaint();
+      $("slots").classList.add("ok");
+      setScore(10 + G.hearts * 5);
+      right(G.it); beep("ok"); say(G.it.en);
+      $("reveal").innerHTML = "Barakalla! <b>" + esc(G.it.en) + "</b>";
+      setTimeout(guessNext, 1100);
+      return;
+    }
+  } else {
+    G.hearts--;
+    beep("bad");
+    if (G.hearts <= 0) {
+      G.busy = true;
+      w.split("").forEach(function (ch) { G.tried[ch] = 1; });
+      guessPaint();
+      wrong(G.it); say(G.it.en);
+      $("reveal").innerHTML = "Javob: <b>" + esc(G.it.en) + "</b>";
+      setTimeout(guessNext, 1600);
+      return;
+    }
+  }
+  guessPaint();
+}
+
+/* ---------- natija ---------- */
+function end(early) {
+  stopTimer();
+  var g = G;
+  G = null;
+  if (!g) return;
+  try { speechSynthesis.cancel(); } catch (e) {}
+  var meta = GAMES.filter(function (x) { return x.id === g.id; })[0];
+  var stars = "";
+  if (g.id === "match" && !early) {
+    var secs = Math.round((Date.now() - g.t0) / 1000);
+    var bonus = Math.max(0, 60 - secs) + Math.max(0, (g.pairs + 4 - g.moves)) * 5;
+    g.score += bonus;
+    var s = g.moves <= g.pairs + 3 ? 3 : g.moves <= g.pairs + 7 ? 2 : 1;
+    stars = "⭐".repeat(s) + '<span style="opacity:.25">' + "⭐".repeat(3 - s) + "</span>";
+    g.extra = g.moves + " ta urinish, " + secs + " soniya" + (bonus ? " · bonus +" + bonus : "");
+  }
+  var played = g.ok + g.bad > 0 || g.score > 0;
+  var lvl0 = lvlOf(st.xp), rec = !early && g.score > 0 && g.score > (st.best[g.id] || 0);
+  if (played) { st.xp += g.score; if (rec) st.best[g.id] = g.score; st.plays = (st.plays || 0) + 1; save(); }
+  var lvl1 = lvlOf(st.xp);
+  var line = g.extra || (g.ok + " ta toʻgʻri" + (g.bad ? " · " + g.bad + " ta xato" : ""));
+  var mine = {};
+  myWords().forEach(function (m) { mine[norm(m.en) + "|" + norm(m.uz)] = 1; });
+  var html = '<div style="font-size:2.6rem" aria-hidden="true">' + (rec ? "🏆" : g.score >= 100 ? "🎉" : meta.em) + "</div>" +
+    "<h2 style=\"margin:4px 0 0\">" + (early ? "Oʻyin toʻxtatildi" : rec ? "Yangi rekord!" : "Oʻyin tugadi") + "</h2>" +
+    '<p class="big">' + g.score + ' <small style="font-size:1rem;color:var(--muted)">ball</small></p>' +
+    (stars ? '<div class="stars">' + stars + "</div>" : "") +
+    '<p class="line">' + esc(line) + (played ? " · +" + g.score + " XP" : "") + "</p>" +
+    (st.best[g.id] && !rec ? '<p class="line">🏆 Rekord: ' + st.best[g.id] + " ball</p>" : "") +
+    (lvl1 > lvl0 ? '<span class="new">⭐ Yangi daraja: ' + lvl1 + " — " + LVLNAMES[Math.min(lvl1 - 1, LVLNAMES.length - 1)] + "</span>" : rec ? '<span class="new">🏆 Rekord yangilandi</span>' : "");
+  if (g.miss.length) {
+    html += '<ul class="g-miss" id="missList">' + g.miss.slice(0, 12).map(function (it, i) {
+      var have = it.src === "my" || mine[norm(it.en) + "|" + norm(it.uzFull)];
+      return "<li><span><b>" + esc(it.v1 ? it.v1 + " – " + it.v2 + " – " + it.v3 : it.en) + "</b> — " + esc(it.uzFull) + "</span>" +
+        (have ? '<span class="hint" style="flex:0 0 auto">✓ Lugʻatimda</span>' : '<button class="btn ghost sm" type="button" data-addw="' + i + '">+ Lugʻatimga</button>') + "</li>";
+    }).join("") + "</ul>";
+  }
+  html += '<div class="startbar" style="position:static;border:0;margin-top:18px"><button class="btn" type="button" id="again">↻ Yana oʻynash</button><button class="btn ghost" type="button" id="toHub">Boshqa oʻyin</button></div>';
+  $("endBox").innerHTML = html;
+  show("end");
+  if (rec || lvl1 > lvl0) { beep("win"); if (window.confetti) confetti(); }
+  $("again").onclick = function () { start(g.id); };
+  $("toHub").onclick = function () { renderHub(); show("hub"); };
+  var ml = $("missList");
+  if (ml) ml.onclick = function (e) {
+    var b = e.target.closest("[data-addw]");
+    if (!b) return;
+    var it = g.miss[+b.getAttribute("data-addw")];
+    if (addToMine(it)) { b.outerHTML = '<span class="hint" style="flex:0 0 auto">✓ Qoʻshildi</span>'; }
+  };
+  $("again").focus();
+}
+/* xato qilingan soʻzni «Mening soʻzlarim»ga qoʻshish (my.html dagi tuzilishda) */
+function addToMine(it) {
+  var my = read("my.v1") || {};
+  if (!Array.isArray(my.w)) my.w = [];
+  var en = it.v1 ? it.v1 + " – " + it.v2 + " – " + it.v3 : it.en;
+  if (my.w.some(function (m) { return norm(m.en) === norm(en) && norm(m.uz) === norm(it.uzFull); })) return true;
+  my.w.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), en: en, uz: it.uzFull, note: "",
+    ref: it.src === "my" ? "" : (it.src === "v" ? "v:" + it.key : it.src + ":" + it.key), from: it.src, t: today() });
+  /* statistika sahifasi uchun tayyor hisobdagi soʻzlar soni — my.html ochilganda toʻliq qayta hisoblanadi */
+  if (my.sum && my.sum.lv) { my.sum.n = my.w.length; my.sum.lv[0] = (my.sum.lv[0] | 0) + 1; }
+  else my.sum = { n: my.w.length, lv: [my.w.length, 0, 0, 0, 0, 0], seen: 0, mis: 0, ok: 0, bad: 0, hard: [] };
+  try { localStorage.setItem("my.v1", JSON.stringify(my)); return true; } catch (e) { return false; }
+}
+
+window.addEventListener("storage", function (e) { if (!G && !$("v-hub").hidden && (e.key === "my.v1" || /words|verbs/.test(e.key || ""))) renderHub(); });
+renderHub();
+/* bosh sahifadan toʻgʻridan-toʻgʻri oʻyinga: games.html#speed */
+var h = location.hash.slice(1);
+if (GAMES.some(function (g) { return g.id === h; })) { try { history.replaceState(null, "", location.pathname); } catch (e) {} start(h); }
+})();
+</script>

@@ -1,5 +1,5 @@
 #!/bin/sh
-# index.html, words.html, a2*.html, my.html va stats.html — artifact uchun yoziladi: ularda <!doctype>, <html>, <head> yoʻq,
+# index.html, verbs.html, words.html, a2*.html, my.html, games.html va stats.html — artifact uchun yoziladi: ularda <!doctype>, <html>, <head> yoʻq,
 # chunki Claude artifact sahifani nashr paytida oʻzi shu qobiqqa oʻraydi.
 # GitHub Pages uchun esa toʻliq hujjat kerak, shuning uchun shu skript
 # ulardan docs/ ichidagi sahifalarni yasaydi. Saytni yangilash:
@@ -62,8 +62,10 @@ HEAD
   echo "$2 tayyor ($(wc -l < "$2") qator)"
 }
 
-page index.html docs/index.html "Irregular Verbs Trainer" \
-  "100 ta ingliz tilidagi notoʻgʻri feʻlni yodlash uchun mashq sayti. Oʻzbek tilida." "$SITE"
+page index.html docs/index.html "Ingliz tili mashqlari — bosh sahifa" \
+  "Irregular verbs, A1 va A2 soʻzlari, listening, speaking, oʻz lugʻatingiz va kundalik takrorlash. Oʻzbek tilida." "$SITE"
+page verbs.html docs/verbs.html "Irregular Verbs Trainer" \
+  "100 ta ingliz tilidagi notoʻgʻri feʻlni yodlash uchun mashq sayti. Oʻzbek tilida." "${SITE}verbs.html"
 page words.html docs/words.html "A1 Vocabulary Trainer" \
   "A1 kursining 24 ta unitidagi 1372 ta inglizcha soʻzni yodlash uchun mashq sayti. Oʻzbek tilida." "${SITE}words.html"
 page a2.html docs/a2.html "A2 Vocabulary Trainer" \
@@ -74,5 +76,7 @@ page a2-speaking.html docs/a2-speaking.html "A2 Speaking" \
   "A2 darajasidagi speaking mashqlari: savollar, ovoz yozish va namuna javoblar. Oʻzbek tilida." "${SITE}a2-speaking.html"
 page my.html docs/my.html "Lugʻatim — qidiruv va kundalik takrorlash" \
   "Feʻllar, A1 va A2 soʻzlari orasidan qidirish, oʻz lugʻatingizni yuritish va xato qilingan soʻzlarni har kuni takrorlash. Oʻzbek tilida." "${SITE}my.html"
+page games.html docs/games.html "Oʻyinlar — ingliz soʻzlarini oʻynab oʻrganish" \
+  "60 soniya, juftlar, harflar va soʻzni top: feʻllar, A1, A2 va oʻz soʻzlaringiz bilan qiziqarli oʻyinlar. Oʻzbek tilida." "${SITE}games.html"
 page stats.html docs/stats.html "Statistika — Irregular Verbs, A1 va A2 soʻzlar" \
   "Ingliz tili mashqlari natijalari: kunlik faollik, ketma-ket kunlar, yodlangan soʻzlar va eng qiyin soʻzlar." "${SITE}stats.html"

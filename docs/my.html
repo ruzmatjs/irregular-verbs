@@ -28,7 +28,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <!-- IBM Plex dagi «ʻ» juda keng (so ʻ z boʻlib koʻrinadi) — faqat shu belgi Noto Sans dan olinadi, u --body da birinchi turadi -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&text=%CA%BB%CA%BC&display=swap">
-<link rel="stylesheet" href="ui.css?v=1328066297">
+<link rel="stylesheet" href="ui.css?v=3804561079">
 <style>
 /* qidiruv */
 .searchbox{position:relative}
@@ -114,8 +114,8 @@ a.chip:hover{border-color:var(--accent);color:var(--accent)}
     </div>
   </div>
 </header>
-<script src="ui.js?v=3949006633"></script>
-<script src="verbs-data.js?v=345154695"></script>
+<script src="ui.js?v=199163600"></script>
+<script src="verbs-data.js?v=1223848894"></script>
 <script src="a1-data.js?v=4171032764"></script>
 <script src="a2-units.js?v=2012671524"></script>
 <script src="a2-data.js?v=362563968"></script>
@@ -264,7 +264,7 @@ var GAP = [0, 1, 2, 4, 7];
 var KEY = "my.v1";
 var SRC = {
   my: { name: "Mening soʻzlarim" },
-  v: { name: "Feʻllar", key: "irrverbs.v1", href: "index.html" },
+  v: { name: "Feʻllar", key: "irrverbs.v1", href: "verbs.html" },
   a1: { name: "A1", key: "a1words.v1", href: "words.html" },
   a2: { name: "A2", key: "a2words.v1", href: "a2.html" }
 };
@@ -495,7 +495,7 @@ function unitTitle(it) {
 }
 function chip(it) {
   if (it.src === "my") return '<span class="chip my">Mening soʻzim</span>';
-  if (it.src === "v") return '<a class="chip" href="index.html" title="Irregular verbs, ' + it.n + '-feʻl">Feʻllar · ' + it.n + "</a>";
+  if (it.src === "v") return '<a class="chip" href="verbs.html" title="Irregular verbs, ' + it.n + '-feʻl">Feʻllar · ' + it.n + "</a>";
   return '<a class="chip" href="' + SRC[it.src].href + '" title="' + esc(unitTitle(it)) + '">' + SRC[it.src].name + " · " + unitsText(it) + "</a>";
 }
 /* soʻzning holati: asl boʻlimdagi level va xatolar, yoki takrorlashdagi quti */
@@ -534,7 +534,19 @@ function setTab(t) {
   if (t === "mine") { renderMine(); show("mine"); }
   if (t === "today") { renderToday(); show("today"); }
   if (store.cfg.tab !== t) { store.cfg.tab = t; save(); }
+  /* manzil va asosiy menyu ochilgan tabga mos turadi (menyudagi «Lugʻat» / «Takrorlash» shu yerga olib keladi) */
+  if (window.setNav) window.setNav(t === "today" ? "review" : "dict");
+  var h = TABHASH[t];
+  if (h && location.hash !== h) { try { history.replaceState(null, "", location.pathname + h); } catch (e) {} }
 }
+var HASH = { "#qidiruv": "search", "#lugat": "mine", "#bugun": "today" }, TABHASH = { search: "#qidiruv", mine: "#lugat", today: "#bugun" };
+window.addEventListener("hashchange", function () {
+  var t = HASH[location.hash];
+  if (!t) return;
+  if (quiz) finish(true);
+  setTab(t);
+  if (t === "search") $("q").focus();
+});
 Array.prototype.forEach.call(document.querySelectorAll("nav.tabs button"), function (b) {
   b.addEventListener("click", function () {
     var t = b.getAttribute("data-view");
@@ -897,13 +909,13 @@ function renderToday() {
   var tomorrow = cands.filter(function (it) { return isNew(it) ? P.ids.indexOf(it.id) < 0 : dueOf(it) <= addDays(t, 1); }).length;
   $("todayStats").innerHTML =
     '<div class="stat"><b>' + done + " / " + P.ids.length + "</b><span>Bugun</span></div>" +
-    '<div class="stat"><b>' + (st ? "🔥 " : "") + st + "</b><span>Kun ketma-ket</span></div>" +
+    '<div class="stat"><b>' + (st ? "🔥 " : "") + st + "</b><span>Kun takrorlandi</span></div>" +
     '<div class="stat"><b>' + cands.length + "</b><span>Takrorlashda</span></div>" +
     '<div class="stat"><b>' + learned + "</b><span>Yodlandi</span></div>";
   var card = $("todayCard");
   if (!P.ids.length) {
     card.innerHTML = '<div class="empty" style="border:0;padding:12px 0">Hozircha takrorlanadigan soʻz yoʻq.<br>' +
-      '«Mening soʻzlarim»ga soʻz qoʻshing yoki <a href="index.html">feʻllar</a>, <a href="words.html">A1</a>, <a href="a2.html">A2</a> boʻyicha mashq qiling — xato qilgan soʻzlaringiz shu yerga oʻzi tushadi.</div>' +
+      '«Mening soʻzlarim»ga soʻz qoʻshing yoki <a href="verbs.html">feʻllar</a>, <a href="words.html">A1</a>, <a href="a2.html">A2</a> boʻyicha mashq qiling — xato qilgan soʻzlaringiz shu yerga oʻzi tushadi.</div>' +
       '<div class="startbar"><button class="btn" type="button" id="goMine">Soʻz qoʻshish</button></div>';
     $("goMine").onclick = function () { setTab("mine"); $("fEn").focus(); };
   } else {
@@ -1159,12 +1171,17 @@ window.addEventListener("storage", function (e) {
 });
 
 /* boshlanishi: manzildagi #qidiruv / #lugat / #bugun yoki oxirgi ochilgan tab */
-var HASH = { "#qidiruv": "search", "#lugat": "mine", "#bugun": "today" };
-var first = HASH[location.hash] || store.cfg.tab || "search";
+/* bosh sahifadagi qidiruvdan kelinsa: my.html?q=soʻz */
+var qp = "";
+try { qp = new URLSearchParams(location.search).get("q") || ""; } catch (e) {}
+var wantAdd = !qp && location.hash === "#lugat";   /* bosh sahifadagi «+ Soʻz qoʻshish» */
+var first = qp ? "search" : HASH[location.hash] || store.cfg.tab || "search";
 if (VIEWS.indexOf(first) < 0 || first === "quiz" || first === "result") first = "search";
+if (qp) { $("q").value = qp.trim(); try { history.replaceState(null, "", location.pathname + "#qidiruv"); } catch (e) {} }
 ensurePlan(); save();
 setTab(first);
-if (first === "search") $("q").focus();
+if (first === "search" && !qp) $("q").focus();
+if (wantAdd) $("fEn").focus();
 })();
 </script>
 </body>
