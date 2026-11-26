@@ -52,6 +52,17 @@ Sahifalar: https://ruzmatjs.github.io/irregular-verbs/a2-listening.html va https
 - Listening darslari ikki tabda: Student's Book va Workbook
 - Yangi dars — listening uchun `a2-listening-data.js` ga, speaking uchun `a2-speaking-data.js` ga qoʻshiladi (koʻrinishi shu fayllarda izohda), mp3 fayllar — `audio/` papkasiga
 
+## Lugʻatim: qidiruv, oʻz soʻzlarim va kundalik takrorlash
+
+Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/my.html
+
+- **Qidiruv** — esdan chiqqan soʻzni inglizcha yoki oʻzbekcha yozasiz, feʻllar, A1, A2 va oʻzingiz qoʻshgan soʻzlar orasidan bir vaqtda qidiriladi. Tutuq belgisisiz ham topadi (`bolmoq` = `boʻlmoq`), V2/V3 boʻyicha ham (`brought` → `bring`), imlo xatosi boʻlsa «yozilishi oʻxshash soʻzlar»ni koʻrsatadi. Har bir natijada qaysi boʻlim va unitda ekani, leveli va necha marta xato qilingani
+- Topilmagan soʻz bir bosishda oʻz lugʻatingizga qoʻshiladi, topilganini ham «+ Lugʻatimga» bilan olish mumkin
+- **Mening soʻzlarim** — oʻz lugʻatingiz: inglizcha, tarjima va izoh/misol; tahrirlash, oʻchirish, hammasini mashq qilish. Faylga saqlash va fayldan tiklash (boshqa qurilmaga oʻtkazish uchun)
+- **Bugungi takrorlash** — har kuni 10/20/30/50 ta soʻz: oʻz soʻzlaringiz va feʻllar, A1, A2 da xato qilgan (hali yodlanmagan) soʻzlaringiz, eng koʻp xato qilinganlari avval. Toʻgʻri topilgan soʻz 1, 2, 4, 7 kundan keyin qaytadi, xato — ertasiga (va shu mashq oxirida yana bir marta). 5 marta ketma-ket topilsa — yodlangan; asl boʻlimda yana xato qilinsa, qaytib keladi. Ketma-ket kunlar 🔥 sanaladi
+- Feʻllar takrorlashda V2 va V3 bilan soʻraladi (oʻzbekchasi chiqsa — uchala shakli)
+- Natijalar `my.v1` kalitida saqlanadi; boshqa boʻlimlarning natijalari faqat oʻqiladi. Soʻz roʻyxatlari `verbs-data.js`, `a1-data.js`, `a2-data.js` da — mashq sahifalari va «Lugʻatim» uchun umumiy
+
 ## Statistika
 
 Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/stats.html
@@ -68,4 +79,4 @@ Alohida sahifa: https://ruzmatjs.github.io/irregular-verbs/stats.html
 
 ## Ishlatish
 
-Server kerak emas: `index.html` (feʻllar), `words.html` (A1 soʻzlar), `a2.html` (A2 soʻzlar), `a2-listening.html`, `a2-speaking.html` yoki `stats.html` (statistika) ni brauzerda ochsangiz kifoya. GitHub Pages uchun `sh build.sh` ularning hammasidan `docs/` ichida toʻliq sahifa yasaydi.
+Server kerak emas: `index.html` (feʻllar), `words.html` (A1 soʻzlar), `a2.html` (A2 soʻzlar), `a2-listening.html`, `a2-speaking.html`, `my.html` (lugʻatim) yoki `stats.html` (statistika) ni brauzerda ochsangiz kifoya. GitHub Pages uchun `sh build.sh` ularning hammasidan `docs/` ichida toʻliq sahifa yasaydi.

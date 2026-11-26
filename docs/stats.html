@@ -125,7 +125,7 @@ section{padding-block:22px 0}
     </div>
   </div>
 </header>
-<script src="ui.js?v=1466396212"></script>
+<script src="ui.js?v=3949006633"></script>
 
 <div class="wrap">
   <section>
@@ -169,6 +169,8 @@ var PARTS = [
   { key: "irrverbs.v1", title: "Irregular verbs", href: "index.html", n: 100, unit: "feʻl", short: "feʻl" },
   { key: "a1words.v1", title: "A1 soʻzlar", href: "words.html", n: 1372, unit: "soʻz", short: "A1" },
   { key: "a2words.v1", title: "A2 soʻzlar", href: "a2.html", n: 1028, unit: "soʻz", short: "A2" },
+  /* oʻzim qoʻshgan soʻzlar: soni oʻzgaradi (sum.n), lugʻat boʻsh boʻlsa koʻrsatilmaydi. Kunlik tarixida takrorlash javoblari ham bor */
+  { key: "my.v1", title: "Mening soʻzlarim", href: "my.html", n: 0, unit: "soʻz", short: "Lugʻatim", opt: true },
   { key: "a2listening.v1", title: "A2 Listening", href: "a2-listening.html", kind: "lesson", note: "savollarga toʻgʻri javob" },
   { key: "a2speaking.v1", title: "A2 Speaking", href: "a2-speaking.html", kind: "lesson", note: "yaxshi aytilgan javob (oʻz bahoingiz)" }
 ];
@@ -207,7 +209,8 @@ function partStats(P, st) {
 
 function render() {
   var stores = PARTS.map(function (P) { return read(P.key); });
-  var stats = PARTS.map(function (P, i) { return partStats(P, stores[i]); });
+  var live = PARTS.filter(function (P, i) { return !P.opt || (stores[i] && stores[i].sum && stores[i].sum.n > 0); });
+  var stats = live.map(function (P) { return partStats(P, stores[PARTS.indexOf(P)]); });
 
   /* barcha boʻlimlarning kunlik tarixi qoʻshiladi */
   var day = {};
@@ -243,8 +246,8 @@ function render() {
   /* yodlangan soʻzlar va aniqlik — faqat soʻz boʻlimlaridan */
   var words = [];
   stats.forEach(function (x, i) {
-    if (isLesson(PARTS[i])) return;
-    words.push(PARTS[i].short + ": " + x.s.lv[MAXLVL]);
+    if (isLesson(live[i])) return;
+    words.push(live[i].short + ": " + x.s.lv[MAXLVL]);
     learned += x.s.lv[MAXLVL]; total += x.s.n; ok += x.s.ok; bad += x.s.bad;
   });
   $("hLearned").innerHTML = num(learned) + " <small>/ " + num(total) + "</small>";
@@ -254,7 +257,7 @@ function render() {
   $("brandStat").textContent = streak ? "🔥 " + streak + " kun ketma-ket" : "";
 
   renderChart(at);
-  renderParts(stats);
+  renderParts(stats, live);
 }
 
 function renderChart(at) {
@@ -325,9 +328,9 @@ function tipText(c, plain) {
   return plain ? head + ". " + body : "<b>" + esc(head) + "</b>" + esc(body);
 }
 
-function renderParts(stats) {
+function renderParts(stats, live) {
   $("parts").innerHTML = stats.map(function (x, i) {
-    var P = PARTS[i], s = x.s, sumL = 0;
+    var P = live[i], s = x.s, sumL = 0;
     if (isLesson(P)) {
       var all = s.ok + s.bad;
       return '<div class="card"><div class="phead"><h2>' + esc(P.title) + '</h2><a class="go" href="' + P.href + '">Mashq qilish →</a></div>' +
@@ -359,7 +362,8 @@ function renderParts(stats) {
         return '<li><span class="w"><b>' + esc(h[0]) + "</b><span>" + esc(h[1]) + '</span></span>' +
           '<span class="n"><span class="x">' + h[3] + " xato</span><br>" + h[2] + " toʻgʻri · level " + h[4] + "</span></li>";
       }).join("") + "</ul>";
-      if (s.mis) html += '<p class="note">Xatolarni alohida mashq qilish: <a class="go" href="' + P.href + '">' + esc(P.title) + " → Xatolar</a></p>";
+      if (s.mis) html += P.opt ? '<p class="note">Bu soʻzlar <a class="go" href="my.html#bugun">Bugungi takrorlash</a>da yana chiqadi.</p>'
+        : '<p class="note">Xatolarni alohida mashq qilish: <a class="go" href="' + P.href + '">' + esc(P.title) + " → Xatolar</a></p>";
     }
     if (!x.exact) html += '<p class="note">Aniq raqamlar uchun «' + esc(P.title) + '» sahifasini bir marta oching.</p>';
     return html + "</div>";

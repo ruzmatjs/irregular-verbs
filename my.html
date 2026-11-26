@@ -1,0 +1,1143 @@
+<title>Lugʻatim</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<!-- IBM Plex dagi «ʻ» juda keng (so ʻ z boʻlib koʻrinadi) — faqat shu belgi Noto Sans dan olinadi, u --body da birinchi turadi -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&text=%CA%BB%CA%BC&display=swap">
+<link rel="stylesheet" href="ui.css">
+<style>
+/* qidiruv */
+.searchbox{position:relative}
+.searchbox input[type=text]{font-size:1.05rem;padding:13px 40px 13px 42px}
+.searchbox svg{position:absolute;left:14px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:var(--muted);
+  fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;pointer-events:none}
+.searchbox .clr{position:absolute;right:6px;top:50%;transform:translateY(-50%);appearance:none;border:0;background:none;color:var(--muted);
+  font:inherit;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer}
+.searchbox .clr:hover{color:var(--fg);background:var(--surface-2)}
+.hits{list-style:none;margin:12px 0 0;padding:0;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.hit{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:12px 14px;border-top:1px solid var(--line)}
+.hit:first-child{border-top:0}
+.hw{flex:1 1 240px;min-width:0}
+.hen{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hen b{font-family:var(--mono);font-size:1rem;font-weight:600;overflow-wrap:anywhere}
+.huz{font-size:.95rem;margin-top:1px;overflow-wrap:anywhere}
+.hnote{font-size:.84rem;color:var(--muted);font-style:italic;overflow-wrap:anywhere}
+.hmeta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:6px;font-size:.78rem;color:var(--muted)}
+.chip{display:inline-block;font-size:.74rem;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface-2);color:var(--muted);text-decoration:none;white-space:nowrap}
+a.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.my{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.xbad{color:var(--bad);font-weight:600}
+.xok{color:var(--ok);font-weight:600}
+.hact{flex:0 0 auto;display:flex;gap:6px;align-items:center;margin-left:auto}
+.inmine{font-size:.8rem;color:var(--ok);font-weight:600;white-space:nowrap}
+.subh{font-size:.84rem;color:var(--muted);margin:18px 0 0}
+/* telefonda qidiruv natijasi bir qatorda qoladi: tugma «+», belgi «✓» */
+@media (max-width:560px){
+  .hits .hit.found{flex-wrap:nowrap;align-items:flex-start}
+  .hit.found .hw{flex:1 1 auto}
+  .hit.found .lbl{display:none}
+  .hit.found [data-add]{width:38px;height:38px;padding:0;font-size:1.2rem;line-height:1;border-radius:50%}
+}
+.more-hits{margin-top:12px}
+.notfound{margin-top:12px}
+.notfound p{margin:0 0 12px}
+/* lugʻat */
+.addf .row{gap:12px}
+.addf .actions{margin-top:14px}
+.finfo{font-size:.84rem;color:var(--muted);margin:10px 0 0}
+.finfo .btn{margin-left:6px}
+.listbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 0}
+.listbar .col{flex:1 1 200px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;align-items:center}
+/* bugungi takrorlash */
+.today-n{font-family:var(--display);font-size:2.2rem;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.today-n small{font-size:1rem;font-weight:400;color:var(--muted)}
+.mix{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 0}
+.done-msg{font-family:var(--display);font-size:1.3rem;font-weight:700;color:var(--ok);margin:0}
+.srcchecks{display:flex;flex-wrap:wrap;gap:4px 18px}
+.howto{font-size:.86rem;color:var(--muted);margin:18px 0 0}
+.howto b{color:var(--fg);font-weight:600}
+/* mashq: maydonlar yonma-yon (feʻllarda V2 va V3) */
+.fields.multi{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr))}
+</style>
+
+<header class="top" data-section="my">
+  <div class="top-in">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+        <rect width="256" height="256" rx="56" fill="var(--accent)"/>
+        <g fill="none" stroke="var(--surface)" stroke-width="11" stroke-linecap="round">
+          <path d="M62 156 A33 64 0 0 1 128 156"/>
+          <path d="M128 156 A33 38 0 0 1 194 156"/>
+        </g>
+        <circle cx="62" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="128" cy="156" r="14" fill="var(--surface)"/>
+        <circle cx="194" cy="156" r="14" fill="var(--gold)"/>
+      </svg>
+      <h1>Lugʻatim</h1>
+      <span class="sub" id="brandStat"></span>
+      <nav class="switch" id="secNav" aria-label="Boʻlimlar"></nav>
+    </div>
+    <div class="subnav">
+      <nav class="skills" id="skillNav" aria-label="Koʻnikmalar" hidden></nav>
+      <nav class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-view="search">Qidiruv</button>
+        <button role="tab" aria-selected="false" data-view="mine">Mening soʻzlarim <span id="mineCount"></span></button>
+        <button role="tab" aria-selected="false" data-view="today">Bugungi takrorlash <span id="todayCount"></span></button>
+      </nav>
+    </div>
+  </div>
+</header>
+<script src="ui.js"></script>
+<script src="verbs-data.js"></script>
+<script src="a1-data.js"></script>
+<script src="a2-units.js"></script>
+<script src="a2-data.js"></script>
+
+<div class="wrap">
+
+<section id="v-search">
+  <h2>Soʻz qidirish</h2>
+  <p class="lede">Esdan chiqqan soʻzni inglizcha yoki oʻzbekcha yozing — feʻllar, A1, A2 va oʻzingiz qoʻshgan soʻzlar orasidan qidiriladi. Topilmasa, shu yerning oʻzida lugʻatingizga qoʻshasiz.</p>
+  <div class="searchbox">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+    <input type="text" id="q" placeholder="Masalan: borrow yoki qarz olmoq" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Qidirish: inglizcha yoki oʻzbekcha">
+    <button class="clr" type="button" id="qClear" aria-label="Tozalash" hidden>✕</button>
+  </div>
+  <div id="searchBody"></div>
+</section>
+
+<section id="v-mine" hidden>
+  <h2>Mening soʻzlarim</h2>
+  <p class="lede">Oʻzingiz uchun lugʻat: kitobda, kinoda yoki suhbatda uchragan yangi soʻzni shu yerga yozing. Qoʻshilgan soʻzlar «Bugungi takrorlash»ga oʻzi tushadi.</p>
+  <form class="card addf" id="addForm" autocomplete="off">
+    <div class="row">
+      <div class="col field">
+        <label for="fEn">Inglizcha</label>
+        <input type="text" id="fEn" spellcheck="false" autocapitalize="off" placeholder="borrow">
+      </div>
+      <div class="col field uzf">
+        <label for="fUz">Oʻzbekcha tarjimasi</label>
+        <input type="text" id="fUz" spellcheck="false" autocapitalize="off" placeholder="qarz olmoq">
+      </div>
+    </div>
+    <div class="field uzf" style="margin-top:12px">
+      <label for="fNote">Izoh yoki misol <span style="text-transform:none;letter-spacing:0;font-weight:400">— shart emas</span></label>
+      <input type="text" id="fNote" spellcheck="false" placeholder="Can I borrow your pen?">
+    </div>
+    <p class="finfo" id="fInfo" hidden></p>
+    <p class="err" id="fErr" hidden></p>
+    <div class="actions">
+      <button class="btn" type="submit" id="fSave">Qoʻshish</button>
+      <button class="btn ghost" type="button" id="fCancel" hidden>Bekor qilish</button>
+      <span class="hint" id="fOk" role="status"></span>
+    </div>
+  </form>
+  <div class="listbar" id="mineBar" hidden>
+    <div class="col"><input type="text" id="mFilter" placeholder="Lugʻatimdan qidirish" spellcheck="false" autocapitalize="off" aria-label="Lugʻatimdan qidirish"></div>
+    <button class="btn" type="button" id="mineTrain">Hammasini mashq qilish</button>
+  </div>
+  <div id="mineBody"></div>
+  <div class="tools">
+    <button class="btn ghost sm" type="button" id="exportBtn">Faylga saqlash</button>
+    <button class="btn ghost sm" type="button" id="importBtn">Fayldan tiklash</button>
+    <input type="file" id="importFile" accept=".json,application/json" hidden>
+    <span class="hint" id="ioMsg" role="status">Soʻzlar shu brauzerda saqlanadi. Boshqa telefon yoki kompyuterga oʻtkazish uchun faylga saqlab qoʻying.</span>
+  </div>
+</section>
+
+<section id="v-today" hidden>
+  <h2>Bugungi takrorlash</h2>
+  <p class="lede">Har kuni ozgina: oʻzingiz qoʻshgan soʻzlar va feʻllar, A1, A2 mashqlarida xato qilgan soʻzlaringiz. Eng koʻp xato qilinganlari birinchi chiqadi.</p>
+  <div class="stats" id="todayStats"></div>
+  <div class="card" id="todayCard"></div>
+  <p class="howto">Qanday ishlaydi: toʻgʻri topgan soʻzingiz <b>1, 2, 4 va 7 kundan</b> keyin yana chiqadi, xato qilsangiz — <b>ertasiga</b>. Ketma-ket 5 marta topsangiz, soʻz yodlangan hisoblanadi va takrorlashdan chiqadi. Asl boʻlimda (A1, A2, feʻllar) yana xato qilsangiz, qaytib keladi.</p>
+  <details class="more" id="todaySet">
+    <summary>Sozlamalar <small>kuniga nechta soʻz, nimalardan</small></summary>
+    <div class="stack" style="gap:16px;padding-top:14px">
+      <fieldset>
+        <legend>Kuniga nechta soʻz</legend>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="daily" value="10"><span>10</span></label>
+          <label class="opt"><input type="radio" name="daily" value="20"><span>20</span></label>
+          <label class="opt"><input type="radio" name="daily" value="30"><span>30</span></label>
+          <label class="opt"><input type="radio" name="daily" value="50"><span>50</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Qaysi soʻzlar takrorlanadi</legend>
+        <div class="srcchecks">
+          <label class="check"><input type="checkbox" data-src="my"> Mening soʻzlarim</label>
+          <label class="check"><input type="checkbox" data-src="v"> Feʻllar xatolari</label>
+          <label class="check"><input type="checkbox" data-src="a1"> A1 xatolari</label>
+          <label class="check"><input type="checkbox" data-src="a2"> A2 xatolari</label>
+        </div>
+      </fieldset>
+      <div class="sets">
+        <div class="set">
+          <label class="flabel" for="dirSel">Nima soʻraladi</label>
+          <select id="dirSel">
+            <option value="en">Inglizcha chiqadi — tarjimasini yozaman</option>
+            <option value="uz">Oʻzbekcha chiqadi — inglizchasini yozaman</option>
+            <option value="mix">Aralash</option>
+          </select>
+        </div>
+      </div>
+      <label class="check"><input type="checkbox" id="autoSay"> Inglizcha soʻzni oʻqib bersin</label>
+    </div>
+  </details>
+</section>
+
+<section id="v-quiz" hidden>
+  <div class="qhead">
+    <span id="qpos"></span>
+    <span id="qscore"></span>
+  </div>
+  <div class="bar"><i id="qbar" style="width:0%"></i></div>
+  <div class="card">
+    <div class="prompt">
+      <span class="tag" id="ptag"></span>
+      <div class="wordrow">
+        <p class="word" id="pword"></p>
+        <button class="spk" type="button" id="spkPrompt" title="Talaffuzni eshitish" aria-label="Talaffuzni eshitish" hidden></button>
+      </div>
+      <p class="extra" id="pmeta"></p>
+    </div>
+    <form id="qform" autocomplete="off">
+      <div class="fields" id="qfields"></div>
+      <div class="verdict" id="verdict" hidden></div>
+      <div class="actions">
+        <button class="btn" type="submit" id="checkBtn">Tekshirish</button>
+        <button class="btn ghost" type="button" id="dontknowBtn">Bilmadim</button>
+        <span class="spacer"></span>
+        <button class="btn ghost" type="button" id="quitBtn">Toʻxtatish</button>
+      </div>
+      <p class="hint kbd">Enter — tekshirish, yana Enter — keyingi soʻz</p>
+    </form>
+  </div>
+</section>
+
+<section id="v-result" hidden>
+  <h2 id="rtitle">Mashq tugadi</h2>
+  <div class="card">
+    <p class="score" id="rscore"></p>
+    <p class="lede" id="rline" style="margin:6px 0 0"></p>
+    <div id="rwrong"></div>
+    <div class="startbar" id="rbtns"></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function () {
+var MAXB = 5;
+var LVLNAME = ["Yangi", "Tanish", "Oʻrganilyapti", "Yaxshi", "Mustahkam", "Yodlangan"];
+/* b-qutidagi soʻz toʻgʻri topilgach, necha kundan keyin yana soʻraladi (b = 1..4); 5 — yodlandi */
+var GAP = [0, 1, 2, 4, 7];
+var KEY = "my.v1";
+var SRC = {
+  my: { name: "Mening soʻzlarim" },
+  v: { name: "Feʻllar", key: "irrverbs.v1", href: "index.html" },
+  a1: { name: "A1", key: "a1words.v1", href: "words.html" },
+  a2: { name: "A2", key: "a2words.v1", href: "a2.html" }
+};
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function p2(n) { return (n < 10 ? "0" : "") + n; }
+function dayKey(d) { d = d || new Date(); return d.getFullYear() + "-" + p2(d.getMonth() + 1) + "-" + p2(d.getDate()); }
+function addDays(k, n) { var d = new Date(k + "T12:00:00"); d.setDate(d.getDate() + n); return dayKey(d); }
+function dayDiff(a, b) { return Math.round((new Date(b + "T12:00:00") - new Date(a + "T12:00:00")) / 864e5); }
+function today() { return dayKey(); }
+function whenText(k) {
+  var n = dayDiff(today(), k);
+  return n <= 0 ? "bugun" : n === 1 ? "ertaga" : n + " kundan keyin";
+}
+function shuffle(a) {
+  for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+
+/* ---------- saqlash ----------
+   w — oʻzim qoʻshgan soʻzlar; r — takrorlash holati (soʻz id → {b: quti 0..5, due: qachon, ok, bad});
+   plan — bugungi roʻyxat; dd — takrorlash bajarilgan kunlar; d — kunlik tarix (stats.html uchun) */
+var store = {};
+function load() {
+  store = {};
+  try { var o = JSON.parse(localStorage.getItem(KEY) || "null"); if (o && typeof o === "object") store = o; } catch (e) {}
+  if (!Array.isArray(store.w)) store.w = [];
+  if (!store.r || typeof store.r !== "object") store.r = {};
+  if (!store.dd || typeof store.dd !== "object") store.dd = {};
+  var c = store.cfg || (store.cfg = {});
+  if ([10, 20, 30, 50].indexOf(c.daily) < 0) c.daily = 20;
+  if (["en", "uz", "mix"].indexOf(c.dir) < 0) c.dir = "mix";
+  if (!c.src) c.src = { my: true, v: true, a1: true, a2: true };
+  if (c.autoSay === undefined) c.autoSay = true;
+}
+load();
+function save() { store.sum = summary(); try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+function logDay(i, n) {
+  if (!store.d) store.d = {};
+  var k = today(), e = store.d[k] || (store.d[k] = [0, 0, 0]);
+  e[i] = Math.max(0, (e[i] || 0) + (n || 1));
+}
+/* Boshqa boʻlimlarning natijalari — faqat oʻqiladi (qaysi soʻzda xato qilingani) */
+var SS = {};
+function readSrc() {
+  ["v", "a1", "a2"].forEach(function (s) {
+    var p = {};
+    try { var o = JSON.parse(localStorage.getItem(SRC[s].key) || "null"); if (o && o.p) p = o.p; } catch (e) {}
+    SS[s] = p;
+  });
+}
+readSrc();
+function srcRec(it) { return it.src === "my" ? null : SS[it.src][it.k] || null; }
+function srcBad(it) { var r = srcRec(it); return r ? r.bad | 0 : 0; }
+
+/* ---------- javobni tekshirish (A1/A2 sahifalaridagidek) ---------- */
+function norm(s) {
+  return (s || "").toLowerCase()
+    .replace(/[ʻʼ‘’`´']/g, "'")
+    .replace(/[—–]/g, "-")
+    .replace(/\s*-\s*/g, " - ")
+    .replace(/[….!?]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+function noParen(s) { return s.replace(/\([^)]*\)/g, " ").replace(/\s+/g, " ").trim(); }
+function bare(x) { return x.replace(/'/g, ""); }
+function uzStem(x) { return x.split(" ").map(function (t) { return t.replace(/(moq|sh)$/, "").replace(/[aeiou]$/, ""); }).join(" "); }
+function enBase(x) { return x.replace(/^to /, ""); }
+function variants(correct) {
+  var full = norm(correct), set = {};
+  [full, noParen(full)].forEach(function (f) {
+    set[f] = 1;
+    f.split(/\s*[\/,;]\s*/).forEach(function (p) { if (p) { set[p] = 1; set[noParen(p)] = 1; } });
+  });
+  return Object.keys(set).filter(Boolean);
+}
+function lev(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  var prev = [], cur, i, j;
+  for (j = 0; j <= b.length; j++) prev[j] = j;
+  for (i = 1; i <= a.length; i++) {
+    cur = [i];
+    for (j = 1; j <= b.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[b.length];
+}
+/* 2 — toʻgʻri, 1 — kichik imlo xatosi bilan toʻgʻri, 0 — xato. strict — feʻl shakllari: imlo xatosi kechirilmaydi */
+function checkAns(user, correct, lang, strict) {
+  var u = norm(user);
+  if (!u) return 0;
+  var acc = variants(correct);
+  var f = lang === "uz" ? function (x) { return uzStem(bare(x)); } : function (x) { return enBase(x); };
+  var fu = f(u);
+  for (var i = 0; i < acc.length; i++) if (acc[i] === u || f(acc[i]) === fu) return 2;
+  if (strict) return 0;
+  for (i = 0; i < acc.length; i++) {
+    var a = lang === "uz" ? bare(acc[i]) : enBase(acc[i]);
+    var b = lang === "uz" ? bare(u) : enBase(u);
+    if (a.length >= 5 && lev(a, b, 1) <= 1) return 1;
+  }
+  return 0;
+}
+
+/* ---------- barcha lugʻatlar bitta roʻyxatda ----------
+   id: "v:go", "a1:<asl kalit>", "a2:<asl kalit>", "my:<id>". k — asl boʻlimdagi saqlash kaliti */
+function fold(s) { return bare(norm(s)).replace(/ - /g, " "); }
+function parts(s) { return fold(s).split(/\s*[\/,;]\s*| - /).map(function (p) { return noParen(p); }).filter(Boolean); }
+function gkey(en, uz) { return fold(noParen(en)).replace(/^to /, "") + "|" + fold(noParen(uz)); }
+function prep(it) {
+  it.fe = fold(it.en); it.fu = fold(it.uz);
+  it.pe = parts(it.v1 ? it.v1 + "/" + it.v2 + "/" + it.v3 : it.en);
+  it.pu = parts(it.uz);
+  it.gk = gkey(it.en, it.uz);
+  return it;
+}
+var STATIC = { v: [], a1: [], a2: [] }, BYID = {};
+VERBS_RAW.forEach(function (line, i) {
+  var p = line.split("|");
+  var it = prep({ id: "v:" + p[0], src: "v", k: p[0], n: i + 1, v1: p[0], v2: p[1], v3: p[2], en: p[0] + " – " + p[1] + " – " + p[2], uz: p[3] });
+  STATIC.v.push(it); BYID[it.id] = it;
+});
+function addWords(src, list) {
+  list.forEach(function (w) {
+    var k = (w[0] + "|" + w[1]).toLowerCase(), id = src + ":" + k;
+    if (BYID[id]) { if (BYID[id].units.indexOf(w[2]) < 0) BYID[id].units.push(w[2]); return; }
+    var it = prep({ id: id, src: src, k: k, en: w[0], uz: w[1], units: [w[2]] });
+    STATIC[src].push(it); BYID[id] = it;
+  });
+}
+addWords("a1", A1_W);
+addWords("a2", A2_W);
+var ALLSTATIC = STATIC.v.concat(STATIC.a1, STATIC.a2);
+
+/* oʻzim qoʻshgan soʻzlar: feʻllar boʻlimidan olingan boʻlsa, V2/V3 bilan soʻraladi */
+var MINE = [];
+function rebuildMine() {
+  MINE = store.w.map(function (m) {
+    var base = m.ref && BYID[m.ref];
+    var it = { id: "my:" + m.id, src: "my", m: m, en: m.en, uz: m.uz, note: m.note || "", ref: m.ref || "" };
+    if (base && base.v1) { it.v1 = base.v1; it.v2 = base.v2; it.v3 = base.v3; }
+    return prep(it);
+  });
+  MINE.forEach(function (it) { BYID[it.id] = it; });
+  buildAccept();
+}
+function item(id) { return BYID[id] && (BYID[id].src !== "my" || store.w.some(function (m) { return "my:" + m.id === id; })) ? BYID[id] : null; }
+/* Bir soʻzning boshqa lugʻatdagi maʼnosi ham qabul qilinadi: "cold" uchun "sovuq" ham, "shamollash" ham */
+var BY_EN = {}, BY_UZ = {};
+function buildAccept() {
+  BY_EN = {}; BY_UZ = {};
+  ALLSTATIC.concat(MINE).forEach(function (it) {
+    if (it.v1 && it.src === "v") return;
+    var e = enBase(fold(noParen(it.en))), u = fold(noParen(it.uz));
+    (BY_EN[e] = BY_EN[e] || []).push(it.uz);
+    (BY_UZ[u] = BY_UZ[u] || []).push(it.en);
+  });
+}
+rebuildMine();
+function acceptedUz(it) { var l = BY_EN[enBase(fold(noParen(it.en)))] || []; return l.indexOf(it.uz) < 0 ? [it.uz].concat(l) : l; }
+function acceptedEn(it) { var l = BY_UZ[fold(noParen(it.uz))] || []; return l.indexOf(it.en) < 0 ? [it.en].concat(l) : l; }
+function mineHas(it) {
+  if (it.src === "my") return true;
+  return MINE.some(function (m) { return m.ref === it.id || m.gk === it.gk; });
+}
+
+/* ---------- talaffuz ---------- */
+var SPKSVG = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' +
+  '<path d="M4 9.3h3.3L12 5.4v13.2L7.3 14.7H4z" fill="currentColor"/>' +
+  '<path d="M15.4 9.2a4 4 0 0 1 0 5.6M17.9 6.7a7.5 7.5 0 0 1 0 10.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+var TTS = typeof window.speechSynthesis !== "undefined" && typeof window.SpeechSynthesisUtterance !== "undefined";
+/* ovoz va tezlik A1 sahifasida tanlangani olinadi */
+var vpref = {};
+try { var a1s = JSON.parse(localStorage.getItem("a1words.v1") || "null"); if (a1s && a1s.cfg) vpref = a1s.cfg; } catch (e) {}
+var voice = null;
+function voiceScore(v) {
+  var n = (v.name || "") + " " + (v.voiceURI || ""), s = 0;
+  if (/natural|neural|premium|enhanced/i.test(n)) s += 100;
+  if (/google/i.test(n)) s += 70;
+  if (/online/i.test(n)) s += 40;
+  if (v.localService === false) s += 20;
+  if (/siri|samantha|daniel|aria|libby|jenny|guy/i.test(n)) s += 25;
+  if (/desktop|compact/i.test(n)) s -= 30;
+  if (/espeak|festival|pico|robot/i.test(n)) s -= 120;
+  if (/^en[-_]US/i.test(v.lang)) s += 10; else if (/^en[-_]GB/i.test(v.lang)) s += 6;
+  return s;
+}
+function loadVoices() {
+  if (!TTS) return;
+  try {
+    var en = (speechSynthesis.getVoices() || []).filter(function (v) { return /^en([-_]|$)/i.test(v.lang || ""); });
+    if (!en.length) return;
+    en.sort(function (a, b) { return voiceScore(b) - voiceScore(a); });
+    voice = (vpref.voice && en.filter(function (v) { return v.voiceURI === vpref.voice || v.name === vpref.voice; })[0]) || en[0];
+  } catch (e) {}
+}
+if (TTS) { loadVoices(); try { speechSynthesis.addEventListener("voiceschanged", loadVoices); } catch (e) {} }
+function sayText(it) { return it.v1 ? it.v1 + ", " + it.v2 + ", " + it.v3 : it.en; }
+function say(text, el) {
+  if (!TTS || !text) return;
+  try { speechSynthesis.cancel(); } catch (e) {}
+  var u = new SpeechSynthesisUtterance(String(text).replace(/\//g, " or ").replace(/\(.*?\)/g, "").replace(/[—–]/g, ","));
+  if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = "en-US";
+  var r = parseFloat(vpref.rate);
+  u.rate = isNaN(r) ? 0.9 : r;
+  if (el) { el.classList.add("on"); u.onend = u.onerror = function () { el.classList.remove("on"); }; }
+  setTimeout(function () { try { speechSynthesis.speak(u); } catch (e) {} }, 50);
+}
+function spkBtn(it) {
+  return TTS ? '<button class="spk mini" type="button" data-say="' + esc(it.id) + '" title="Talaffuzni eshitish" aria-label="' + esc(it.en) + ' — eshitish">' + SPKSVG + "</button>" : "";
+}
+
+/* ---------- umumiy koʻrinish ---------- */
+function pips(lvl, title) {
+  var h = '<span class="pips" title="' + esc(title || "Level " + lvl + " — " + LVLNAME[lvl]) + '">';
+  for (var i = 1; i <= MAXB; i++) h += '<i class="' + (i <= lvl ? (lvl === MAXB ? "full" : "on") : "") + '"></i>';
+  return h + "</span>";
+}
+function unitsText(it) {
+  var u = it.units.slice().sort(function (a, b) { return a - b; });
+  return u.length > 3 ? u.slice(0, 3).join(", ") + "… (" + u.length + " unit)" : u.join(", ") + "-unit";
+}
+function unitTitle(it) {
+  var list = it.src === "a1" ? A1_UNITS : UNITS;
+  return it.units.map(function (n) { var u = list.filter(function (x) { return x[0] === n; })[0]; return u ? n + ". " + u[2] : n; }).join("; ");
+}
+function chip(it) {
+  if (it.src === "my") return '<span class="chip my">Mening soʻzim</span>';
+  if (it.src === "v") return '<a class="chip" href="index.html" title="Irregular verbs, ' + it.n + '-feʻl">Feʻllar · ' + it.n + "</a>";
+  return '<a class="chip" href="' + SRC[it.src].href + '" title="' + esc(unitTitle(it)) + '">' + SRC[it.src].name + " · " + unitsText(it) + "</a>";
+}
+/* soʻzning holati: asl boʻlimdagi level va xatolar, yoki takrorlashdagi quti */
+function statusHtml(it) {
+  var h = "";
+  if (it.src === "my") {
+    var r = store.r[it.id];
+    if (!r || r.ok + r.bad === 0) return '<span>Hali takrorlanmagan</span>';
+    h += pips(r.b, "Takrorlash: " + r.b + " / " + MAXB);
+    h += r.b >= MAXB ? ' <span class="xok">Yodlangan</span>' : " <span>Keyingi: " + whenText(r.due || today()) + "</span>";
+    if (r.bad) h += ' <span class="xbad">' + r.bad + " xato</span>";
+    return h;
+  }
+  var s = srcRec(it);
+  if (!s) return "";
+  h += pips(Math.max(0, Math.min(MAXB, s.lvl | 0)));
+  if (s.bad) h += ' <span class="xbad">' + s.bad + " marta xato</span>";
+  return h;
+}
+
+/* ---------- koʻrinishlar ---------- */
+var VIEWS = ["search", "mine", "today", "quiz", "result"];
+var tab = "search";
+function show(name) {
+  VIEWS.forEach(function (v) { $("v-" + v).hidden = v !== name; });
+  window.scrollTo(0, 0);
+}
+function setTab(t) {
+  tab = t;
+  Array.prototype.forEach.call(document.querySelectorAll("nav.tabs button"), function (b) {
+    b.setAttribute("aria-selected", String(b.getAttribute("data-view") === t));
+  });
+  if (quiz) { show("quiz"); return; }
+  readSrc();
+  if (t === "search") { renderSearch(); show("search"); }
+  if (t === "mine") { renderMine(); show("mine"); }
+  if (t === "today") { renderToday(); show("today"); }
+  if (store.cfg.tab !== t) { store.cfg.tab = t; save(); }
+}
+Array.prototype.forEach.call(document.querySelectorAll("nav.tabs button"), function (b) {
+  b.addEventListener("click", function () {
+    var t = b.getAttribute("data-view");
+    if (quiz) finish(true);
+    setTab(t);
+  });
+});
+
+/* ---------- qidiruv ---------- */
+/* 0 — aynan oʻzi, 1 — soʻz boshidan, 2 — ichida bor, 3 — yozilishi oʻxshash (imlo xatosi bilan) */
+function scoreOf(it, q) {
+  var i, best = 9, all = it.pe.concat(it.pu);
+  for (i = 0; i < all.length; i++) if (all[i] === q || enBase(all[i]) === q) return 0;
+  [it.fe, it.fu].forEach(function (h) {
+    var at = h.indexOf(q);
+    if (at < 0) return;
+    best = Math.min(best, at === 0 || /[\s\/,;(]/.test(h.charAt(at - 1)) ? 1 : 2);
+  });
+  if (best < 9 || q.length < 4) return best;
+  var max = q.length >= 7 ? 2 : 1, words = (it.fe + " " + it.fu).split(/[\s\/,;()]+/).concat(all);
+  for (i = 0; i < words.length; i++) if (words[i].length >= 3 && lev(words[i], q, max) <= max) return 3;
+  return best;
+}
+var shown = 40;
+function searchList(q) {
+  var groups = {}, order = [];
+  MINE.concat(ALLSTATIC).forEach(function (it) {
+    var s = scoreOf(it, q);
+    if (s > 3) return;
+    var g = groups[it.gk];
+    if (!g) { g = groups[it.gk] = { items: [], s: s }; order.push(g); }
+    g.items.push(it);
+    g.s = Math.min(g.s, s);
+  });
+  order.sort(function (a, b) { return a.s - b.s || a.items[0].en.length - b.items[0].en.length; });
+  return order;
+}
+function hitHtml(g) {
+  var it = g.items[0];
+  var add = g.items.some(mineHas) ? '<span class="inmine" title="Lugʻatimda bor">✓<span class="lbl"> Lugʻatimda</span></span>'
+    : '<button class="btn ghost sm" type="button" data-add="' + esc(it.id) + '" aria-label="' + esc(it.en) + ' — lugʻatimga qoʻshish">+<span class="lbl"> Lugʻatimga</span></button>';
+  var st = g.items.map(statusHtml).filter(Boolean)[0] || "";
+  return '<li class="hit found"><div class="hw"><div class="hen"><b>' + esc(it.en) + "</b>" + spkBtn(it) + "</div>" +
+    '<div class="huz">' + esc(it.uz) + "</div>" + (it.note ? '<div class="hnote">' + esc(it.note) + "</div>" : "") +
+    '<div class="hmeta">' + g.items.map(chip).join("") + st + "</div></div>" +
+    '<div class="hact">' + add + "</div></li>";
+}
+function renderSearch() {
+  var raw = $("q").value, q = fold(raw).replace(/^to /, "");
+  $("qClear").hidden = !raw;
+  var box = $("searchBody");
+  if (!q) {
+    var total = ALLSTATIC.length + MINE.length;
+    box.innerHTML = '<p class="subh">Qidiruv ' + String(total).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " ta soʻz ichidan: feʻllar (" + STATIC.v.length +
+      "), A1 (" + STATIC.a1.length + "), A2 (" + STATIC.a2.length + ") va mening soʻzlarim (" + MINE.length + "). Tutuq belgisini yozmasangiz ham topadi: <b>bolmoq</b> = <b>boʻlmoq</b>.</p>";
+    return;
+  }
+  var all = searchList(q), exact = all.filter(function (g) { return g.s < 3; }), near = all.filter(function (g) { return g.s === 3; });
+  var html = "";
+  if (exact.length) {
+    html += '<p class="subh">' + exact.length + " ta topildi</p>";
+    html += '<ul class="hits">' + exact.slice(0, shown).map(hitHtml).join("") + "</ul>";
+    if (exact.length > shown) html += '<button class="btn ghost sm more-hits" type="button" id="moreHits">Yana ' + Math.min(40, exact.length - shown) + " tasini koʻrsatish</button>";
+  }
+  if (!exact.length || (near.length && exact.length < 5)) {
+    if (!exact.length) {
+      html += '<div class="card notfound"><p>«<b>' + esc(raw.trim()) + '</b>» hech bir lugʻatda topilmadi.</p>' +
+        '<button class="btn" type="button" id="addFromSearch">Lugʻatimga qoʻshish</button></div>';
+    }
+    if (near.length) {
+      html += '<p class="subh">Yozilishi oʻxshash soʻzlar — balki shulardan biridir:</p>';
+      html += '<ul class="hits">' + near.slice(0, 15).map(hitHtml).join("") + "</ul>";
+    }
+  }
+  box.innerHTML = html;
+  if ($("moreHits")) $("moreHits").onclick = function () { shown += 40; renderSearch(); };
+  if ($("addFromSearch")) $("addFromSearch").onclick = function () { startAdd(raw.trim()); };
+}
+$("q").addEventListener("input", function () { shown = 40; renderSearch(); });
+$("q").addEventListener("keydown", function (e) { if (e.key === "Escape" && this.value) { this.value = ""; renderSearch(); } });
+$("qClear").addEventListener("click", function () { $("q").value = ""; renderSearch(); $("q").focus(); });
+
+/* Qidiruvda topilmagan soʻz: yozilgani mos maydonga qoʻyiladi (oʻzbekcha harflar boʻlsa — tarjimaga) */
+function startAdd(text) {
+  resetForm();
+  setTab("mine");
+  /* inglizchada q deyarli doim «qu» boʻlib keladi; tutuq belgisi, -moq — oʻzbekcha */
+  var uzLike = /[ʻʼ‘’'`]|(moq|mak)$|q(?!u)/i.test(text);
+  if (uzLike) { $("fUz").value = text; $("fEn").focus(); }
+  else { $("fEn").value = text; $("fUz").focus(); }
+  formInfo();
+}
+
+/* ---------- mening soʻzlarim ---------- */
+var editing = null, delAsk = null;
+function newId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
+function addMine(en, uz, note, ref, from) {
+  store.w.push({ id: newId(), en: en, uz: uz, note: note || "", ref: ref || "", from: from || "", t: today() });
+  rebuildMine();
+  ensurePlan();   /* bugungi roʻyxatda joy boʻlsa, yangi soʻz bugunoq chiqadi */
+  save();
+  updateBrand();
+}
+function resetForm() {
+  editing = null;
+  $("fEn").value = $("fUz").value = $("fNote").value = "";
+  $("fSave").textContent = "Qoʻshish";
+  $("fCancel").hidden = true;
+  $("fErr").hidden = true;
+  $("fInfo").hidden = true;
+}
+/* yozilayotgan inglizcha soʻz boshqa lugʻatlarda bormi */
+var infoHit = null;
+function formInfo() {
+  var q = enBase(fold(noParen($("fEn").value)));
+  infoHit = null;
+  if (q.length >= 2) {
+    infoHit = ALLSTATIC.filter(function (it) { return it.pe.some(function (p) { return enBase(p) === q; }); })[0] || null;
+  }
+  var box = $("fInfo");
+  if (!infoHit) { box.hidden = true; return; }
+  var same = fold($("fUz").value) === fold(infoHit.uz);
+  box.innerHTML = "Bu soʻz bor: " + chip(infoHit) + " — <b>" + esc(infoHit.en) + "</b> — " + esc(infoHit.uz) +
+    (same || !$("fEn").value ? "" : ' <button class="btn ghost sm" type="button" id="takeUz">Shu tarjimani olish</button>');
+  box.hidden = false;
+  if ($("takeUz")) $("takeUz").onclick = function () { $("fUz").value = infoHit.uz; formInfo(); $("fNote").focus(); };
+}
+$("fEn").addEventListener("input", formInfo);
+$("fUz").addEventListener("input", function () { if (infoHit) formInfo(); });
+$("addForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var en = $("fEn").value.trim().replace(/\s+/g, " "), uz = $("fUz").value.trim().replace(/\s+/g, " "), note = $("fNote").value.trim();
+  var err = !en ? "Inglizchasini yozing." : !uz ? "Oʻzbekcha tarjimasini yozing." : "";
+  var gk = gkey(en, uz);
+  if (!err) {
+    var dup = MINE.filter(function (m) { return m.gk === gk && (!editing || m.m.id !== editing); })[0];
+    if (dup) err = "Bu soʻz lugʻatingizda bor: " + dup.en + " — " + dup.uz;
+  }
+  if (err) { $("fErr").textContent = err; $("fErr").hidden = false; return; }
+  if (editing) {
+    var m = store.w.filter(function (x) { return x.id === editing; })[0];
+    if (m) {
+      /* tarjima oʻzgarsa ham takrorlash tarixi saqlanadi; feʻl bogʻlanishi esa faqat inglizchasi oʻsha boʻlsa qoladi */
+      if (m.ref && BYID[m.ref] && enBase(fold(noParen(en))) !== enBase(fold(noParen(m.en)))) m.ref = "";
+      m.en = en; m.uz = uz; m.note = note;
+    }
+    rebuildMine(); save();
+    $("fOk").textContent = "Saqlandi: " + en;
+  } else {
+    addMine(en, uz, note);
+    $("fOk").textContent = "Qoʻshildi: " + en + " — " + uz;
+  }
+  resetForm();
+  renderMine();
+  $("fEn").focus();
+});
+$("fCancel").addEventListener("click", function () { resetForm(); renderMine(); });
+
+function mineRow(it) {
+  var r = store.r[it.id], asking = delAsk === it.m.id;
+  return '<li class="hit" data-id="' + esc(it.m.id) + '"><div class="hw"><div class="hen"><b>' + esc(it.en) + "</b>" + spkBtn(it) + "</div>" +
+    '<div class="huz">' + esc(it.uz) + "</div>" + (it.note ? '<div class="hnote">' + esc(it.note) + "</div>" : "") +
+    '<div class="hmeta">' + statusHtml(it) + (it.m.t ? "<span>Qoʻshilgan: " + it.m.t.split("-").reverse().join(".") + "</span>" : "") + "</div></div>" +
+    '<div class="hact">' + (asking
+      ? '<span class="hint">Oʻchirilsinmi?</span><button class="btn danger sm" type="button" data-delyes>Ha</button><button class="btn ghost sm" type="button" data-delno>Yoʻq</button>'
+      : (r && r.b >= MAXB ? '<button class="btn ghost sm" type="button" data-relearn title="Yana takrorlashga qoʻshish">Qayta</button>' : "") +
+        '<button class="btn ghost sm" type="button" data-edit>Tahrirlash</button><button class="btn ghost danger sm" type="button" data-del aria-label="Oʻchirish">✕</button>') +
+    "</div></li>";
+}
+function renderMine() {
+  var f = fold($("mFilter").value);
+  $("mineBar").hidden = !MINE.length;
+  var list = MINE.slice().reverse();
+  if (f) list = list.filter(function (it) { return it.fe.indexOf(f) > -1 || it.fu.indexOf(f) > -1 || fold(it.note).indexOf(f) > -1; });
+  $("mineTrain").textContent = "Hammasini mashq qilish (" + MINE.length + ")";
+  var box = $("mineBody");
+  if (!MINE.length) {
+    box.innerHTML = '<div class="empty" style="margin-top:18px">Hali soʻz qoʻshilmagan. Yuqoridagi formaga yozing yoki «Qidiruv»da topilgan soʻz yonidagi <b>+ Lugʻatimga</b> ni bosing.</div>';
+  } else if (!list.length) {
+    box.innerHTML = '<div class="empty" style="margin-top:12px">Lugʻatingizda bunday soʻz yoʻq.</div>';
+  } else {
+    box.innerHTML = '<ul class="hits">' + list.map(mineRow).join("") + "</ul>";
+  }
+  updateBrand();
+}
+$("mFilter").addEventListener("input", renderMine);
+$("mineBody").addEventListener("click", function (e) {
+  var li = e.target.closest("li[data-id]");
+  if (!li || e.target.closest("[data-say]")) return;
+  var id = li.getAttribute("data-id"), m = store.w.filter(function (x) { return x.id === id; })[0];
+  if (!m) return;
+  if (e.target.closest("[data-del]")) { delAsk = id; renderMine(); return; }
+  if (e.target.closest("[data-delno]")) { delAsk = null; renderMine(); return; }
+  if (e.target.closest("[data-delyes]")) {
+    delAsk = null;
+    store.w = store.w.filter(function (x) { return x.id !== id; });
+    delete store.r["my:" + id];
+    if (editing === id) resetForm();
+    rebuildMine(); save(); renderMine();
+    $("fOk").textContent = "Oʻchirildi: " + m.en;
+    return;
+  }
+  if (e.target.closest("[data-relearn]")) {
+    var r = store.r["my:" + id];
+    if (r) { r.b = 1; r.due = today(); }
+    save(); renderMine();
+    $("fOk").textContent = m.en + " — yana takrorlashga qoʻshildi";
+    return;
+  }
+  if (e.target.closest("[data-edit]")) {
+    editing = id;
+    $("fEn").value = m.en; $("fUz").value = m.uz; $("fNote").value = m.note || "";
+    $("fSave").textContent = "Saqlash";
+    $("fCancel").hidden = false;
+    $("fErr").hidden = true; $("fOk").textContent = "";
+    $("fInfo").hidden = true;
+    $("addForm").scrollIntoView({ block: "start", behavior: "smooth" });
+    $("fEn").focus();
+  }
+});
+$("mineTrain").addEventListener("click", function () {
+  if (MINE.length) startQuiz("mine", shuffle(MINE.slice()));
+});
+
+/* faylga saqlash va tiklash */
+$("exportBtn").addEventListener("click", function () {
+  var data = JSON.stringify({ app: "irregular-verbs/lugatim", v: 1, saved: today(), w: store.w, r: store.r }, null, 1);
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([data], { type: "application/json" }));
+  a.download = "lugatim-" + today() + ".json";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+  $("ioMsg").textContent = store.w.length + " ta soʻz faylga saqlandi.";
+});
+$("importBtn").addEventListener("click", function () { $("importFile").click(); });
+$("importFile").addEventListener("change", function () {
+  var f = this.files && this.files[0];
+  if (!f) return;
+  var rd = new FileReader();
+  rd.onload = function () {
+    var o = null;
+    try { o = JSON.parse(rd.result); } catch (e) {}
+    if (!o || !Array.isArray(o.w)) { $("ioMsg").textContent = "Bu fayl lugʻat fayli emas."; return; }
+    var have = {}, n = 0;
+    MINE.forEach(function (it) { have[it.gk] = 1; });
+    o.w.forEach(function (m) {
+      if (!m || typeof m.en !== "string" || typeof m.uz !== "string" || !m.en.trim() || !m.uz.trim()) return;
+      var gk = gkey(m.en, m.uz);
+      if (have[gk]) return;
+      have[gk] = 1;
+      var id = typeof m.id === "string" && !store.w.some(function (x) { return x.id === m.id; }) ? m.id : newId();
+      store.w.push({ id: id, en: m.en.trim(), uz: m.uz.trim(), note: typeof m.note === "string" ? m.note : "", ref: typeof m.ref === "string" ? m.ref : "", t: typeof m.t === "string" ? m.t : today() });
+      var r = o.r && o.r["my:" + m.id];
+      if (r && typeof r === "object") store.r["my:" + id] = { b: Math.max(0, Math.min(MAXB, r.b | 0)), due: typeof r.due === "string" ? r.due : null, ok: r.ok | 0, bad: r.bad | 0 };
+      n++;
+    });
+    rebuildMine(); save(); renderMine();
+    $("ioMsg").textContent = n ? n + " ta soʻz qoʻshildi." : "Yangi soʻz yoʻq — fayldagi hamma soʻz lugʻatingizda bor.";
+  };
+  rd.readAsText(f);
+  this.value = "";
+});
+
+/* qidiruv va lugʻatdagi tugmalar: talaffuz, lugʻatga qoʻshish */
+document.addEventListener("click", function (e) {
+  var b = e.target.closest("[data-say]");
+  if (b) { var it = BYID[b.getAttribute("data-say")]; if (it) say(sayText(it), b); return; }
+  var a = e.target.closest("[data-add]");
+  if (a) {
+    var s = BYID[a.getAttribute("data-add")];
+    if (!s || mineHas(s)) return;
+    addMine(s.en, s.uz, "", s.id, s.src);
+    renderSearch();
+  }
+});
+
+/* ---------- kundalik takrorlash ---------- */
+/* Takrorlanadigan soʻzlar: oʻzim qoʻshganlar + boshqa boʻlimlarda xato qilinib, hali yodlanmaganlar */
+function candidates() {
+  var t = today(), out = [], seen = {}, c = store.cfg.src;
+  /* lugʻatimga olingan soʻz asl boʻlimdan ikkinchi marta chiqmaydi */
+  MINE.forEach(function (it) { seen[it.gk] = 1; if (it.ref) seen["id:" + it.ref] = 1; });
+  function push(it) {
+    var r = store.r[it.id];
+    if (r && r.b >= MAXB) {
+      /* yodlangan soʻz asl boʻlimda yana xato qilinsa — takrorlashga qaytadi */
+      if (it.src !== "my" && srcBad(it) > (r.g | 0)) { r.b = 1; r.due = t; }
+      else return;
+    }
+    out.push(it);
+  }
+  if (c.my) MINE.forEach(push);
+  ["v", "a1", "a2"].forEach(function (s) {
+    if (!c[s]) return;
+    STATIC[s].forEach(function (it) {
+      var p = SS[s][it.k];
+      if (!p || !(((p.bad | 0) > 0 && (p.lvl | 0) < MAXB) || p.mis)) return;
+      if (seen[it.gk] || seen["id:" + it.id]) return;
+      seen[it.gk] = 1;
+      push(it);
+    });
+  });
+  return out;
+}
+function dueOf(it) { var r = store.r[it.id]; return r && r.due ? r.due : today(); }
+function isNew(it) { var r = store.r[it.id]; return !r || (r.ok | 0) + (r.bad | 0) === 0; }
+/* qiyinligi: xatosi koʻp, toʻgʻrisi kam, leveli past soʻz avval */
+function hardness(it) {
+  var p = srcRec(it);
+  return p ? ((p.bad | 0) - (p.ok | 0)) * 10 - (p.lvl | 0) : 0;
+}
+function ensurePlan() {
+  var t = today();
+  if (!store.plan || store.plan.day !== t) store.plan = { day: t, ids: [], done: {}, extra: 0 };
+  var P = store.plan, cap = store.cfg.daily + (P.extra | 0);
+  var cands = candidates(), byId = {};
+  cands.forEach(function (it) { byId[it.id] = it; });
+  P.ids = P.ids.filter(function (id) { return P.done[id] ? !!item(id) : !!byId[id]; });
+  if (P.ids.length < cap) {
+    var inPlan = {};
+    P.ids.forEach(function (id) { inPlan[id] = 1; });
+    var rest = cands.filter(function (it) { return !inPlan[it.id]; });
+    var due = rest.filter(function (it) { return !isNew(it) && dueOf(it) <= t; })
+      .sort(function (a, b) { return dueOf(a) < dueOf(b) ? -1 : dueOf(a) > dueOf(b) ? 1 : store.r[a.id].b - store.r[b.id].b || hardness(b) - hardness(a); });
+    var fresh = rest.filter(isNew).sort(function (a, b) {
+      return (a.src === "my" ? 0 : 1) - (b.src === "my" ? 0 : 1) || hardness(b) - hardness(a);
+    });
+    var room = cap - P.ids.length;
+    /* eski soʻzlar koʻp boʻlsa ham, har kuni bir nechta yangi soʻz kiradi */
+    var keepNew = Math.min(fresh.length, Math.ceil(room / 4));
+    var add = due.slice(0, room - keepNew);
+    add = add.concat(fresh.slice(0, room - add.length));
+    if (add.length < room) add = add.concat(due.slice(room - keepNew, room - keepNew + room - add.length));
+    /* «Yana»: navbati kelmagan, lekin eng yaqin kunlarda chiqadigan soʻzlar */
+    if (add.length < room && P.extra) {
+      var ahead = rest.filter(function (it) { return !isNew(it) && dueOf(it) > t && add.indexOf(it) < 0; })
+        .sort(function (a, b) { return dueOf(a) < dueOf(b) ? -1 : dueOf(a) > dueOf(b) ? 1 : 0; });
+      add = add.concat(ahead.slice(0, room - add.length));
+    }
+    P.ids = P.ids.concat(shuffle(add).map(function (it) { return it.id; }));
+  }
+  checkDayDone();
+  return cands;
+}
+function planLeft() { var P = store.plan; return P.ids.filter(function (id) { return !P.done[id]; }); }
+function checkDayDone() {
+  var P = store.plan;
+  if (P && P.day === today() && P.ids.length && !planLeft().length) store.dd[P.day] = 1;
+}
+function streak() {
+  var n = 0, k = today();
+  if (!store.dd[k]) k = addDays(k, -1);
+  while (store.dd[k] && n < 3660) { n++; k = addDays(k, -1); }
+  return n;
+}
+function renderToday() {
+  var cands = ensurePlan(); save();
+  var P = store.plan, left = planLeft(), done = P.ids.length - left.length, t = today();
+  var st = streak(), learned = Object.keys(store.r).filter(function (id) { return store.r[id].b >= MAXB && item(id); }).length;
+  var tomorrow = cands.filter(function (it) { return isNew(it) ? P.ids.indexOf(it.id) < 0 : dueOf(it) <= addDays(t, 1); }).length;
+  $("todayStats").innerHTML =
+    '<div class="stat"><b>' + done + " / " + P.ids.length + "</b><span>Bugun</span></div>" +
+    '<div class="stat"><b>' + (st ? "🔥 " : "") + st + "</b><span>Kun ketma-ket</span></div>" +
+    '<div class="stat"><b>' + cands.length + "</b><span>Takrorlashda</span></div>" +
+    '<div class="stat"><b>' + learned + "</b><span>Yodlandi</span></div>";
+  var card = $("todayCard");
+  if (!P.ids.length) {
+    card.innerHTML = '<div class="empty" style="border:0;padding:12px 0">Hozircha takrorlanadigan soʻz yoʻq.<br>' +
+      '«Mening soʻzlarim»ga soʻz qoʻshing yoki <a href="index.html">feʻllar</a>, <a href="words.html">A1</a>, <a href="a2.html">A2</a> boʻyicha mashq qiling — xato qilgan soʻzlaringiz shu yerga oʻzi tushadi.</div>' +
+      '<div class="startbar"><button class="btn" type="button" id="goMine">Soʻz qoʻshish</button></div>';
+    $("goMine").onclick = function () { setTab("mine"); $("fEn").focus(); };
+  } else {
+    var mix = {}, html = "";
+    left.forEach(function (id) { var it = item(id); if (it) mix[it.src] = (mix[it.src] || 0) + 1; });
+    if (left.length) {
+      html += '<p class="today-n">' + left.length + " <small>ta soʻz qoldi</small></p>" +
+        '<div class="bar" style="margin:12px 0 0"><i style="width:' + (done / P.ids.length * 100) + '%"></i></div>' +
+        '<div class="mix">' + ["my", "v", "a1", "a2"].filter(function (s) { return mix[s]; }).map(function (s) {
+          return '<span class="chip' + (s === "my" ? " my" : "") + '">' + SRC[s].name + (s === "my" ? "" : " xatolari") + ": " + mix[s] + "</span>";
+        }).join("") + "</div>" +
+        '<div class="startbar"><button class="btn" type="button" id="goToday">' + (done ? "Davom ettirish" : "Boshlash") + "</button>" +
+        '<span class="hint">Taxminan ' + Math.max(1, Math.round(left.length * 12 / 60)) + " daqiqa</span></div>";
+    } else {
+      html += '<p class="done-msg">✓ Bugungi takrorlash bajarildi</p>' +
+        '<p class="lede" style="margin:6px 0 0">' + P.ids.length + " ta soʻz takrorlandi." +
+        (tomorrow ? " Ertaga taxminan " + Math.min(tomorrow, store.cfg.daily) + " ta soʻz chiqadi." : "") + "</p>" +
+        '<div class="startbar">' + (cands.some(function (it) { return P.ids.indexOf(it.id) < 0; })
+          ? '<button class="btn ghost" type="button" id="moreToday">Yana 10 ta soʻz</button>' : "") + "</div>";
+    }
+    card.innerHTML = html;
+    if ($("goToday")) $("goToday").onclick = function () { startQuiz("daily", shuffle(left.map(item).filter(Boolean))); };
+    if ($("moreToday")) $("moreToday").onclick = function () {
+      store.plan.extra = (store.plan.extra | 0) + 10;
+      var before = store.plan.ids.length;
+      ensurePlan(); save();
+      if (store.plan.ids.length > before) startQuiz("daily", shuffle(planLeft().map(item).filter(Boolean)));
+      else renderToday();
+    };
+  }
+  updateBrand();
+}
+/* sozlamalar */
+function paintTodaySet() {
+  setRadio("daily", String(store.cfg.daily));
+  Array.prototype.forEach.call(document.querySelectorAll("[data-src]"), function (c) { c.checked = !!store.cfg.src[c.getAttribute("data-src")]; });
+  $("dirSel").value = store.cfg.dir;
+  $("autoSay").checked = !!store.cfg.autoSay;
+}
+paintTodaySet();
+$("todaySet").addEventListener("change", function (e) {
+  var t = e.target;
+  if (t.name === "daily") store.cfg.daily = parseInt(t.value, 10);
+  if (t.hasAttribute("data-src")) store.cfg.src[t.getAttribute("data-src")] = t.checked;
+  if (t.id === "dirSel") store.cfg.dir = t.value;
+  if (t.id === "autoSay") store.cfg.autoSay = t.checked;
+  save();
+  renderToday();
+});
+
+/* ---------- mashq ---------- */
+var quiz = null;
+var FLABEL = { v1: "V1 — Base Form", v2: "V2 — Past Simple", v3: "V3 — Past Participle" };
+function startQuiz(kind, items) {
+  if (!items.length) return;
+  quiz = { kind: kind, queue: items, i: 0, ok: 0, bad: 0, seen: {}, again: {}, wrong: [], graded: false, n0: items.length };
+  show("quiz");
+  renderQ();
+}
+function qItem() { return quiz.queue[quiz.i]; }
+function fromText(it) {
+  if (it.src === "my") return "Mening soʻzim";
+  var p = srcRec(it), where = it.src === "v" ? "Feʻllar" : SRC[it.src].name + " · " + unitsText(it);
+  return where + (p && p.bad ? " · " + p.bad + " marta xato qilgansiz" : "");
+}
+function renderQ() {
+  var it = qItem(), d = store.cfg.dir;
+  quiz.dir = d === "mix" ? (Math.random() < 0.5 ? "en" : "uz") : d;
+  quiz.graded = false;
+  var showEn = quiz.dir === "en";
+  $("qpos").textContent = (quiz.i + 1) + " / " + quiz.queue.length;
+  $("qscore").textContent = quiz.ok + " toʻgʻri · " + quiz.bad + " xato";
+  $("qbar").style.width = (quiz.i / quiz.queue.length * 100) + "%";
+  $("ptag").textContent = fromText(it);
+  var w = $("pword");
+  var f = [];
+  if (it.v1) {
+    if (showEn) { w.textContent = it.v1; $("pmeta").textContent = it.uz; f = [["v2", it.v2, "en"], ["v3", it.v3, "en"]]; }
+    else { w.textContent = it.uz; $("pmeta").textContent = "Feʻlning uchala shaklini yozing"; f = [["v1", it.v1, "en"], ["v2", it.v2, "en"], ["v3", it.v3, "en"]]; }
+  } else {
+    w.textContent = showEn ? it.en : it.uz;
+    $("pmeta").textContent = it.note && showEn ? it.note : "";
+    f = showEn ? [["uz", acceptedUz(it).join(" / "), "uz"]] : [["en", acceptedEn(it).join(" / "), "en"]];
+  }
+  w.className = "word" + (showEn ? "" : " uz");
+  quiz.fields = f;
+  var fb = $("qfields");
+  fb.className = "fields" + (f.length > 1 ? " multi" : "");
+  fb.innerHTML = f.map(function (x, i) {
+    var lab = x[0] === "uz" ? "Oʻzbekcha tarjimasi" : x[0] === "en" ? "Inglizchasi" : FLABEL[x[0]];
+    return '<div class="field' + (x[2] === "uz" ? " uzf" : "") + '"><label for="qa' + i + '">' + lab + "</label>" +
+      '<input type="text" id="qa' + i + '" spellcheck="false" autocapitalize="off" autocomplete="off"><div class="fix" hidden></div></div>';
+  }).join("");
+  var spk = $("spkPrompt");
+  spk.innerHTML = SPKSVG;
+  spk.hidden = !TTS || !showEn;
+  /* javobdan oldin faqat koʻrsatilgan soʻz oʻqiladi (V2/V3 ni aytib qoʻymasin), keyin — hammasi */
+  spk.onclick = function () { say(quiz && quiz.graded ? sayText(it) : it.v1 || it.en, spk); };
+  $("verdict").hidden = true;
+  $("checkBtn").textContent = "Tekshirish";
+  $("dontknowBtn").hidden = false;
+  if (showEn && store.cfg.autoSay) say(it.v1 || it.en, spk);
+  $("qa0").focus();
+}
+function check(giveUp) {
+  var it = qItem(), all = true, typo = false;
+  quiz.fields.forEach(function (x, i) {
+    var inp = $("qa" + i), box = inp.parentNode, fix = box.querySelector(".fix");
+    var s = giveUp ? 0 : checkAns(inp.value, x[1], x[2], !!it.v1);
+    if (!s) all = false;
+    if (s === 1) typo = true;
+    inp.readOnly = true;
+    box.classList.add(s ? "good" : "wrong");
+    var right = x[0] === "uz" ? it.uz : x[0] === "en" ? it.en : x[1];
+    if (s !== 2) { fix.innerHTML = (s ? "Yozilishi: " : "Toʻgʻrisi: ") + "<b>" + esc(right) + "</b>"; fix.hidden = false; }
+  });
+  quiz.graded = true;
+  var note = grade(it, all);
+  var v = $("verdict");
+  v.className = "verdict " + (all ? "good" : "bad");
+  v.innerHTML = (all ? (typo ? "Toʻgʻri, faqat yozilishiga qarang" : "Toʻgʻri!") : giveUp ? "Mayli, endi eslab qoling" : "Xato") +
+    '<span class="lvl">' + esc(note) + "</span>";
+  v.hidden = false;
+  $("checkBtn").textContent = quiz.i + 1 < quiz.queue.length ? "Keyingi →" : "Natijani koʻrish";
+  $("dontknowBtn").hidden = true;
+  $("spkPrompt").hidden = !TTS;
+  if (quiz.dir === "uz" && store.cfg.autoSay) say(sayText(it), $("spkPrompt"));
+  $("qscore").textContent = quiz.ok + " toʻgʻri · " + quiz.bad + " xato";
+  $("checkBtn").focus();
+}
+/* natija: takrorlash qutisi oʻzgaradi (faqat soʻz shu mashqda birinchi marta soʻralganda) */
+function grade(it, ok) {
+  var t = today(), r = store.r[it.id] || (store.r[it.id] = { b: 0, ok: 0, bad: 0 });
+  var first = !quiz.seen[it.id], note;
+  quiz.seen[it.id] = 1;
+  if (ok) { r.ok = (r.ok | 0) + 1; quiz.ok++; logDay(0); }
+  else { r.bad = (r.bad | 0) + 1; quiz.bad++; logDay(1); }
+  if (first) {
+    if (ok) {
+      if (r.b >= MAXB) note = "Bu soʻz yodlangan — zoʻr!";
+      else if (!r.due || r.due <= t) {
+        r.b = Math.min(MAXB, (r.b | 0) + 1);
+        if (r.b >= MAXB) {
+          r.due = null; r.g = srcBad(it); logDay(2);
+          note = "Yodlandi! Bu soʻz endi takrorlashga chiqmaydi.";
+        } else {
+          r.due = addDays(t, GAP[r.b]);
+          note = "Keyingi takrorlash: " + whenText(r.due) + " (" + r.b + " / " + MAXB + ").";
+        }
+      } else note = "Navbati " + whenText(r.due) + " — oʻshanda yana soʻraladi.";
+    } else {
+      r.b = 0; r.due = addDays(t, 1);
+      quiz.wrong.push(it);
+      note = "Ertaga yana soʻraladi.";
+      if (!quiz.again[it.id]) { quiz.again[it.id] = 1; quiz.queue.push(it); note += " Bu mashq oxirida ham bir marta chiqadi."; }
+    }
+    r.last = t;
+    var P = store.plan;
+    if (P && P.day === t && P.ids.indexOf(it.id) > -1) { P.done[it.id] = 1; checkDayDone(); }
+  } else note = ok ? "Endi toʻgʻri. Ertaga yana tekshiramiz." : "Ertaga yana soʻraladi.";
+  save();
+  updateBrand();
+  return note;
+}
+function next() {
+  if (quiz.i + 1 >= quiz.queue.length) { finish(false); return; }
+  quiz.i++;
+  renderQ();
+}
+$("qform").addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (!quiz) return;
+  if (quiz.graded) { next(); return; }
+  var empty = quiz.fields.every(function (x, i) { return !$("qa" + i).value.trim(); });
+  if (empty) { $("qa0").focus(); return; }
+  check(false);
+});
+$("dontknowBtn").addEventListener("click", function () { if (quiz && !quiz.graded) check(true); });
+$("quitBtn").addEventListener("click", function () { finish(true); });
+/* maydonda Enter: keyingi maydonga oʻtadi, oxirgisida — tekshiradi */
+$("qfields").addEventListener("keydown", function (e) {
+  if (e.key !== "Enter" || !quiz || quiz.graded) return;
+  var i = parseInt((e.target.id || "").slice(2), 10);
+  if (isNaN(i) || i + 1 >= quiz.fields.length) return;
+  e.preventDefault();
+  $("qa" + (i + 1)).focus();
+});
+
+function finish(early) {
+  var q = quiz;
+  quiz = null;
+  if (!q) return;
+  try { speechSynthesis.cancel(); } catch (e) {}
+  var asked = Object.keys(q.seen).length;
+  if (!asked) { setTab(tab); return; }
+  var firstOk = asked - q.wrong.length;
+  $("rtitle").textContent = early ? "Mashq toʻxtatildi" : "Mashq tugadi";
+  $("rscore").innerHTML = firstOk + " / " + asked;
+  $("rline").textContent = "birinchi urinishda toʻgʻri topildi" + (q.wrong.length ? " — xato qilinganlari ertaga yana chiqadi." : ". Barakalla!");
+  $("rwrong").innerHTML = q.wrong.length ? '<ul class="res-list">' + q.wrong.map(function (it) {
+    return '<li><span class="w">' + esc(it.en) + '</span> <span class="c">— ' + esc(it.uz) + "</span></li>";
+  }).join("") + "</ul>" : "";
+  var btns = "";
+  if (q.kind === "daily") {
+    ensurePlan(); save();
+    var left = planLeft().length;
+    btns += left ? '<button class="btn" type="button" data-r="today">Davom ettirish (' + left + " ta qoldi)</button>"
+      : '<button class="btn" type="button" data-r="today">✓ Bugungi takrorlash bajarildi</button>';
+  } else {
+    btns += '<button class="btn" type="button" data-r="again">Yana mashq qilish</button><button class="btn ghost" type="button" data-r="mine">Lugʻatimga qaytish</button>';
+  }
+  $("rbtns").innerHTML = btns;
+  show("result");
+  updateBrand();
+}
+$("rbtns").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-r]");
+  if (!b) return;
+  var r = b.getAttribute("data-r");
+  if (r === "again") { startQuiz("mine", shuffle(MINE.slice())); return; }
+  setTab(r);
+});
+
+/* ---------- statistika uchun tayyor hisob (stats.html) — mening soʻzlarim boʻyicha ---------- */
+function summary() {
+  var lv = [0, 0, 0, 0, 0, 0], seen = 0, mis = 0, ok = 0, bad = 0, hard = [];
+  (store.w || []).forEach(function (m) {
+    var r = store.r && store.r["my:" + m.id];
+    var b = r ? Math.max(0, Math.min(MAXB, r.b | 0)) : 0;
+    lv[b]++;
+    if (r && (r.ok | 0) + (r.bad | 0) > 0) seen++;
+    if (r && r.bad && b < MAXB && b === 0) mis++;
+    if (r && r.bad && b < MAXB) hard.push([m.en, m.uz, r.ok | 0, r.bad | 0, b]);
+  });
+  Object.keys(store.r || {}).forEach(function (id) { var r = store.r[id]; ok += r.ok | 0; bad += r.bad | 0; });
+  hard.sort(function (a, b) { return (b[3] - b[2]) - (a[3] - a[2]) || b[3] - a[3]; });
+  return { n: (store.w || []).length, lv: lv, seen: seen, mis: mis, ok: ok, bad: bad, hard: hard.slice(0, 10) };
+}
+
+function updateBrand() {
+  $("mineCount").textContent = MINE.length ? "(" + MINE.length + ")" : "";
+  var P = store.plan, left = P && P.day === today() ? planLeft().length : -1;
+  $("todayCount").textContent = left > 0 ? "(" + left + ")" : left === 0 && P.ids.length ? "✓" : "";
+  var st = streak();
+  $("brandStat").textContent = (st ? "🔥 " + st + " kun · " : "") + MINE.length + " ta mening soʻzim";
+}
+
+/* boshqa oynada oʻzgarsa — shu yerda ham yangilanadi (mashq paytida emas) */
+window.addEventListener("storage", function (e) {
+  if (quiz) return;
+  if (e.key === KEY) { load(); rebuildMine(); paintTodaySet(); }
+  if (e.key === KEY || e.key === SRC.v.key || e.key === SRC.a1.key || e.key === SRC.a2.key) setTab(tab);
+});
+
+/* boshlanishi: manzildagi #qidiruv / #lugat / #bugun yoki oxirgi ochilgan tab */
+var HASH = { "#qidiruv": "search", "#lugat": "mine", "#bugun": "today" };
+var first = HASH[location.hash] || store.cfg.tab || "search";
+if (VIEWS.indexOf(first) < 0 || first === "quiz" || first === "result") first = "search";
+ensurePlan(); save();
+setTab(first);
+if (first === "search") $("q").focus();
+})();
+</script>

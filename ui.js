@@ -6,6 +6,7 @@ var ICON = {
   verbs: '<path d="M4 17c0-9 8-9 8 0m0 0c0-6 8-6 8 0"/>',
   book: '<path d="M5 4h14v16H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h11"/>',
   books: '<path d="M4 4h5v16H4zM9 7h5v13H9zM14 8.5l4-1 3 11.500-4 1z"/>',
+  mine: '<path d="M6 3h12v18l-6-4.5L6 21zM9.5 8.5h5"/>',
   chart: '<path d="M4 20h16M7 20v-7M12 20V6M17 20v-10"/>',
   listening: '<path d="M4 18v-5a8 8 0 0 1 16 0v5M4 14h3v6H5a1 1 0 0 1-1-1zM20 14h-3v6h2a1 1 0 0 0 1-1z"/>',
   speaking: '<path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/>'
@@ -20,6 +21,7 @@ var SECTIONS = [
     { id: "listening", label: "Listening", icon: "listening", href: "a2-listening.html" },
     { id: "speaking", label: "Speaking", icon: "speaking", href: "a2-speaking.html" }
   ] },
+  { id: "my", label: "Lugʻatim", icon: "mine", href: "my.html" },
   { id: "stats", label: "Statistika", icon: "chart", href: "stats.html" }
 ];
 (function () {

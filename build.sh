@@ -1,5 +1,5 @@
 #!/bin/sh
-# index.html, words.html, a2*.html va stats.html — artifact uchun yoziladi: ularda <!doctype>, <html>, <head> yoʻq,
+# index.html, words.html, a2*.html, my.html va stats.html — artifact uchun yoziladi: ularda <!doctype>, <html>, <head> yoʻq,
 # chunki Claude artifact sahifani nashr paytida oʻzi shu qobiqqa oʻraydi.
 # GitHub Pages uchun esa toʻliq hujjat kerak, shuning uchun shu skript
 # ulardan docs/ ichidagi sahifalarni yasaydi. Saytni yangilash:
@@ -9,7 +9,7 @@ set -e
 cd "$(dirname "$0")"
 mkdir -p docs
 cp assets/* docs/
-SHARED="ui.css ui.js lessons.css lessons.js a2-units.js a2-listening-data.js a2-speaking-data.js"
+SHARED="ui.css ui.js lessons.css lessons.js a2-units.js a2-listening-data.js a2-speaking-data.js verbs-data.js a1-data.js a2-data.js"
 cp $SHARED docs/
 # GitHub Pages fayllarni 10 daqiqa keshda saqlaydi: yangi sahifa eski css/js bilan ochilib qolmasligi uchun
 # manzilga fayl mazmunidan olingan versiya qoʻshiladi (ui.css -> ui.css?v=123456). Fayl oʻzgarsa, versiya ham oʻzgaradi.
@@ -72,5 +72,7 @@ page a2-listening.html docs/a2-listening.html "A2 Listening" \
   "A2 darajasidagi listening mashqlari: dialoglar, savollar va matni. Oʻzbek tilida." "${SITE}a2-listening.html"
 page a2-speaking.html docs/a2-speaking.html "A2 Speaking" \
   "A2 darajasidagi speaking mashqlari: savollar, ovoz yozish va namuna javoblar. Oʻzbek tilida." "${SITE}a2-speaking.html"
+page my.html docs/my.html "Lugʻatim — qidiruv va kundalik takrorlash" \
+  "Feʻllar, A1 va A2 soʻzlari orasidan qidirish, oʻz lugʻatingizni yuritish va xato qilingan soʻzlarni har kuni takrorlash. Oʻzbek tilida." "${SITE}my.html"
 page stats.html docs/stats.html "Statistika — Irregular Verbs, A1 va A2 soʻzlar" \
   "Ingliz tili mashqlari natijalari: kunlik faollik, ketma-ket kunlar, yodlangan soʻzlar va eng qiyin soʻzlar." "${SITE}stats.html"
